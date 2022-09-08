@@ -26,4 +26,4 @@
 
 
 <input bind:value={userUUID} type="text">
-<button on:click="{handleLogin}">Register</button>
+<button on:click="{handleLogin}">Login</button>
