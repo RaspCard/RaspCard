@@ -1,25 +1,65 @@
 <script lang="ts">
     import { Button, Modal, Label, Input } from 'flowbite-svelte';
-    import  {Html5QrcodeScanner, Html5Qrcode } from "html5-qrcode";
+    import  { Html5Qrcode } from "html5-qrcode";
     import { onMount } from 'svelte';
 
+    const config = {
+        fps: 10,
+        qrbox: { width: 250, height: 250 },
+    };
 
     let formModal = false;
-    let isScanning = false;
     let html5Qrcode: Html5Qrcode | undefined;
     let uuid: string = '';
+    let pin: string = '';
+    let error: string | undefined;
 
-    onMount(() => {
-        html5Qrcode = new Html5Qrcode(
-            "reader",
-        );
+    onMount(async() => {
+        html5Qrcode = new Html5Qrcode("reader");
+
+        // Html5Qrcode.getCameras().then(devices => {
+        //     if (devices && devices.length) {
+        //         devices.forEach(element => {
+        //             deviceIds.push(element.id);
+        //         });
+        //     }
+        // }).catch(err => {
+        //     uuid = err.message;
+        // });
+
+        // if (!deviceIds.length) {
+        //     return;
+        // }
+
+        enableCamera();
     });
+
+    async function handleLogin() {
+        const res = await fetch('', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                uuid,
+                pin
+            })
+        });
+
+        const data = await res.json();
+
+        if(data.success) {
+            window.location.href = '/dashboard';
+        }
+
+        error = data.message;
+    }
+
 
     async function onScanSuccess(decodedText: string) {
         console.log(`Code matched = ${decodedText}`);
         uuid = decodedText;
         await html5Qrcode?.stop();
-        isScanning = false;
         formModal = true;
     }
 
@@ -27,57 +67,49 @@
         console.warn(`Code scan error = ${error}`);
     }
 
-    async function changeScan() {
-        isScanning = !isScanning;
-        if(isScanning) {
-            html5Qrcode?.start(
-                { facingMode: 'environment' },
-                {
-                    fps: 10,
-                    qrbox: { width: 250, height: 250 },
-                },
-                onScanSuccess,
-                onScanFailure
-            )
-        } else {
-            await html5Qrcode?.stop();
-        }
+    function enableCamera() {
+        html5Qrcode?.start(
+            { facingMode: "environment" },
+            config,
+            onScanSuccess,
+            onScanFailure
+        );
     }
 </script>
-  
+
 
 <div>
-    <div class="reader">
+    <div class="reader-container">
         <reader id="reader" />
-        <Button  on:click={changeScan} pill={true} class="!p-2"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path></svg></Button>
+        <Button pill={true} class="!p-2"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path></svg></Button>
     </div>
     <div class="test3">
-        <p class="text">Impossible to login with the scanner? ID Login</p>
-        <Button on:click={() => formModal = true}>Form modal</Button>
+        <p class="text">Impossible to login with the scanner?</p>
+        <Button on:click={() => formModal = true}>ID Login</Button>
     </div>
 </div>
 
-<Modal bind:open={formModal} size="xs">
-    <form class="flex flex-col space-y-6" action="/">
+<Modal bind:open={formModal} size="xs" on:show={async() => await html5Qrcode?.stop()} on:hide={() => enableCamera()}>
+    <form on:submit|preventDefault={handleLogin} class="flex flex-col space-y-6" action="/">
         <h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Sign in to our platform</h3>
         <Label class="space-y-2">
             <span>ID</span>
             <Input bind:value={uuid} type="text" name="uuid" required />
         </Label>
         <Label class="space-y-2">
-            <span>Your password</span>
-            <Input type="password" name="password" placeholder="•••••" required />
+            <span>PIN</span>
+            <Input bind:value={pin} type="password" name="password" placeholder="•••••" required />
         </Label>
         <Button type="submit" class="w-full1">Login to your account</Button>
     </form>
+    {#if error}
+        <h1>Error</h1>
+    {/if}
 </Modal>
 
 
-<h1>{uuid}</h1>
-
-
 <style>
-    .reader {
+    .reader-container {
         box-sizing: border-box;
 
         /* Auto layout */
@@ -99,6 +131,15 @@
         order: 0;
         align-self: stretch;
         flex-grow: 1;
+    }
+
+    #reader {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
     }
 
     .test3 {
