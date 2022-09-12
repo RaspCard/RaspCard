@@ -24,8 +24,6 @@ export const POST: RequestHandler = async({ request }) => {
     console.log("here");
 
     const headers = new Headers();
-    headers.append('set-cookie', `session=${uuid}; HttpOnly; SameSite=Strict; Path=/`);
+    headers.append('set-cookie', `session=${uuid}; HttpOnly; SameSite=Strict; Path=/; Secure; Max-Age=21600`);
     return new Response(JSON.stringify({success: true, message: "Utente creato con successo"}), { headers });
 }
-
-// a9281392-4f0e-41dc-8f6f-2077e683f201
