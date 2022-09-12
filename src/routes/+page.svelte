@@ -1,37 +1,30 @@
 <script lang="ts">
     import { Button, Modal, Label, Input } from 'flowbite-svelte';
-    import  { Html5Qrcode } from "html5-qrcode";
+    import Head from '$lib/components/Head.svelte';
+    import QrScanner from 'qr-scanner';
     import { onMount } from 'svelte';
 
-    const config = {
-        fps: 10,
-        qrbox: { width: 250, height: 250 },
-    };
-
     let formModal = false;
-    let html5Qrcode: Html5Qrcode | undefined;
+    let qrScanner: QrScanner;
     let uuid: string = '';
     let pin: string = '';
     let error: string | undefined;
 
+    let debug: string;
+
     onMount(async() => {
-        html5Qrcode = new Html5Qrcode("reader");
+        const cameras = await QrScanner.listCameras(true);
 
-        // Html5Qrcode.getCameras().then(devices => {
-        //     if (devices && devices.length) {
-        //         devices.forEach(element => {
-        //             deviceIds.push(element.id);
-        //         });
-        //     }
-        // }).catch(err => {
-        //     uuid = err.message;
-        // });
+        let videoElem = document.getElementById('reader') as HTMLVideoElement;
 
-        // if (!deviceIds.length) {
-        //     return;
-        // }
+        qrScanner = new QrScanner(
+            videoElem,
+            result => debug = result.data,
+            { /* your options or returnDetailedScanResult: true if you're not specifying any other options */ },
+        );
 
-        enableCamera();
+        qrScanner.setCamera(cameras[1].id);
+        qrScanner.start();
     });
 
     async function handleLogin() {
@@ -56,40 +49,52 @@
     }
 
 
-    async function onScanSuccess(decodedText: string) {
-        console.log(`Code matched = ${decodedText}`);
-        uuid = decodedText;
-        await html5Qrcode?.stop();
-        formModal = true;
-    }
+    // async function onScanSuccess(decodedText: string) {
+    //     console.log(`Code matched = ${decodedText}`);
+    //     uuid = decodedText;
+    //     setTimeout(async() => {
+    //         await html5Qrcode?.stop();
+    //     }, 400);
+    //     formModal = true;
+    // }
 
-    function onScanFailure(error: string) {
-        console.warn(`Code scan error = ${error}`);
-    }
+    // function onScanFailure(error: string) {
+    //     console.warn(`Code scan error = ${error}`);
+    // }
 
-    function enableCamera() {
-        html5Qrcode?.start(
-            { facingMode: "environment" },
-            config,
-            onScanSuccess,
-            onScanFailure
-        );
-    }
+    // async function enableCamera() {
+    //     setTimeout(() => {
+    //         html5Qrcode?.start(
+    //             {facingMode: "environment"},
+    //             { fps: 10 },
+    //             onScanSuccess,
+    //             onScanFailure
+    //         );
+    //     }, 400);
+    // }
+
+    // async function disableCamera() {
+    //     setTimeout(async() => {
+    //         await html5Qrcode?.stop();
+    //     }, 400);
+    // }
 </script>
 
 
-<div>
+<div class="container">
+    <div>
+    </div>
     <div class="reader-container">
-        <reader id="reader" />
-        <Button pill={true} class="!p-2"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path></svg></Button>
+        <video id="reader"></video>
     </div>
     <div class="test3">
+        <h1>{debug}</h1>
         <p class="text">Impossible to login with the scanner?</p>
         <Button on:click={() => formModal = true}>ID Login</Button>
     </div>
 </div>
 
-<Modal bind:open={formModal} size="xs" on:show={async() => await html5Qrcode?.stop()} on:hide={() => enableCamera()}>
+<Modal bind:open={formModal} size="xs">
     <form on:submit|preventDefault={handleLogin} class="flex flex-col space-y-6" action="/">
         <h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Sign in to our platform</h3>
         <Label class="space-y-2">
@@ -109,53 +114,37 @@
 
 
 <style>
+    .container {
+        width: 100vw;
+        height: 100vh;
+
+        display: grid;
+        grid-template-rows: 50px 1fr 20vh;
+    }
+
     .reader-container {
-        box-sizing: border-box;
-
-        /* Auto layout */
-
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
+        justify-content: center;
         align-items: center;
-        padding: 0px 0px 20px;
 
         width: 100vw;
-        height: 90vh;
-
-        border: 1px solid #000000;
-
-        /* Inside auto layout */
-
-        flex: none;
-        order: 0;
-        align-self: stretch;
-        flex-grow: 1;
     }
 
     #reader {
         width: 100%;
         height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
+        background-color: black;
     }
 
     .test3 {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+        gap: 10px;
 
         width: 100vw;
-        height: 10vh;
-
-        /* Inside auto layout */
-
-        flex: none;
-        order: 1;
-        align-self: stretch;
-        flex-grow: 0;
     }
+
 </style>
