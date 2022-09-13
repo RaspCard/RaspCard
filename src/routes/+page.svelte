@@ -1,8 +1,8 @@
 <script lang="ts">
     import { Button, Modal, Label, Input } from 'flowbite-svelte';
-    import Head from '$lib/components/Head.svelte';
     import QrScanner from 'qr-scanner';
     import { onMount } from 'svelte';
+    import Logo from '$lib/components/Logo.svelte';
 
     let formModal = false;
     let qrScanner: QrScanner;
@@ -82,7 +82,8 @@
 
 
 <div class="container">
-    <div>
+    <div class="logo">
+        <Logo/>
     </div>
     <div class="reader-container">
         <video id="reader"></video>
@@ -147,4 +148,9 @@
         width: 100vw;
     }
 
+    .logo {
+        height: 50px;
+        width: 134px;
+        flex: none;
+    }
 </style>
