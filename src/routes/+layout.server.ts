@@ -8,5 +8,5 @@ export const load: LayoutServerLoad = async({ request }) => {
 
     const user = session ? await db.user.findUnique({ where: { id: session } }) : null;
 
-    return { user };
+    return { currentUser: user };
 }
