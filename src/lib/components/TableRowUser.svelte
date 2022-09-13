@@ -20,8 +20,3 @@
         </a>
     </TableBodyCell>
 </TableBodyRow>
-
-
-<style>
-
-</style>

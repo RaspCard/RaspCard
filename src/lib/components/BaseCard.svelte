@@ -13,8 +13,3 @@
     </div>
     <slot/>
 </Card>
-
-
-<style>
-
-</style>
