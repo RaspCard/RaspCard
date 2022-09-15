@@ -21,8 +21,25 @@
 
     let deleteModal: boolean = false;
     let transactionModal: boolean = false;
+    let rollbackModal: boolean = false;
 
     let choice: string = "normal";
+
+    async function handleDelete() {
+        deleteModal = false;
+        // Query
+        goto('/users');
+    }
+
+    async function handleRollback() {
+        rollbackModal = false;
+        // Query
+    }
+
+    async function handleTransaction() {
+        transactionModal = false;
+        // Query
+    }
 </script>
 
 
@@ -85,7 +102,7 @@
     <div class="m-4 mb-10 bottom-buttons-container">
         <Button on:click={() => deleteModal = true} gradient color="red" class="w-56"><Icon.Trash/> Delete User</Button>
         <div class="container-buttons">
-            <Button gradient color="blue" class="w-56"><Icon.Backward/>Rollback</Button>
+            <Button on:click={() => rollbackModal = null ? true : false} gradient color="blue" class="w-56"><Icon.Backward/>Rollback</Button>
             <Button on:click={() => transactionModal = true} gradient color="blue" class="w-56"><Icon.CurrencyEuro/>New Transaction</Button>    
         </div>
     </div>
@@ -96,8 +113,19 @@
 <Modal bind:open={deleteModal} size="sm">
     <div class="text-center">
         <Icon.ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"/>
-        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this user?</h3>
-        <Button color="red" class="mr-2">Yes, I'm sure</Button>
+        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Sei sicuro di voler eliminare quest'utente? Quest'operazione è irreversibile</h3>
+        <Button on:click={handleDelete} color="red" class="mr-2">Yes, I'm sure</Button>
+        <Button color='alternative'>No, cancel</Button>
+    </div>
+</Modal>
+
+
+<!-- Rollback modal -->
+<Modal bind:open={rollbackModal} size="sm">
+    <div class="text-center">
+        <Icon.ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"/>
+        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Sei sicuro di voler effettuare un rollback su quest'utente? Quest'operazione è irreversibile</h3>
+        <Button on:click={handleRollback} color="blue" class="mr-2">Yes, I'm sure</Button>
         <Button color='alternative'>No, cancel</Button>
     </div>
 </Modal>
@@ -117,7 +145,7 @@
                 <Radio bind:group={choice} value="normal">Normal</Radio>
             </div>
         </div>
-		<Button type="submit" class="w-full">Confirm</Button>
+		<Button on:click={handleTransaction} type="submit" class="w-full">Confirm</Button>
 	</form>
 </Modal>
 
