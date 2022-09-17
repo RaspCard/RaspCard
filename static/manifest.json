@@ -1,0 +1,10 @@
+{
+    "name": "RaspCard",
+    "short_name": "RaspCard",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#fff",
+    "description": "A hackable fidelty card system.",
+    "icons": [],
+    "shortcuts": []
+}
