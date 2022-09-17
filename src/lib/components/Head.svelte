@@ -12,8 +12,8 @@
         <Logo/>
     </div>
     <div>
-        <h1>{establishment}</h1>
-        <p>{seller}</p>
+        <h1 class="text-base font-bold tracking-tight leading-none text-gray-900">{establishment}</h1>
+        <p class="text-base font-normal text-gray-500">{seller}</p>
     </div>
 </div>
 
