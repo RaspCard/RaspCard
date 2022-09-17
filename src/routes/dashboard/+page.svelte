@@ -7,11 +7,25 @@
     let establishment: string = "STREGATTO";
     let seller: string = "SELLER #1";
 
+    async function handleLogout() {
+        const res = await fetch('/api/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            goto('/login');
+        }
+    }
 </script>
 
 
 <div class="container-raspcard b-d">
-    <div class="container-data"> <!-- column 1 -->
+    <div class="m-4 container-data"> <!-- column 1 -->
         <Head establishment={establishment} seller={seller}/>
         <div class="text"> <!-- row 2 -->
             <h1>WELCOME</h1>
@@ -20,15 +34,14 @@
             </p>
         </div>
     </div>
-    <div class="button-group"> <!-- column 2 -->
+    <div class="m-4 button-group"> <!-- column 2 -->
         <div class="button-list">
             <Button on:click={() => goto("/scanner")} gradient color="blue" class="h-20 w-full"><Icon.CreditCard class="mr-2 -ml-1 w-7 h-7"/> Scan</Button>
             <Button on:click={() => goto("/users")} gradient color="blue" class="h-20 w-full"><Icon.Users class="mr-2 -ml-1 w-7 h-7"/> All Users</Button>
             <Button on:click={() => goto("/create")} gradient color="blue" class="h-20 w-full"><Icon.Plus class="mr-2 -ml-1 w-7 h-7"/> Create Card</Button>
-            <Button on:click={() => goto("/migrate")} gradient color="blue" class="h-20 w-full"><Icon.CloudArrowUp class="mr-2 -ml-1 w-7 h-7"/> Migrate?</Button>
         </div>
         <div class="button-list">
-            <Button on:click={() => goto("/logout")} gradient color="blue" class="h-15 w-full"><Icon.ArrowLeftOnRectangle class="mr-2 -ml-1 w-7 h-7"/> Logout</Button>
+            <Button on:click={handleLogout} gradient color="blue" class="h-15 w-full"><Icon.ArrowLeftOnRectangle class="mr-2 -ml-1 w-7 h-7"/> Logout</Button>
         </div>
     </div>
 </div>
@@ -45,7 +58,6 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        padding: 15px 25px;
         gap: 20px;
     }
 
@@ -62,7 +74,6 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        padding: 30px 0px;
     }
 
     .button-list {
@@ -71,12 +82,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 0px 16px;
         gap: 25px;
     }
-/* 
-    .button-list > * {
-        width: 100%;
-        height: 50px;
-    } */
 </style>
