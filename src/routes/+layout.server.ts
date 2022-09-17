@@ -1,12 +1,18 @@
 import { db } from "$lib/database";
+import * as cookie from "cookie";
 import type { LayoutServerLoad } from './$types';
 
 
 export const load: LayoutServerLoad = async({ request }) => {
-    const cookies = request.headers.get('cookie');
-    const session = cookies?.split('; ').find(row => row.startsWith('session='))?.split('=')[1];
+    const cookies = cookie.parse(request.headers.get('cookie') || '');
 
-    const user = session ? await db.user.findUnique({ where: { id: session } }) : null;
+    if(!cookies.session) {
+        return {
+            currentUser: null
+        };
+    }
+
+    const user = cookies.session ? await db.user.findUnique({ where: { id: cookies.session } }) : null;
 
     return { currentUser: user };
 }

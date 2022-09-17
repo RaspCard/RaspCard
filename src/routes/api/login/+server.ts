@@ -1,14 +1,13 @@
-// import type { RequestHandler } from "@sveltejs/kit";
 import type { RequestHandler } from './$types';
+import * as cookie from 'cookie';
 import { db } from '$lib/database';
 
 
 export const POST: RequestHandler = async({ request }) => {
-    console.log("post");
-    const { uuid } = await request.json();
+    const { uuid, pin } = await request.json();
 
     if(typeof uuid !== 'string' || !uuid) {
-        return new Response(JSON.stringify({success: false,  error: 'UUID invalido' }));
+        return new Response(JSON.stringify({success: false,  message: 'UUID invalido' }));
     }
 
     const user = await db.user.findUnique({
@@ -18,12 +17,16 @@ export const POST: RequestHandler = async({ request }) => {
     });
 
     if(!user) {
-        return new Response(JSON.stringify({success: false, error: 'Utente non trovato' }));
+        return new Response(JSON.stringify({success: false, message: 'Utente non trovato' }));
     }
 
-    console.log("here");
-
-    const headers = new Headers();
-    headers.append('set-cookie', `session=${uuid}; HttpOnly; SameSite=Strict; Path=/; Secure; Max-Age=21600`);
-    return new Response(JSON.stringify({success: true, message: "Utente creato con successo"}), { headers });
+    return new Response(JSON.stringify({success: true, message: "Utente loggato con successo"}), { headers: {
+        'set-cookie': cookie.serialize('session', uuid, {
+            path: '/',
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
+            maxAge: 21600
+        })
+    } });
 }
