@@ -1,6 +1,6 @@
 import type { RequestHandler } from './$types';
 import * as cookie from 'cookie';
-import { db } from '$lib/database';
+import { db } from '$lib/server/database';
 
 
 export const POST: RequestHandler = async({ request }) => {
