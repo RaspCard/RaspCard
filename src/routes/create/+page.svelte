@@ -15,7 +15,31 @@
     let deposit: string = "";
 
     async function handleCreation() {
+        const res = await fetch('/api/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name,
+                surname,
+                phoneNumber,
+                migrationID,
+                deposit
+            })
+        });
 
+        const data = await res.json();
+
+        if (data.success) {
+            console.log(data.message);
+            return;
+        }
+
+        if (!data.success) {
+            console.log(data.message);
+            return;
+        }
     }
 </script>
 
