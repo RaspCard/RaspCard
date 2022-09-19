@@ -25,7 +25,7 @@
                 surname,
                 phoneNumber,
                 migrationID,
-                deposit
+                deposit // TODO add cashback to deposit after more istructions from client
             })
         });
 
