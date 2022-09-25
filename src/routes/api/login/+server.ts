@@ -10,13 +10,13 @@ export const POST: RequestHandler = async({ request }) => {
         return new Response(JSON.stringify({success: false,  message: 'UUID invalido' }));
     }
 
-    const user = await db.user.findUnique({
+    const admin = await db.admin.findUnique({
         where: {
             id: uuid
         }
     });
 
-    if(!user) {
+    if(!admin) {
         return new Response(JSON.stringify({success: false, message: 'Utente non trovato' }));
     }
 

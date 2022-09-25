@@ -8,11 +8,11 @@ export const load: LayoutServerLoad = async({ request }) => {
 
     if(!cookies.session) {
         return {
-            currentUser: null
+            currentAdmin: null
         };
     }
 
-    const user = await db.user.findUnique({ where: { id: cookies.session } });
+    const user = await db.admin.findUnique({ where: { id: cookies.session } });
 
-    return { currentUser: user };
+    return { currentAdmin: user };
 }
