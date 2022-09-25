@@ -3,6 +3,11 @@
     import HeadWithButtons from '$lib/components/HeadWithButtons.svelte';
     import TableRowUser from '$lib/components/TableRowUser.svelte';
     import TableHeadUsers from '$lib/components/TableHeadUsers.svelte';
+    import type { PageData } from '.svelte-kit/types/src/routes/users/$types';
+    import BaseCard from '$lib/components/BaseCard.svelte';
+
+    export let data: PageData;
+    const { users } = data;
 
     let establishment: string = "STREGATTO";
     let seller: string = "SELLER #1";
@@ -14,8 +19,8 @@
     <div class="m-4 overflow-y-scroll">
         <Table shadow>
             <TableHeadUsers>
-                {#each {length:160} as _, i}
-                    <TableRowUser id={i.toString()} name={null} surname={null} phoneNumber={null}/>
+                {#each users as user}
+                    <TableRowUser  {...user}/>
                 {/each}
             </TableHeadUsers>
         </Table>
