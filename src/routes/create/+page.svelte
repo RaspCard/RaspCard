@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Button, Label, Input, Checkbox, Helper } from 'flowbite-svelte';
+    import { Button, Label, Input, Checkbox, Helper, Alert } from 'flowbite-svelte';
     import * as Icon from 'svelte-heros-v2';
     import HeadWithButtons from '$lib/components/HeadWithButtons.svelte';
 
@@ -15,17 +15,21 @@
     let deposit: string = "";
 
     async function handleCreation() {
+        const parsedPhoneNumber = parseInt(phoneNumber);
+        const parsedMigrationID = parseInt(migrationID);
+        const parsedDeposit = parseInt(deposit);
+
         const res = await fetch('/api/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name,
-                surname,
-                phoneNumber,
-                migrationID,
-                deposit // TODO add cashback to deposit after more istructions from client
+                name: name || null,
+                surname: surname || null,
+                phoneNumber: (parsedPhoneNumber !== NaN) ? parsedPhoneNumber : null,
+                migrationID: (parsedMigrationID !== NaN) ? parsedMigrationID : null,
+                deposit: (parsedDeposit !== NaN) ? parsedDeposit : 0 // TODO add cashback to deposit after more istructions from client
             })
         });
 
@@ -36,13 +40,20 @@
             return;
         }
 
-        if (!data.success) {
-            console.log(data.message);
-            return;
-        }
+        console.log(data.message);
     }
 </script>
 
+<!-- <Alert dismissable transition color="red">
+    <Icon.ExclamationCircle class="w-5 h-5"/>
+    <div class="ml-3">
+        <span class="sr-only">Error</span>
+        <span class="font-medium">Impossibile creare la tessera:</span>        
+    </div>
+    <ul slot="extra" class="mt-0 ml-8 list-disc list-inside">
+        <li>{message}</li>
+    </ul>
+</Alert> -->
 
 <div class="container-raspcard b-d">
     <HeadWithButtons establishment={establishment} seller={seller}/>
