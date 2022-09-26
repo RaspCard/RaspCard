@@ -5,11 +5,15 @@
     import HeadWithButtons from '$lib/components/HeadWithButtons.svelte';
     import BaseCard from '$lib/components/BaseCard.svelte';
     import ListItem from '$lib/components/ListItem.svelte';
+    import type { PageData } from './$types';
+
+    export let data: PageData;
+    const { currentAdmin, user } = data;
 
     let establishment: string = "STREGATTO";
     let seller: string = "SELLER #1";
 
-    let user;
+
     let list = [
         { name: "Made in Abyss 11", status: "to be shipped soon" },
         { name: "Berserk 33", status: "shipped" },
@@ -44,22 +48,22 @@
 
 
 <div class="container-raspcard b-d">
-    <HeadWithButtons establishment={establishment} seller={seller}/>
+    <HeadWithButtons establishment={currentAdmin?.establishment.name} seller={currentAdmin?.name}/>
     <div class="container-content mt-6">
         <div>
             <div> <!-- Top card -->
                 <BaseCard title="Profile Data">
                     <ul>
-                        <ListItem fieldName={"Name"} fieldValue={null}/>
-                        <ListItem fieldName={"Surname"} fieldValue={null} border={true}/>
-                        <ListItem fieldName={"PhoneNumber"} fieldValue={null} border={true}/>
+                        <ListItem fieldName={"Name"} fieldValue={user.name}/>
+                        <ListItem fieldName={"Surname"} fieldValue={user.surname} border={true}/>
+                        <ListItem fieldName={"PhoneNumber"} fieldValue={user.phoneNumber} border={true}/>
                     </ul>
                 </BaseCard>
             </div>
             <div> <!-- Bottom card -->
                 <BaseCard title="Balance">
                     <div class="w-full flex items-center text-lg">
-                        <p>{123}€</p>
+                        <p>{user.balance}€</p>
                     </div>
                 </BaseCard>
             </div>
