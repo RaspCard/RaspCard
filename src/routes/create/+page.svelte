@@ -27,9 +27,9 @@
             body: JSON.stringify({
                 name: name || null,
                 surname: surname || null,
-                phoneNumber: (parsedPhoneNumber !== NaN) ? parsedPhoneNumber : null,
-                migrationID: (parsedMigrationID !== NaN) ? parsedMigrationID : null,
-                deposit: (parsedDeposit !== NaN) ? parsedDeposit : 0 // TODO add cashback to deposit after more istructions from client
+                phoneNumber: (!isNaN(parsedPhoneNumber)) ? parsedPhoneNumber : null,
+                migrationID: (!isNaN(parsedMigrationID)) ? parsedMigrationID : null,
+                deposit: (!isNaN(parsedDeposit)) ? parsedDeposit : 0 // TODO add cashback to deposit after more istructions from client
             })
         });
 
