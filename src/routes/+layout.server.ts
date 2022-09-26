@@ -12,7 +12,7 @@ export const load: LayoutServerLoad = async({ request }) => {
         };
     }
 
-    const user = await db.admin.findUnique({ where: { id: cookies.session } });
+    const user = await db.admin.findUnique({ where: { id: cookies.session }, include: { establishment: true } });
 
     return { currentAdmin: user };
 }
