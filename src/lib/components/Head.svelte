@@ -2,8 +2,8 @@
     import Logo from './Logo.svelte';
     import { goto } from '$app/navigation';
 
-    export let establishment: string;
-    export let seller: string;
+    export let establishment: string | undefined;
+    export let seller: string | undefined;
 </script>
 
 

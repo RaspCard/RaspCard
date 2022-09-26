@@ -4,8 +4,8 @@
     import * as Icon from 'svelte-heros-v2';
     import Head from '$lib/components/Head.svelte';
     
-    export let establishment: string;
-    export let seller: string;
+    export let establishment: string | undefined;
+    export let seller: string | undefined;
 </script>
 
 
