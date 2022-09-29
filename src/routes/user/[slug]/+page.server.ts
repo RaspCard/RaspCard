@@ -6,7 +6,7 @@ export const load: PageServerLoad = async ({parent, params}) => {
     const { currentAdmin } = await parent();
 
     if (!currentAdmin) {
-        throw redirect(301, '/login');
+        throw redirect(307, '/login');
     }
 
     const user = await db.user.findFirst({

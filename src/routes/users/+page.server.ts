@@ -6,7 +6,7 @@ export const load: PageServerLoad = async ({parent}) => {
     const { currentAdmin } = await parent();
 
     if (!currentAdmin) {
-        throw redirect(301, '/login');
+        throw redirect(307, '/login');
     }
 
     const users = await db.user.findMany({
