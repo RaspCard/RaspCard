@@ -2,9 +2,10 @@
     import { Button, Label, Input, Checkbox, Helper, Alert } from 'flowbite-svelte';
     import * as Icon from 'svelte-heros-v2';
     import HeadWithButtons from '$lib/components/HeadWithButtons.svelte';
+    import type { PageData } from './$types';
 
-    let establishment: string = "STREGATTO";
-    let seller: string = "SELLER #1";
+    export let data: PageData;
+    const { currentAdmin } = data;
 
     let tos: boolean = true;
     
@@ -13,6 +14,8 @@
     let phoneNumber: string = "";
     let migrationID: string = "";
     let deposit: string = "";
+
+    let dataJson = {success: undefined, message: ""};
 
     async function handleCreation() {
         const parsedPhoneNumber = parseInt(phoneNumber);
@@ -33,31 +36,35 @@
             })
         });
 
-        const data = await res.json();
-
-        if (data.success) {
-            console.log(data.message);
-            return;
-        }
-
-        console.log(data.message);
+        dataJson = await res.json();
     }
 </script>
 
-<!-- <Alert dismissable transition color="red">
-    <Icon.ExclamationCircle class="w-5 h-5"/>
-    <div class="ml-3">
-        <span class="sr-only">Error</span>
-        <span class="font-medium">Impossibile creare la tessera:</span>        
-    </div>
-    <ul slot="extra" class="mt-0 ml-8 list-disc list-inside">
-        <li>{message}</li>
-    </ul>
-</Alert> -->
+<div class="flex justify-center w-screen">
+    {#if dataJson.success === false}
+        <Alert dismissable class="absolute w-96 top-20 shadow" style="max-width: 40vw" color="red">
+            <Icon.ExclamationCircle class="w-5 h-5"/>
+            <div class="ml-3">
+                <span class="sr-only">Error</span>
+                <span class="font-medium">Impossibile creare la tessera:</span>        
+            </div>
+            <ul slot="extra" class="mt-0 ml-8 list-disc list-inside">
+                <li>{dataJson.message}</li>
+            </ul>
+        </Alert>
+    {/if}
+
+    {#if dataJson.success === true}
+        <Alert dismissable class="absolute w-96 top-20 shadow" style="max-width: 40vw" color="green">
+            <Icon.InformationCircle class="w-5 h-5"/>
+            <span class="font-medium">Success!</span>{dataJson.message}.
+        </Alert>
+    {/if}
+</div>
 
 <div class="container-raspcard b-d">
-    <HeadWithButtons establishment={establishment} seller={seller}/>
-    <div class="m-4">
+    <HeadWithButtons establishment={currentAdmin?.establishment.name} seller={currentAdmin?.name}/>
+    <div class="m-4 mt-6">
         <div>
             <h1 class="mb-4 text-4xl font-bold tracking-tight leading-none text-gray-900">Create a new card</h1>
             <p class="mb-6 text-lg font-normal text-gray-500">
@@ -68,26 +75,26 @@
             <div class="w-full flex flex-col gap-4">
                 <Label class="space-y-2">
                     <span>Name</span>
-                    <Input disabled={tos} bind:value={name} type="text" name="name" />
+                    <Input autocomplete="off" disabled={tos} bind:value={name} type="text" name="name" />
                 </Label>
                 <Label class="space-y-2">
                     <span>Surname</span>
-                    <Input disabled={tos} bind:value={surname} type="text" name="surname" />
+                    <Input autocomplete="off" disabled={tos} bind:value={surname} type="text" name="surname" />
                 </Label>
                 <Label class="space-y-2">
                     <span>Phone number</span>
-                    <Input disabled={tos} bind:value={phoneNumber} type="number" name="phoneNumber" />
+                    <Input autocomplete="off" disabled={tos} bind:value={phoneNumber} type="number" name="phoneNumber" />
                 </Label>
                 <Checkbox on:click={() => tos = !tos}>Agree TOS</Checkbox>
             </div>
             <div class="flex flex-col gap-4">
                 <Label class="space-y-2">
                     <span>Migration ID</span>
-                    <Input bind:value={migrationID} type="number" name="migrationID" />
+                    <Input autocomplete="off"  bind:value={migrationID} type="number" name="migrationID" />
                 </Label>
                 <Label class="space-y-2">
                     <span>Initial Deposit</span>
-                    <Input bind:value={deposit} type="number" name="deposit" />
+                    <Input autocomplete="off" bind:value={deposit} type="number" name="deposit" />
                     <Helper class='text-sm'>CashBack applied of 20%</Helper>
                 </Label>
             </div>
