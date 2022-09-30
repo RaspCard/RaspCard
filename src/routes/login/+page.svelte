@@ -1,10 +1,9 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import type { JsonResponse } from '$lib/types';
     let userUUID: string = '';
 
     async function handleLogin() {
-        console.log("ok");
-
         const response = await fetch('/api/login', {
             method: 'POST',
             headers: {
@@ -18,7 +17,8 @@
         const data: JsonResponse  = await response.json();
 
         if(data.success) {
-            window.location.href = '/';
+            console.log("ok");
+            goto("/dashboard");
         }
     }
 </script>
