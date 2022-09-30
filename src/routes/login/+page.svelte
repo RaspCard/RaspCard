@@ -18,7 +18,8 @@
 
         if(data.success) {
             console.log("ok");
-            goto("/dashboard");
+            window.location.href = "/dashboard";
+            // await goto("/dashboard"); // TODO not working
         }
     }
 </script>

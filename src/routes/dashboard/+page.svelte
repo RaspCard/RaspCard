@@ -17,7 +17,8 @@
         });
 
         if (res.ok) {
-            goto('/login');
+            // goto('/login'); // TODO not working
+            window.location.href = '/login';
         }
     }
 </script>
