@@ -8,6 +8,6 @@ export const load: PageLoad = async ({parent}) => {
     if (!currentAdmin) {
         throw redirect(307, '/login');
     }
-
+    
     return { };
 }
