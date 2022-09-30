@@ -22,6 +22,7 @@
     .head {
         height: 3rem; /* temp 48px then fit-content */
         width: 25vw;
+        max-width: 15rem;
 
         display: flex;
         flex-direction: row;
