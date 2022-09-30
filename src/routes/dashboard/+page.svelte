@@ -3,9 +3,10 @@
     import { goto } from '$app/navigation';
     import * as Icon from 'svelte-heros-v2';
     import Head from '$lib/components/Head.svelte';
+    import type { PageData } from './$types';
 
-    let establishment: string = "STREGATTO";
-    let seller: string = "SELLER #1";
+    export let data: PageData;
+    const { currentAdmin } = data;
 
     async function handleLogout() {
         const res = await fetch('/api/logout', {
@@ -15,7 +16,6 @@
             }
         });
 
-       
         if (res.ok) {
             goto('/login');
         }
@@ -25,7 +25,7 @@
 
 <div class="container-raspcard b-d">
     <div class="m-4 container-data"> <!-- column 1 -->
-        <Head establishment={establishment} seller={seller}/>
+        <Head establishment={currentAdmin?.establishment.name} seller={currentAdmin?.name}/>
         <div class="text"> <!-- row 2 -->
             <h1>WELCOME</h1>
             <p>
