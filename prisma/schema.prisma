@@ -44,7 +44,6 @@ model User {
 model Establishment {
   id      Int @id @default(autoincrement())
   name    String
-  logoSvg String
 
   // Relation between User and Establishment many-to-1
   users User[]
