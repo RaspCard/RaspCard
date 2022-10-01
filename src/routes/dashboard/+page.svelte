@@ -4,29 +4,17 @@
     import * as Icon from 'svelte-heros-v2';
     import Head from '$lib/components/Head.svelte';
     import type { PageData } from './$types';
+    import { applyAction, enhance } from '$app/forms';
+    import { invalidateAll } from '$app/navigation';
 
     export let data: PageData;
     const { currentAdmin } = data;
-
-    async function handleLogout() {
-        const res = await fetch('/api/logout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (res.ok) {
-            // goto('/login'); // TODO not working
-            window.location.href = '/login';
-        }
-    }
 </script>
 
 
 <div class="container-raspcard b-d">
     <div class="m-4 container-data"> <!-- column 1 -->
-        <Head establishment={currentAdmin?.establishment.name} seller={currentAdmin?.name}/>
+        <Head establishment={currentAdmin?.establishmentName} seller={currentAdmin?.name}/>
         <div class="text"> <!-- row 2 -->
             <h1>WELCOME</h1>
             <p>
@@ -41,7 +29,18 @@
             <Button on:click={() => goto("/create")} gradient color="blue" class="h-20 w-full"><Icon.Plus class="mr-2 -ml-1 w-7 h-7"/> Create Card</Button>
         </div>
         <div class="button-list">
-            <Button on:click={handleLogout} gradient color="blue" class="h-15 w-full"><Icon.ArrowLeftOnRectangle class="mr-2 -ml-1 w-7 h-7"/> Logout</Button>
+            <form
+                method="POST"
+                action="/logout"
+                use:enhance={() => {
+                    return async ({ result }) => {
+                        invalidateAll();
+                        await applyAction(result);
+                    }
+                }}
+            >
+                <Button type="submit" gradient color="blue" class="h-15 w-full"><Icon.ArrowLeftOnRectangle class="mr-2 -ml-1 w-7 h-7"/> Logout</Button>
+            </form>
         </div>
     </div>
 </div>
