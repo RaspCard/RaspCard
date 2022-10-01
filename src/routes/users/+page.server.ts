@@ -2,20 +2,14 @@ import { db } from '$lib/server/database';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({parent}) => {
-    const { currentAdmin } = await parent();
-
-    if (!currentAdmin) {
-        throw redirect(307, '/login');
+export const load: PageServerLoad = async({ locals }) => {
+    if(!locals.currentAdmin) {
+        throw redirect(302, '/login');
     }
 
     const users = await db.user.findMany({
-        where: {
-            establishmentId: currentAdmin.establishmentId
-        }
+        where: { establishmentId: locals.currentAdmin.establishmentId },
     });
 
-    return {
-        users
-    };
+    return { users };
 }
