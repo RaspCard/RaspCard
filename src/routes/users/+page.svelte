@@ -3,8 +3,7 @@
     import HeadWithButtons from '$lib/components/HeadWithButtons.svelte';
     import TableRowUser from '$lib/components/TableRowUser.svelte';
     import TableHeadUsers from '$lib/components/TableHeadUsers.svelte';
-    import type { PageData } from '.svelte-kit/types/src/routes/users/$types';
-    import BaseCard from '$lib/components/BaseCard.svelte';
+    import type { PageData } from './$types';
 
     export let data: PageData;
     const { users } = data;
