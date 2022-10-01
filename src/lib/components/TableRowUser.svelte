@@ -15,7 +15,7 @@
     <TableBodyCell>{surname}</TableBodyCell>
     <TableBodyCell>{phoneNumber}</TableBodyCell>
     <TableBodyCell>
-        <a data-sveltekit-prefetch href={`/user/${id}`} class="font-medium text-blue-600 hover:underline dark:text-blue-500">
+        <a data-sveltekit-prefetch href={`/users/${id}`} class="font-medium text-blue-600 hover:underline dark:text-blue-500">
             Edit
         </a>
     </TableBodyCell>

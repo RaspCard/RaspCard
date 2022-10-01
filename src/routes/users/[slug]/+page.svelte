@@ -10,9 +10,6 @@
     export let data: PageData;
     const { currentAdmin, user } = data;
 
-    let establishment: string = "STREGATTO";
-    let seller: string = "SELLER #1";
-
 
     let list = [
         { name: "Made in Abyss 11", status: "to be shipped soon" },
@@ -48,7 +45,7 @@
 
 
 <div class="container-raspcard b-d">
-    <HeadWithButtons establishment={currentAdmin?.establishment.name} seller={currentAdmin?.name}/>
+    <HeadWithButtons establishment={currentAdmin?.establishmentName} seller={currentAdmin?.name}/>
     <div class="container-content mt-6">
         <div>
             <div> <!-- Top card -->
