@@ -3,8 +3,8 @@
     import * as Icon from 'svelte-heros-v2';
     import HeadWithButtons from '$lib/components/HeadWithButtons.svelte';
     import type { PageData, ActionData } from './$types';
-    import { applyAction, enhance } from '$app/forms'
-    import { invalidateAll } from '$app/navigation'
+    import { applyAction, enhance } from '$app/forms';
+    import { invalidateAll } from '$app/navigation';
 
 
     export let form: ActionData;
@@ -37,16 +37,15 @@
 </div>
 
 <div class="container-raspcard b-d">
-    <HeadWithButtons establishment={currentAdmin?.establishment.name} seller={currentAdmin?.name}/>
+    <HeadWithButtons establishment={currentAdmin?.establishmentName} seller={currentAdmin?.name}/>
     <form
         method="POST"
         use:enhance={() => {
-                return async ({ result }) => {
-                    invalidateAll()
-                    await applyAction(result)
-                }
+            return async ({ result }) => {
+                invalidateAll();
+                await applyAction(result);
             }
-        }
+        }}
     >
         <div class="m-4 mt-6">
             <div>
