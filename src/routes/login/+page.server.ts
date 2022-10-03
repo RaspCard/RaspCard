@@ -3,6 +3,13 @@ import { invalid, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
 
+export const load: PageServerLoad = async({ locals }) => {
+    if(locals.currentAdmin) {
+        throw redirect(302, '/dashboard');
+    }
+}
+
+
 export const actions: Actions = {
 	async default({ request, cookies }) {
         const data = await request.formData();
