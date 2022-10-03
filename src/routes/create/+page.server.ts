@@ -4,7 +4,11 @@ import type { Actions } from './$types';
 
 
 export const actions: Actions = {
-    async default({request}) {
+    async default({request, locals}) {
+        if(!locals.currentAdmin) {
+            return invalid(401);
+        }
+
         const data = await request.formData();
 
         const parsedPhoneNumber = parseInt(data.get('phoneNumber')?.toString() || '');
