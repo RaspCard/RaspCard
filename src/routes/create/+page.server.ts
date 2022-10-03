@@ -1,6 +1,13 @@
 import { db } from '$lib/server/database';
-import { invalid } from '@sveltejs/kit';
-import type { Actions } from './$types';
+import { invalid, redirect } from '@sveltejs/kit';
+import type { Actions, PageServerLoad } from './$types';
+
+
+export const load: PageServerLoad = async({ locals }) => {
+    if(!locals.currentAdmin) {
+        throw redirect(302, '/login');
+    }
+}
 
 
 export const actions: Actions = {
