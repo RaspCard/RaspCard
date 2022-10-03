@@ -7,8 +7,11 @@ export const load: PageServerLoad = async({ locals, params }) => {
         throw redirect(302, '/login');
     }
 
-    const user = await db.user.findUnique({
-        where: { id: params.slug }
+    const user = await db.user.findFirst({
+        where: {
+            id: params.slug,
+            establishmentId: locals.currentAdmin.establishmentId
+        },
     });
 
     if(!user) {
