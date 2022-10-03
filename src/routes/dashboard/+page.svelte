@@ -30,6 +30,7 @@
         </div>
         <div class="button-list">
             <form
+                class="h-15 w-full"
                 method="POST"
                 action="/logout"
                 use:enhance={() => {
@@ -39,7 +40,7 @@
                     }
                 }}
             >
-                <Button type="submit" gradient color="blue" class="h-15 w-full"><Icon.ArrowLeftOnRectangle class="mr-2 -ml-1 w-7 h-7"/> Logout</Button>
+                <Button type="submit" gradient color="blue" class="h-full w-full"><Icon.ArrowLeftOnRectangle class="mr-2 -ml-1 w-7 h-7"/> Logout</Button>
             </form>
         </div>
     </div>
