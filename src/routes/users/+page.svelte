@@ -6,15 +6,12 @@
     import type { PageData } from './$types';
 
     export let data: PageData;
-    const { users } = data;
-
-    let establishment: string = "STREGATTO";
-    let seller: string = "SELLER #1";
+    const { currentAdmin, users } = data;
 </script>
 
 
 <div class="container-raspcard b-d">
-    <HeadWithButtons establishment={establishment} seller={seller}/>
+    <HeadWithButtons establishment={currentAdmin.establishmentName} seller={currentAdmin.name}/>
     <div class="m-4 overflow-y-scroll">
         <Table shadow>
             <TableHeadUsers>

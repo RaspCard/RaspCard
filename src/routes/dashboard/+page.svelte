@@ -14,7 +14,7 @@
 
 <div class="container-raspcard b-d">
     <div class="m-4 container-data"> <!-- column 1 -->
-        <Head establishment={currentAdmin?.establishmentName} seller={currentAdmin?.name}/>
+        <Head establishment={currentAdmin.establishmentName} seller={currentAdmin.name}/>
         <div class="text"> <!-- row 2 -->
             <h1>WELCOME</h1>
             <p>
