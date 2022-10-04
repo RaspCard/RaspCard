@@ -15,29 +15,32 @@
 </script>
 
 <div class="flex justify-center w-screen">
-    {#if form?.success === false}
-        <Alert dismissable class="absolute w-96 top-20 shadow" style="max-width: 40vw" color="red">
-            <Icon.ExclamationCircle class="w-5 h-5"/>
-            <div class="ml-3">
-                <span class="sr-only">Error</span>
-                <span class="font-medium">Impossibile creare la tessera:</span>        
-            </div>
-            <ul slot="extra" class="mt-0 ml-8 list-disc list-inside">
-                <li>{form?.message}</li>
-            </ul>
-        </Alert>
-    {/if}
 
-    {#if form?.success === true}
-        <Alert dismissable class="absolute w-96 top-20 shadow" style="max-width: 40vw" color="green">
-            <Icon.InformationCircle class="w-5 h-5"/>
-            <span class="font-medium">Success!</span>{form?.message}.
+    
+
+    {#if form?.message}
+        <Alert dismissable class="absolute w-96 top-20 shadow" style="max-width: 40vw" color={form?.success === true ? 'green': 'red'}>
+            {#if form?.success === true}
+                <Icon.InformationCircle class="w-5 h-5"/>
+                <span class="font-medium">Success!</span>{form?.message}.
+            {/if}
+
+            {#if form?.success === false}    
+                <Icon.ExclamationCircle class="w-5 h-5"/>
+                <div class="ml-3">
+                    <span class="sr-only">Error</span>
+                    <span class="font-medium">Impossibile creare la tessera:</span>        
+                </div>
+                <ul class="mt-0 ml-8 list-disc list-inside">
+                    <li>{form?.message}</li>
+                </ul>
+            {/if}
         </Alert>
     {/if}
 </div>
 
 <div class="container-raspcard b-d">
-    <HeadWithButtons establishment={currentAdmin?.establishmentName} seller={currentAdmin?.name}/>
+    <HeadWithButtons establishment={currentAdmin.establishmentName} seller={currentAdmin.name}/>
     <form
         method="POST"
         use:enhance={() => {
@@ -94,7 +97,7 @@
     .container-raspcard {
         display: grid;
         grid-template-columns: auto;
-        grid-template-rows: 10vh 75vh 15vh;
+        grid-template-rows: 10vh 75vh 15vh; /* fix the height of the container */
     }
 
     .container-content {
