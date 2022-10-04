@@ -1,6 +1,6 @@
 import { db } from '$lib/server/database';
-import { redirect, error } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import { redirect, error, invalid } from '@sveltejs/kit';
+import type { PageServerLoad, Actions } from './$types';
 
 export const load: PageServerLoad = async({ locals, params }) => {
     if(!locals.currentAdmin) {
@@ -19,4 +19,37 @@ export const load: PageServerLoad = async({ locals, params }) => {
     }
 
     return { user };
+}
+
+export const actions: Actions = {
+    async balance({locals, params}) {
+        if(!locals.currentAdmin) {
+            return invalid(401);
+        }
+    },
+
+    async rollback({locals, params}) {
+        if(!locals.currentAdmin) {
+            return invalid(401);
+        }
+    },
+
+    async delete({ locals, params }) {
+        if(!locals.currentAdmin) {
+            return invalid(401);
+        }
+
+        try {
+            await db.user.deleteMany({
+                where: {
+                    id: params.slug,
+                    establishmentId: locals.currentAdmin.establishmentId
+                }
+            });
+        } catch {
+            return invalid(400, {success: false, message: "Errore nella richiesta"});
+        }
+        
+        throw redirect(302, '/dashboard');
+    }
 }
