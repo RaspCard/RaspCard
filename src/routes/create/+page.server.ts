@@ -41,7 +41,7 @@ export const actions: Actions = {
                 surname: data.get('surname')?.toString() || null,
                 phoneNumber: isNaN(parsedPhoneNumber) ? null : parsedPhoneNumber,
                 balance: isNaN(parsedDeposit) ? 0 : parsedDeposit,
-                establishmentId: 1
+                establishmentId: locals.currentAdmin.establishmentId
             }
         });
     
