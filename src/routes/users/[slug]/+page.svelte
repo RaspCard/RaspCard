@@ -1,11 +1,12 @@
 <script lang="ts">
     import { Button, Modal, Listgroup, Input, Label, Radio } from 'flowbite-svelte';
-    import { goto } from '$app/navigation';
+    import { goto, invalidateAll } from '$app/navigation';
     import * as Icon from 'svelte-heros-v2'
     import HeadWithButtons from '$lib/components/HeadWithButtons.svelte';
     import BaseCard from '$lib/components/BaseCard.svelte';
     import ListItem from '$lib/components/ListItem.svelte';
     import type { PageData } from './$types';
+    import { applyAction, enhance } from '$app/forms';
 
     export let data: PageData;
     const { currentAdmin, user } = data;
@@ -25,27 +26,11 @@
     let rollbackModal: boolean = false;
 
     let choice: string = "normal";
-
-    async function handleDelete() {
-        deleteModal = false;
-        // Query
-        goto('/users');
-    }
-
-    async function handleRollback() {
-        rollbackModal = false;
-        // Query
-    }
-
-    async function handleTransaction() {
-        transactionModal = false;
-        // Query
-    }
 </script>
 
 
 <div class="container-raspcard b-d">
-    <HeadWithButtons establishment={currentAdmin?.establishmentName} seller={currentAdmin?.name}/>
+    <HeadWithButtons establishment={currentAdmin.establishmentName} seller={currentAdmin.name}/>
     <div class="container-content mt-6">
         <div>
             <div> <!-- Top card -->
@@ -106,29 +91,63 @@
 
 <!-- Delete modal -->
 <Modal bind:open={deleteModal} size="sm">
-    <div class="text-center">
-        <Icon.ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"/>
-        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Sei sicuro di voler eliminare quest'utente? Quest'operazione è irreversibile</h3>
-        <Button on:click={handleDelete} color="red" class="mr-2">Yes, I'm sure</Button>
-        <Button color='alternative'>No, cancel</Button>
-    </div>
+    <form
+        method="POST"
+        action="?/delete"
+        class="flex flex-col space-y-6"
+        use:enhance={() => {
+            return async ({ result }) => {
+                invalidateAll();
+                await applyAction(result);
+            }
+        }}
+    >
+        <div class="text-center">
+            <Icon.ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"/>
+            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Sei sicuro di voler eliminare quest'utente? Quest'operazione è irreversibile</h3>
+            <Button type="submit" color="red" class="mr-2">Yes, I'm sure</Button>
+            <Button color='alternative'>No, cancel</Button>
+        </div>
+    </form>
 </Modal>
 
 
 <!-- Rollback modal -->
 <Modal bind:open={rollbackModal} size="sm">
-    <div class="text-center">
-        <Icon.ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"/>
-        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Sei sicuro di voler effettuare un rollback su quest'utente? Quest'operazione è irreversibile</h3>
-        <Button on:click={handleRollback} color="blue" class="mr-2">Yes, I'm sure</Button>
-        <Button color='alternative'>No, cancel</Button>
-    </div>
+    <form
+        method="POST"
+        action="?/rollback"
+        class="flex flex-col space-y-6"
+        use:enhance={() => {
+            return async ({ result }) => {
+                invalidateAll();
+                await applyAction(result);
+            }
+        }}
+    >
+        <div class="text-center">
+            <Icon.ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"/>
+            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Sei sicuro di voler effettuare un rollback su quest'utente? Quest'operazione è irreversibile</h3>
+            <Button type="submit" color="blue" class="mr-2">Yes, I'm sure</Button>
+            <Button color='alternative'>No, cancel</Button>
+        </div>
+    </form>
 </Modal>
 
 
 <!-- Transaction modal -->
 <Modal bind:open={transactionModal} size="xs">
-    <form class="flex flex-col space-y-6">
+    <form
+        method="POST"
+        action="?/balance"
+        class="flex flex-col space-y-6"
+        use:enhance={() => {
+            return async ({ result }) => {
+                invalidateAll();
+                await applyAction(result);
+            }
+        }}
+    >
 		<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">New Transaction</h3>
 		<div class="container-transaction-conent">
             <Label class="space-y-2">
@@ -140,7 +159,7 @@
                 <Radio bind:group={choice} value="normal">Normal</Radio>
             </div>
         </div>
-		<Button on:click={handleTransaction} type="submit" class="w-full">Confirm</Button>
+		<Button type="submit" class="w-full">Confirm</Button>
 	</form>
 </Modal>
 
