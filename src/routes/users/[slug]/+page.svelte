@@ -32,7 +32,7 @@
 <div class="container-raspcard b-d">
     <HeadWithButtons establishment={currentAdmin.establishmentName} seller={currentAdmin.name}/>
     <div class="container-content mt-6">
-        <div>
+        <div style="width: 30vw">
             <div> <!-- Top card -->
                 <BaseCard title="Profile Data">
                     <ul>
@@ -50,7 +50,7 @@
                 </BaseCard>
             </div>
         </div>
-        <div> <!-- Last Transaction card -->
+        <div style="width: 30vw"> <!-- Last Transaction card -->
             <BaseCard title="Last Transaction">
                 <ul>
                     <ListItem fieldName={"Transaction"} fieldValue={null}/>
@@ -60,26 +60,28 @@
                 </ul>
             </BaseCard>
         </div>
-        <div> <!-- Func card -->
+        <div style="width: 40vw"> <!-- Func card -->
             <BaseCard title="Field">
-                <ul>
-                    <ListItem fieldName={"Field"} fieldValue={null}/>
-                    <ListItem fieldName={"Field"} fieldValue={null} border={true}/>
-                </ul>
-                <div class="text-lg text-gray-500 border-t-2 my-2">{"Field"}</div>
-                <Listgroup items={list} let:item class="border-0 h-52 overflow-scroll">
-                    <div class="flex items-center space-x-4">
-                        <div class="flex-1 space-y-1 font-medium">
-                          <div>{item.name}</div>
-                          <div class="text-sm text-gray-500">{item.status}</div>
+                <div class="overflow-scroll">
+                    <ul>
+                        <ListItem fieldName={"Field"} fieldValue={null}/>
+                        <ListItem fieldName={"Field"} fieldValue={null} border={true}/>
+                    </ul>
+                    <div class="text-lg text-gray-500 border-t-2 my-2">{"Field"}</div>
+                    <Listgroup items={list} let:item class="border-0 h-52">
+                        <div class="flex items-center space-x-4">
+                            <div class="flex-1 space-y-1 font-medium">
+                              <div>{item.name}</div>
+                              <div class="text-sm text-gray-500">{item.status}</div>
+                            </div>
+                            <Button gradient color="green" class="h-8">Details</Button>
                         </div>
-                        <Button gradient color="green" class="h-8">Details</Button>
-                    </div>
-                </Listgroup>
+                    </Listgroup>
+                </div>
             </BaseCard>
         </div>
     </div>
-    <div class="m-4 mb-10 bottom-buttons-container">
+    <div class="m-4 bottom-buttons-container">
         <Button on:click={() => deleteModal = true} gradient color="red" class="w-56"><Icon.Trash/> Delete User</Button>
         <div class="container-buttons">
             <Button on:click={() => rollbackModal = null ? true : false} gradient color="blue" class="w-56"><Icon.Backward/>Rollback</Button>
@@ -166,9 +168,8 @@
 
 <style>
     .container-raspcard {
-        display: grid;
-        grid-template-columns: auto;
-        grid-template-rows: 10vh 80vh 10vh;
+        display: flex;
+        flex-direction: column;
     }
 
     .container-buttons {
@@ -180,9 +181,12 @@
     }
 
     .container-content {
-        display: grid;
-        grid-template-columns: 30vw 30vw 40vw;
-        grid-template-rows: auto;
+        height: 80vh;
+        width: 100%;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
     }
 
     .bottom-buttons-container {
