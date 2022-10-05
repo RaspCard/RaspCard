@@ -42,6 +42,7 @@
 <div class="container-raspcard b-d">
     <HeadWithButtons establishment={currentAdmin.establishmentName} seller={currentAdmin.name}/>
     <form
+        class="form-container"
         method="POST"
         use:enhance={() => {
             return async ({ result }) => {
@@ -95,9 +96,16 @@
 
 <style>
     .container-raspcard {
-        display: grid;
-        grid-template-columns: auto;
-        grid-template-rows: 10vh 75vh 15vh; /* fix the height of the container */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-container {
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
     }
 
     .container-content {

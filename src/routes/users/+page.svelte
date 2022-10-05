@@ -26,8 +26,7 @@
 
 <style>
     .container-raspcard {
-        display: grid;
-        grid-template-columns: auto;
-        grid-template-rows: 10vh 90vh;
+        display: flex;
+        flex-direction: column;
     }
 </style>
