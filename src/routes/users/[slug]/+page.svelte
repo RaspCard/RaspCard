@@ -99,7 +99,6 @@
         class="flex flex-col space-y-6"
         use:enhance={() => {
             return async ({ result }) => {
-                invalidateAll();
                 await applyAction(result);
             }
         }}

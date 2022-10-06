@@ -26,6 +26,8 @@ export const actions: Actions = {
         if(!locals.currentAdmin) {
             return invalid(401);
         }
+
+        
     },
 
     async rollback({locals, params}) {
@@ -49,7 +51,7 @@ export const actions: Actions = {
         } catch {
             return invalid(400, {success: false, message: "Errore nella richiesta"});
         }
-        
-        throw redirect(302, '/dashboard');
+
+        throw redirect(302, '/users');
     }
 }
