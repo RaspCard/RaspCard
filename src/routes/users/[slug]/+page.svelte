@@ -84,7 +84,7 @@
     <div class="m-4 bottom-buttons-container">
         <Button on:click={() => deleteModal = true} gradient color="red" class="w-56"><Icon.Trash/> Delete User</Button>
         <div class="container-buttons">
-            <Button on:click={() => rollbackModal = null ? true : false} gradient color="blue" class="w-56"><Icon.Backward/>Rollback</Button>
+            <Button on:click={() => rollbackModal = null ? true : false} gradient color="blue" class="w-56"><Icon.ArrowPathRoundedSquare/>Rollback</Button>
             <Button on:click={() => transactionModal = true} gradient color="blue" class="w-56"><Icon.CurrencyEuro/>New Transaction</Button>    
         </div>
     </div>
@@ -143,7 +143,11 @@
         action="?/balance"
         class="flex flex-col space-y-6"
         use:enhance={() => {
-            return async ({ result }) => {
+            return async ({ result, form }) => {
+                if(result.type === "success") {
+                    user.balance += result.data?.balance;
+                }
+                form.reset();
                 invalidateAll();
                 await applyAction(result);
             }
