@@ -1,43 +1,43 @@
 <script lang="ts">
-    import { Button, Label, Input, Checkbox, Helper, Alert } from 'flowbite-svelte';
+    import { Button, Label, Input, Toast, Helper } from 'flowbite-svelte';
+    import { slide } from 'svelte/transition';
     import * as Icon from 'svelte-heros-v2';
     import HeadWithButtons from '$lib/components/HeadWithButtons.svelte';
     import type { PageData, ActionData } from './$types';
     import { applyAction, enhance } from '$app/forms';
-    import { invalidateAll } from '$app/navigation';
 
+    let show: boolean = false;
+
+    function timeout() {
+        let counter = 6;
+
+        const trigger = () : NodeJS.Timeout | void => {
+            if (--counter > 0)
+                return setTimeout(trigger, 1000);
+            show = false;
+        };
+
+        trigger();
+    }
 
     export let form: ActionData;
     export let data: PageData;
     const { currentAdmin } = data;
-
-    let tos: boolean = true;
 </script>
 
 <div class="flex justify-center w-screen">
-
-    
-
-    {#if form?.message}
-        <Alert dismissable class="absolute w-96 top-20 shadow" style="max-width: 40vw" color={form?.success === true ? 'green': 'red'}>
+    <Toast class="mb-2 absolute w-96 top-20 shadow" color={form?.success === true ? 'green': 'red'} transition={slide} bind:visible={show}> 
+        <svelte:fragment slot="icon">
             {#if form?.success === true}
-                <Icon.InformationCircle class="w-5 h-5"/>
-                <span class="font-medium">Success!</span>{form?.message}.
+                <Icon.Check class="w-5 h-5"/>
+            {:else}
+                <Icon.XMark class="w-5 h-5"/>
             {/if}
-
-            {#if form?.success === false}    
-                <Icon.ExclamationCircle class="w-5 h-5"/>
-                <div class="ml-3">
-                    <span class="sr-only">Error</span>
-                    <span class="font-medium">Impossibile creare la tessera:</span>        
-                </div>
-                <ul class="mt-0 ml-8 list-disc list-inside">
-                    <li>{form?.message}</li>
-                </ul>
-            {/if}
-        </Alert>
-    {/if}
+        </svelte:fragment>
+        {form?.message}
+    </Toast>
 </div>
+
 
 <div class="container-raspcard b-d">
     <HeadWithButtons establishment={currentAdmin.establishmentName} seller={currentAdmin.name}/>
@@ -45,8 +45,12 @@
         class="form-container"
         method="POST"
         use:enhance={() => {
-            return async ({ result }) => {
-                invalidateAll();
+            return async ({ result, form }) => {
+                if(result.type === "success") form.reset();
+                
+                show = true;
+                timeout();
+
                 await applyAction(result);
             }
         }}
@@ -62,17 +66,16 @@
                 <div class="w-full flex flex-col gap-4">
                     <Label class="space-y-2">
                         <span>Name</span>
-                        <Input autocomplete="off" disabled={tos} type="text" name="name" />
+                        <Input autocomplete="off" type="text" name="name" />
                     </Label>
                     <Label class="space-y-2">
                         <span>Surname</span>
-                        <Input autocomplete="off" disabled={tos} type="text" name="surname" />
+                        <Input autocomplete="off" type="text" name="surname" />
                     </Label>
                     <Label class="space-y-2">
                         <span>Phone number</span>
-                        <Input autocomplete="off" disabled={tos} type="number" name="phoneNumber" />
+                        <Input autocomplete="off" type="number" name="phoneNumber" />
                     </Label>
-                    <Checkbox on:click={() => tos = !tos}>Agree TOS</Checkbox>
                 </div>
                 <div class="flex flex-col gap-4">
                     <Label class="space-y-2">
@@ -106,6 +109,7 @@
 
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
     }
 
     .container-content {
