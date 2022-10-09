@@ -4,8 +4,7 @@
     import * as Icon from 'svelte-heros-v2';
     import Head from '$lib/components/Head.svelte';
     import type { PageData } from './$types';
-    import { applyAction, enhance } from '$app/forms';
-    import { invalidateAll } from '$app/navigation';
+    import { enhance } from '$app/forms';
 
     export let data: PageData;
     const { currentAdmin } = data;
@@ -33,12 +32,7 @@
                 class="h-15 w-full"
                 method="POST"
                 action="/logout"
-                use:enhance={() => {
-                    return async ({ result }) => {
-                        invalidateAll();
-                        await applyAction(result);
-                    }
-                }}
+                use:enhance
             >
                 <Button type="submit" gradient color="blue" class="h-full w-full"><Icon.ArrowLeftOnRectangle class="mr-2 -ml-1 w-7 h-7"/> Logout</Button>
             </form>
