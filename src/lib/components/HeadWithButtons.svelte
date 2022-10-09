@@ -4,8 +4,9 @@
     import * as Icon from 'svelte-heros-v2';
     import Head from '$lib/components/Head.svelte';
     
-    export let establishment: string | undefined;
-    export let seller: string | undefined;
+    export let establishment: string;
+    export let seller: string;
+    export let userPage: boolean = false;
 </script>
 
 
@@ -13,6 +14,9 @@
     <Head establishment={establishment} seller={seller}/>
     <div class="container-buttons">
         <Button on:click={() => goto("/scanner")} gradient color="blue" class="w-56"><Icon.CreditCard class="mr-2 -ml-1 w-7 h-7"/>Scan</Button>
+        {#if userPage}
+            <Button on:click={() => goto("/users")} gradient color="blue" class="w-56"><Icon.Users class="mr-2 -ml-1 w-7 h-7"/>Users</Button>
+        {/if}
         <Button on:click={() => goto("/dashboard")} gradient color="blue" class="w-56"><Icon.RectangleGroup class="mr-2 -ml-1 w-7 h-7"/>Dashboard</Button>
     </div>
 </div>

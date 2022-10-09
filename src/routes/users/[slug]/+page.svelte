@@ -30,7 +30,7 @@
 
 
 <div class="container-raspcard b-d">
-    <HeadWithButtons establishment={currentAdmin.establishmentName} seller={currentAdmin.name}/>
+    <HeadWithButtons establishment={currentAdmin.establishmentName} seller={currentAdmin.name} userPage={true}/>
     <div class="container-content mt-6">
         <div style="width: 30vw">
             <div> <!-- Top card -->
@@ -150,7 +150,7 @@
 		<div class="container-transaction-conent">
             <Label class="space-y-2">
                 <span>Amount</span>
-                <Input type="number" name="amount" placeholder="0" required class="w-24"/>
+                <Input step="0.01" type="number" name="amount" placeholder="0" required class="w-24"/>
 		    </Label>
             <div class="flex flex-col gap-1">
                 <Radio bind:group={choice} value="comics">Comics</Radio>
