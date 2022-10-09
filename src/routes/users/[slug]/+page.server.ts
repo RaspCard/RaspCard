@@ -29,7 +29,6 @@ export const actions: Actions = {
 
         const data = await request.formData();
         const amount = parseFloat(data.get('amount')?.toString() || '');
-        console.log(amount);
 
         if(isNaN(amount)) {
             return invalid(400, {success: false, message: 'Saldo invalido'});
