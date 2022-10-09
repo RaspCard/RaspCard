@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Button, Label, Input, Toast, Helper } from 'flowbite-svelte';
-    import { slide } from 'svelte/transition';
+    import { fly } from 'svelte/transition';
     import * as Icon from 'svelte-heros-v2';
     import HeadWithButtons from '$lib/components/HeadWithButtons.svelte';
     import type { PageData, ActionData } from './$types';
@@ -26,7 +26,7 @@
 </script>
 
 <div class="flex justify-center w-screen">
-    <Toast class="mb-2 absolute w-96 top-20 shadow" color={form?.success === true ? 'green': 'red'} transition={slide} bind:visible={show}> 
+    <Toast class="mb-2 absolute w-96 top-20 shadow" color={form?.success === true ? 'green': 'red'} transition={fly} params="{{x: 200}}" bind:visible={show}> 
         <svelte:fragment slot="icon">
             {#if form?.success === true}
                 <Icon.Check class="w-5 h-5"/>
