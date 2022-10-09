@@ -1,43 +1,19 @@
 <script lang="ts">
     import { Button, Label, Input, Toast, Helper } from 'flowbite-svelte';
-    import { fly } from 'svelte/transition';
     import * as Icon from 'svelte-heros-v2';
     import HeadWithButtons from '$lib/components/HeadWithButtons.svelte';
+    import Notification from '$lib/components/Notification.svelte';
     import type { PageData, ActionData } from './$types';
     import { applyAction, enhance } from '$app/forms';
-
-    let show: boolean = false;
-
-    function timeout() {
-        let counter = 6;
-
-        const trigger = () : NodeJS.Timeout | void => {
-            if (--counter > 0)
-                return setTimeout(trigger, 1000);
-            show = false;
-        };
-
-        trigger();
-    }
 
     export let form: ActionData;
     export let data: PageData;
     const { currentAdmin } = data;
+
+    let checkedDate: Date | undefined;
 </script>
 
-<div class="flex justify-center w-screen">
-    <Toast class="mb-2 absolute w-96 top-20 shadow" color={form?.success === true ? 'green': 'red'} transition={fly} params="{{x: 200}}" bind:visible={show}> 
-        <svelte:fragment slot="icon">
-            {#if form?.success === true}
-                <Icon.Check class="w-5 h-5"/>
-            {:else}
-                <Icon.XMark class="w-5 h-5"/>
-            {/if}
-        </svelte:fragment>
-        {form?.message}
-    </Toast>
-</div>
-
+<Notification success={form?.success} message={form?.message} checkedDate={checkedDate}/>
 
 <div class="container-raspcard b-d">
     <HeadWithButtons establishment={currentAdmin.establishmentName} seller={currentAdmin.name}/>
@@ -48,8 +24,7 @@
             return async ({ result, form }) => {
                 if(result.type === "success") form.reset();
                 
-                show = true;
-                timeout();
+                checkedDate = new Date();
 
                 await applyAction(result);
             }
