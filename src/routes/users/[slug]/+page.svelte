@@ -9,8 +9,8 @@
     import { applyAction, enhance } from '$app/forms';
 
     export let data: PageData;
-    const { currentAdmin, user } = data;
-
+    const { currentAdmin } = data;
+    $: ({ user } = data ); 
 
     let list = [
         { name: "Made in Abyss 11", status: "to be shipped soon" },
@@ -97,11 +97,7 @@
         method="POST"
         action="?/delete"
         class="flex flex-col space-y-6"
-        use:enhance={() => {
-            return async ({ result }) => {
-                await applyAction(result);
-            }
-        }}
+        use:enhance
     >
         <div class="text-center">
             <Icon.ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"/>
@@ -144,9 +140,6 @@
         class="flex flex-col space-y-6"
         use:enhance={() => {
             return async ({ result, form }) => {
-                if(result.type === "success") {
-                    user.balance += result.data?.balance;
-                }
                 form.reset();
                 invalidateAll();
                 await applyAction(result);
