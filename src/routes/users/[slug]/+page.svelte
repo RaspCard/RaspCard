@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Button, Modal, Listgroup, Input, Label, Radio } from 'flowbite-svelte';
-    import { goto, invalidateAll } from '$app/navigation';
+    import { invalidateAll } from '$app/navigation';
     import * as Icon from 'svelte-heros-v2'
     import HeadWithButtons from '$lib/components/HeadWithButtons.svelte';
     import BaseCard from '$lib/components/BaseCard.svelte';
@@ -84,7 +84,7 @@
     <div class="m-4 bottom-buttons-container">
         <Button on:click={() => deleteModal = true} gradient color="red" class="w-56"><Icon.Trash/> Delete User</Button>
         <div class="container-buttons">
-            <Button on:click={() => rollbackModal = null ? true : false} gradient color="blue" class="w-56"><Icon.ArrowPathRoundedSquare/>Rollback</Button>
+            <Button on:click={() => rollbackModal = true} gradient color="blue" class="w-56"><Icon.ArrowPathRoundedSquare/>Rollback</Button>
             <Button on:click={() => transactionModal = true} gradient color="blue" class="w-56"><Icon.CurrencyEuro/>New Transaction</Button>    
         </div>
     </div>
