@@ -1,10 +1,10 @@
 <script lang="ts">
     import { Button } from 'flowbite-svelte';
-    import { goto } from '$app/navigation';
+    import { goto, invalidateAll } from '$app/navigation';
     import * as Icon from 'svelte-heros-v2';
     import Head from '$lib/components/Head.svelte';
     import type { PageData } from './$types';
-    import { enhance } from '$app/forms';
+    import { applyAction, enhance } from '$app/forms';
 
     export let data: PageData;
     const { currentAdmin } = data;
@@ -23,18 +23,23 @@
     </div>
     <div class="m-4 button-group"> <!-- column 2 -->
         <div class="button-list">
-            <Button on:click={() => goto("/scanner")} gradient color="blue" class="h-20 w-full"><Icon.CreditCard class="mr-2 -ml-1 w-7 h-7"/> Scan</Button>
-            <Button on:click={() => goto("/users")} gradient color="blue" class="h-20 w-full"><Icon.Users class="mr-2 -ml-1 w-7 h-7"/> All Users</Button>
-            <Button on:click={() => goto("/create")} gradient color="blue" class="h-20 w-full"><Icon.Plus class="mr-2 -ml-1 w-7 h-7"/> Create Card</Button>
+            <Button on:click={() => goto("/scanner")} gradient color="blue" class="h-20 w-full"><Icon.CreditCard class="mr-2 -ml-1 w-7 h-7"/>Scan</Button>
+            <Button on:click={() => goto("/users")} gradient color="blue" class="h-20 w-full"><Icon.Users class="mr-2 -ml-1 w-7 h-7"/>All Users</Button>
+            <Button on:click={() => goto("/create")} gradient color="blue" class="h-20 w-full"><Icon.Plus class="mr-2 -ml-1 w-7 h-7"/>Create Card</Button>
         </div>
         <div class="button-list">
             <form
                 class="h-15 w-full"
                 method="POST"
                 action="/logout"
-                use:enhance
+                use:enhance={() => {
+                    return async ({ result }) => {
+                        invalidateAll();
+                        await applyAction(result);
+                    }
+                }}
             >
-                <Button type="submit" gradient color="blue" class="h-full w-full"><Icon.ArrowLeftOnRectangle class="mr-2 -ml-1 w-7 h-7"/> Logout</Button>
+                <Button type="submit" gradient color="blue" class="h-full w-full"><Icon.ArrowLeftOnRectangle class="mr-2 -ml-1 w-7 h-7"/>Logout</Button>
             </form>
         </div>
     </div>
