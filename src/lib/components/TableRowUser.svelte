@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { TableBodyRow, TableBodyCell } from "flowbite-svelte";
+    import { TableBodyRow, TableBodyCell, Button } from "flowbite-svelte";
 
     export let id: string;
     export let name: string | null;
@@ -15,8 +15,8 @@
     <TableBodyCell>{surname}</TableBodyCell>
     <TableBodyCell>{phoneNumber}</TableBodyCell>
     <TableBodyCell>
-        <a data-sveltekit-prefetch href={`/users/${id}`} class="font-medium text-blue-600 hover:underline dark:text-blue-500">
-            Edit
-        </a>
+        <Button data-sveltekit-prefetch href={`/users/${id}`} class="font-medium" gradient>
+            Dettagli
+        </Button>
     </TableBodyCell>
 </TableBodyRow>

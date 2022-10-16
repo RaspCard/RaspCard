@@ -32,41 +32,40 @@
     >
         <div class="m-4 mt-6">
             <div>
-                <h1 class="mb-4 text-4xl font-bold tracking-tight leading-none text-gray-900">Create a new card</h1>
+                <h1 class="mb-4 text-4xl font-bold tracking-tight leading-none text-gray-900">Crea una carta</h1>
                 <p class="mb-6 text-lg font-normal text-gray-500">
-                    All the fields are optional, but for a more simple management is preferable
+                    Tutti i campi sono facoltativi, ma per una gestione più semplice è preferibile l'inserimento di tutti i dati.
                 </p>
             </div>
             <div class="container-content w-3/4">
                 <div class="w-full flex flex-col gap-4">
                     <Label class="space-y-2">
-                        <span>Name</span>
-                        <Input autocomplete="off" type="text" name="name" />
+                        <span>Nome</span>
+                        <Input autocomplete="off" type="text" name="name" size="lg"/>
                     </Label>
                     <Label class="space-y-2">
-                        <span>Surname</span>
-                        <Input autocomplete="off" type="text" name="surname" />
+                        <span>Cognome</span>
+                        <Input autocomplete="off" type="text" name="surname" size="lg"/>
                     </Label>
                     <Label class="space-y-2">
-                        <span>Phone number</span>
-                        <Input autocomplete="off" type="number" name="phoneNumber" />
+                        <span>Numero di Telefono</span>
+                        <Input autocomplete="off" type="number" name="phoneNumber" size="lg"/>
                     </Label>
                 </div>
                 <div class="flex flex-col gap-4">
-                    <Label class="space-y-2">
+                    <!-- <Label class="space-y-2">
                         <span>Migration ID</span>
                         <Input autocomplete="off" type="number" name="migrationID" />
-                    </Label>
+                    </Label> -->
                     <Label class="space-y-2">
-                        <span>Initial Deposit</span>
-                        <Input autocomplete="off" type="number" name="deposit" />
-                        <Helper class='text-sm'>CashBack applied of 20%</Helper>
+                        <span>Deposito iniziale</span>
+                        <Input autocomplete="off" type="number" name="deposit" size="lg"/>
                     </Label>
                 </div>
             </div>
         </div>
         <div class="m-4 bottom-button-container">
-            <Button type="submit" gradient color="blue" class="w-72 h-20"><Icon.Plus class="mr-2 -ml-1 w-7 h-7"/>Create Card</Button>
+            <Button type="submit" gradient color="green" class="w-72 h-20 text-lg"><Icon.Plus class="mr-2 -ml-1 w-7 h-7"/>Crea la Carta</Button>
         </div>
     </form>
 </div>

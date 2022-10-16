@@ -2,15 +2,19 @@
     import { TableHead, TableHeadCell, TableBody } from 'flowbite-svelte';
 </script>
 
-<TableHead>
+<TableHead class="bg-gray-200">
     <TableHeadCell>ID</TableHeadCell>
-    <TableHeadCell>name</TableHeadCell>
-    <TableHeadCell>surname</TableHeadCell>
-    <TableHeadCell>phone number</TableHeadCell>
+    <TableHeadCell>Nome</TableHeadCell>
+    <TableHeadCell>Cognome</TableHeadCell>
+    <TableHeadCell>Numero di telefono</TableHeadCell>
     <TableHeadCell>
-        <span class="sr-only"> Edit </span>
+        <span class="sr-only"> Modifica </span>
     </TableHeadCell>
 </TableHead>
 <TableBody class="divide-y">
     <slot />
 </TableBody>
+
+<style>
+
+</style>

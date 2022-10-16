@@ -31,7 +31,7 @@
 
 <div class="container-raspcard b-d">
     <HeadWithButtons establishment={currentAdmin.establishmentName} seller={currentAdmin.name} userPage={true}/>
-    <div class="container-content mt-6">
+    <div class="container-content">
         <div style="width: 30vw">
             <div> <!-- Top card -->
                 <BaseCard title="Profile Data">
