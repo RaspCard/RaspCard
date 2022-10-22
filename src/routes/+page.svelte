@@ -3,14 +3,15 @@
     import { goto } from '$app/navigation';
     import * as Icon from 'svelte-heros-v2';
     import Head from '$lib/components/Head.svelte';
+    import Scanner from "$lib/components/Scanner.svelte";
     import type { PageData } from './$types';
     import { enhance } from '$app/forms';
 
     export let data: PageData;
-    const { currentAdmin } = data;
+    $: ({ currentAdmin } = data);
 </script>
 
-
+<Scanner/>
 <div class="container-raspcard b-d">
     <div class="m-4 container-data"> <!-- column 1 -->
         <Head establishment={currentAdmin.establishmentName} seller={currentAdmin.name}/>

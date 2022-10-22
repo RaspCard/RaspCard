@@ -9,8 +9,7 @@
     import { applyAction, enhance } from '$app/forms';
 
     export let data: PageData;
-    const { currentAdmin } = data;
-    $: ({ user } = data ); 
+    $: ({ user, currentAdmin } = data ); 
 
     let list = [
         { name: "Made in Abyss 11", status: "to be shipped soon" },
