@@ -1,19 +1,22 @@
 <script lang="ts">
-    import { createEventDispatcher } from 'svelte';
-    import QrScanner from 'qr-scanner';
-    const dispatch = createEventDispatcher();
+    //@ts-ignore
+    import onScan from "onscan.js";
+    import { onDestroy, onMount } from "svelte";
+    import { goto } from "$app/navigation";
+    import { browser } from "$app/environment";
 
-    // const qrScanner = new QrScanner(
-    //     videoElem,
-    //     result => dispatch('scan-success', { result: result }),
-    //     { /* your options or returnDetailedScanResult: true if you're not specifying any other options */ },
-    // );
+
+    onMount(() => {
+        onScan.attachTo(document, {
+            onScan: function(sScanned: string, iQty: number) {
+                // goto(`/users/${sScanned}`);
+                window.location.href=`/users/${sScanned}`;
+            }
+        });
+    });
+
+    onDestroy(() => {
+        if (browser) onScan.detachFrom(document);
+    });
+
 </script>
-
-
-
-
-
-<style>
-    
-</style>
