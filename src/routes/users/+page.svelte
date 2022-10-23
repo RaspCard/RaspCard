@@ -3,6 +3,7 @@
     import HeadWithButtons from '$lib/components/HeadWithButtons.svelte';
     import TableRowUser from '$lib/components/TableRowUser.svelte';
     import TableHeadUsers from '$lib/components/TableHeadUsers.svelte';
+    import Scanner from "$lib/components/Scanner.svelte";
     import type { PageData } from './$types';
 
     export let data: PageData;
@@ -12,7 +13,7 @@
     $: dynamicUsers = users.filter(user => user.id.includes(searchInput));
 </script>
 
-
+<Scanner/>
 <div class="container-raspcard b-d">
     <HeadWithButtons establishment={currentAdmin.establishmentName} seller={currentAdmin.name}/>
     <div class="mr-4 ml-4">
