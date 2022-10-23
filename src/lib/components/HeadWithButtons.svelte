@@ -13,11 +13,10 @@
 <div class="m-4 head-container">
     <Head establishment={establishment} seller={seller}/>
     <ButtonGroup class="space-x-px">
-        <Button on:click={() => goto("/scanner")} gradient color="blue" class="w-56 text-lg"><Icon.CreditCard class="mr-2 -ml-1 w-7 h-7"/>Scansiona</Button>
         {#if userPage}
-            <Button on:click={() => goto("/users")} gradient color="blue" class="w-56 text-lg"><Icon.Users class="mr-2 -ml-1 w-7 h-7"/>Utenti</Button>
+            <Button href="/users" gradient color="blue" class="w-56 text-lg"><Icon.Users class="mr-2 -ml-1 w-7 h-7"/>Utenti</Button>
         {/if}
-        <Button on:click={() => goto("/")} gradient color="blue" class="w-56 text-lg"><Icon.RectangleGroup class="mr-2 -ml-1 w-7 h-7"/>Home</Button>
+        <Button href="/" gradient color="blue" class="w-56 text-lg"><Icon.RectangleGroup class="mr-2 -ml-1 w-7 h-7"/>Home</Button>
     </ButtonGroup>
 </div>
 

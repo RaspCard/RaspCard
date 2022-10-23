@@ -9,8 +9,7 @@
     onMount(() => {
         onScan.attachTo(document, {
             onScan: function(sScanned: string, iQty: number) {
-                // goto(`/users/${sScanned}`);
-                window.location.href=`/users/${sScanned}`;
+                goto(`/users/${sScanned}`);
             }
         });
     });
