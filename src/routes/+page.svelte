@@ -8,7 +8,7 @@
     import { enhance } from '$app/forms';
 
     export let data: PageData;
-    $: ({ currentAdmin } = data);
+    const { currentAdmin } = data;
 </script>
 
 <Scanner/>
@@ -24,9 +24,8 @@
     </div>
     <div class="m-4 button-group"> <!-- column 2 -->
         <div class="button-list">
-            <Button on:click={() => goto("/scanner")} gradient color="blue" class="h-20 w-full text-lg"><Icon.CreditCard class="mr-2 -ml-1 w-7 h-7"/>Scansiona</Button>
-            <Button on:click={() => goto("/users")} gradient color="blue" class="h-20 w-full text-lg"><Icon.Users class="mr-2 -ml-1 w-7 h-7"/>Utenti</Button>
-            <Button on:click={() => goto("/create")} gradient color="blue" class="h-20 w-full text-lg"><Icon.Plus class="mr-2 -ml-1 w-7 h-7"/>Crea Carta</Button>
+            <Button href="/users" gradient color="blue" class="h-20 w-full text-lg"><Icon.Users class="mr-2 -ml-1 w-7 h-7"/>Utenti</Button>
+            <Button href="/create" gradient color="blue" class="h-20 w-full text-lg"><Icon.Plus class="mr-2 -ml-1 w-7 h-7"/>Crea Carta</Button>
         </div>
         <div class="button-list">
             <form
