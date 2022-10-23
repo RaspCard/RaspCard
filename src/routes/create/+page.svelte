@@ -1,7 +1,8 @@
 <script lang="ts">
-    import { Button, Label, Input, Toast, Helper } from 'flowbite-svelte';
+    import { Button, Label, Input } from 'flowbite-svelte';
     import * as Icon from 'svelte-heros-v2';
     import HeadWithButtons from '$lib/components/HeadWithButtons.svelte';
+    import Nav from '$lib/components/Nav.svelte';
     import Notification from '$lib/components/Notification.svelte';
     import type { PageData, ActionData } from './$types';
     import { applyAction, enhance } from '$app/forms';
@@ -16,7 +17,11 @@
 <Notification success={form?.success} message={form?.message} checkedDate={checkedDate}/>
 
 <div class="container-raspcard b-d">
-    <HeadWithButtons establishment={currentAdmin.establishmentName} seller={currentAdmin.name}/>
+    <Nav fixedButton={true} establishment={currentAdmin.establishmentName} seller={currentAdmin.name}>
+        <svelte:fragment slot="fixed">
+            <Button href="/" gradient color="blue"><Icon.RectangleGroup class="mr-2 -ml-1 w-7 h-7"/>Home</Button>
+        </svelte:fragment>
+    </Nav>
     <form
         class="form-container"
         method="POST"
@@ -53,10 +58,6 @@
                     </Label>
                 </div>
                 <div class="flex flex-col gap-4">
-                    <!-- <Label class="space-y-2">
-                        <span>Migration ID</span>
-                        <Input autocomplete="off" type="number" name="migrationID" />
-                    </Label> -->
                     <Label class="space-y-2">
                         <span>Deposito iniziale</span>
                         <Input autocomplete="off" type="number" name="deposit" size="lg"/>
