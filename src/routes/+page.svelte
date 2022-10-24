@@ -11,7 +11,7 @@
     const { currentAdmin } = data;
 </script>
 
-<Scanner/>
+<Scanner on:scan={(event) => goto(`/users/${event.detail.id}`)}/>
 <div class="container-raspcard b-d">
     <div class="m-4 container-data"> <!-- column 1 -->
         <Head establishment={currentAdmin.establishmentName} seller={currentAdmin.name}/>

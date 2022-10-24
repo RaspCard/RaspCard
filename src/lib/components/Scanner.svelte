@@ -1,15 +1,16 @@
 <script lang="ts">
     //@ts-ignore
     import onScan from "onscan.js";
-    import { onDestroy, onMount } from "svelte";
+    import { onDestroy, onMount, createEventDispatcher } from "svelte";
     import { goto } from "$app/navigation";
     import { browser } from "$app/environment";
 
+    const dispatch = createEventDispatcher();
 
     onMount(() => {
         onScan.attachTo(document, {
             onScan: function(sScanned: string, iQty: number) {
-                goto(`/users/${sScanned}`);
+                dispatch("scan", { id: sScanned });
             }
         });
     });
