@@ -1,4 +1,5 @@
 import { db } from '$lib/server/database';
+import type { BalanceRequest } from '$lib/utils/types';
 import { redirect, error, invalid } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 
@@ -27,8 +28,9 @@ export const actions: Actions = {
             return invalid(401);
         }
 
-        const data = await request.formData();
-        const amount = parseFloat(data.get('amount')?.toString() || '');
+        const data: BalanceRequest = Object.fromEntries(await request.formData());
+        const amount = parseFloat(data?.amount || '');
+        const operationType = data?.operationType === '+' ? 1 : -1;
 
         if(isNaN(amount)) {
             return invalid(400, {success: false, message: 'Saldo invalido'});
@@ -41,7 +43,7 @@ export const actions: Actions = {
                     establishmentId: locals.currentAdmin.establishmentId
                 }, data: {
                     balance: {
-                        increment: amount
+                        increment: amount * operationType
                     }
                 }
             });

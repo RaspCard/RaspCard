@@ -149,14 +149,15 @@
 		<div class="container-transaction-conent">
             <Label class="space-y-2">
                 <span>Amount</span>
-                <Input step="0.01" type="number" name="amount" placeholder="0" required class="w-24"/>
+                <Input min="0.01" step="0.01" type="number" name="amount" placeholder="0" required class="w-24"/>
 		    </Label>
             <div class="flex flex-col gap-1">
                 <Radio bind:group={choice} value="comics">Comics</Radio>
                 <Radio bind:group={choice} value="normal">Normal</Radio>
             </div>
         </div>
-		<Button type="submit" class="w-full">Confirm</Button>
+		<Button type="submit" name="operationType" value="-" gradient color="red" class="w-full">-</Button>
+		<Button type="submit" name="operationType" value="+" gradient color="green" class="w-full">+</Button>
 	</form>
 </Modal>
 
