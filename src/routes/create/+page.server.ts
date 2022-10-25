@@ -16,8 +16,8 @@ export const actions: Actions = {
             return invalid(401);
         }
 
-        const data = await request.formData();
-
+        const data = Object.fromEntries(await request.formData());
+        return {};
         const parsedPhoneNumber = parseInt(data.get('phoneNumber')?.toString() || '');
         // const parsedMigrationID = parseInt(data.get('migrationID')?.toString() || '');
         const parsedDeposit = parseInt(data.get('deposit')?.toString() || '');
