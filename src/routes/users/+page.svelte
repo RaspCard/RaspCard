@@ -1,16 +1,16 @@
 <script lang="ts">
+    import type { PageData } from './$types';
     import { Table, Input } from 'flowbite-svelte';
     import HeadWithButtons from '$lib/components/HeadWithButtons.svelte';
     import TableRowUser from '$lib/components/TableRowUser.svelte';
     import TableHeadUsers from '$lib/components/TableHeadUsers.svelte';
     import Scanner from "$lib/components/Scanner.svelte";
-    import type { PageData } from './$types';
 
     export let data: PageData;
     const { currentAdmin, users } = data;
 
     let searchInput = '';
-    $: dynamicUsers = users.filter(user => user.id.includes(searchInput));
+    $: dynamicUsers = users.filter(user => user.cardId.includes(searchInput));
 </script>
 
 <Scanner/>
