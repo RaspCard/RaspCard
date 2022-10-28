@@ -1,7 +1,7 @@
-import { db } from '$lib/server/database';
-import type { BalanceRequest } from '$lib/utils/types';
 import { redirect, error, invalid } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
+import { db } from '$lib/server/database';
+import type { BalanceRequest } from '$lib/utils/types';
 
 export const load: PageServerLoad = async({ locals, params }) => {
     if(!locals.currentAdmin) {
@@ -10,8 +10,9 @@ export const load: PageServerLoad = async({ locals, params }) => {
 
     const user = await db.user.findFirst({
         where: {
-            id: params.slug,
-            establishmentId: locals.currentAdmin.establishmentId
+            cardId: params.slug,
+            establishmentId: locals.currentAdmin.establishmentId,
+            active: true
         },
     });
 
@@ -37,10 +38,12 @@ export const actions: Actions = {
         }
 
         try {
-            await db.user.updateMany({
+            await db.user.update({
                 where: {
-                    id: params.slug,
-                    establishmentId: locals.currentAdmin.establishmentId
+                    cardId_establishmentId: {
+                        cardId: params.slug,
+                        establishmentId: locals.currentAdmin.establishmentId
+                    }
                 }, data: {
                     balance: {
                         increment: amount * operationType
@@ -67,10 +70,15 @@ export const actions: Actions = {
         }
 
         try {
-            await db.user.deleteMany({
+            await db.user.update({
                 where: {
-                    id: params.slug,
-                    establishmentId: locals.currentAdmin.establishmentId
+                    cardId_establishmentId: {
+                        cardId: params.slug,
+                        establishmentId: locals.currentAdmin.establishmentId
+                    }
+                },
+                data: {
+                    active: false
                 }
             });
         } catch {
