@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { Button } from 'flowbite-svelte';
     import { goto } from '$app/navigation';
+    import { enhance } from '$app/forms';
+    import type { PageData } from './$types';
+    import { Button } from 'flowbite-svelte';
     import * as Icon from 'svelte-heros-v2';
     import Head from '$lib/components/Head.svelte';
     import Scanner from "$lib/components/Scanner.svelte";
-    import type { PageData } from './$types';
-    import { enhance } from '$app/forms';
 
     export let data: PageData;
     const { currentAdmin } = data;

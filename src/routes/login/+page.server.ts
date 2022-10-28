@@ -1,6 +1,6 @@
-import { db } from '$lib/server/database';
 import { invalid, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import { db } from '$lib/server/database';
 
 
 export const load: PageServerLoad = async({ locals }) => {

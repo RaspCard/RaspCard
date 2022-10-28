@@ -1,11 +1,11 @@
 <script lang="ts">
+    import { applyAction, enhance } from '$app/forms';
+    import type { PageData, ActionData } from './$types';
     import { Button, Label, Input } from 'flowbite-svelte';
     import * as Icon from 'svelte-heros-v2';
     import HeadWithButtons from '$lib/components/HeadWithButtons.svelte';
     import Nav from '$lib/components/Nav.svelte';
     import Notification from '$lib/components/Notification.svelte';
-    import type { PageData, ActionData } from './$types';
-    import { applyAction, enhance } from '$app/forms';
 
     export let form: ActionData;
     export let data: PageData;
@@ -45,6 +45,10 @@
             <div class="container-content w-3/4">
                 <div class="w-full flex flex-col gap-4">
                     <Label class="space-y-2">
+                        <span>ID carta</span>
+                        <Input autocomplete="off" required type="text" name="cardId" size="lg"/>
+                    </Label>
+                    <Label class="space-y-2">
                         <span>Nome</span>
                         <Input autocomplete="off" type="text" name="name" size="lg"/>
                     </Label>
@@ -60,7 +64,7 @@
                 <div class="flex flex-col gap-4">
                     <Label class="space-y-2">
                         <span>Deposito iniziale</span>
-                        <Input autocomplete="off" type="number" name="deposit" size="lg"/>
+                        <Input autocomplete="off" min="0" step="0.01" type="number" name="deposit" size="lg"/>
                     </Label>
                 </div>
             </div>
