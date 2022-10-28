@@ -1,6 +1,6 @@
-import { db } from '$lib/server/database';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { db } from '$lib/server/database';
 
 export const load: PageServerLoad = async({ locals }) => {
     if(!locals.currentAdmin) {
@@ -8,7 +8,7 @@ export const load: PageServerLoad = async({ locals }) => {
     }
 
     const users = await db.user.findMany({
-        where: { establishmentId: locals.currentAdmin.establishmentId },
+        where: { establishmentId: locals.currentAdmin.establishmentId, active: true }
     });
 
     return { users };
