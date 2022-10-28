@@ -1,9 +1,8 @@
 <script lang="ts">
+    import { browser } from "$app/environment";
+    import { onDestroy, onMount, createEventDispatcher } from "svelte";
     //@ts-ignore
     import onScan from "onscan.js";
-    import { onDestroy, onMount, createEventDispatcher } from "svelte";
-    import { goto } from "$app/navigation";
-    import { browser } from "$app/environment";
 
     const dispatch = createEventDispatcher();
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Logo from './Logo.svelte';
     import { goto } from '$app/navigation';
+    import Logo from './Logo.svelte';
 
     export let establishment: string;
     export let seller: string;

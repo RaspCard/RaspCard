@@ -1,6 +1,6 @@
 <script lang="ts">
-    import SimpleLogo from "./SimpleLogo.svelte";
     import { Navbar, NavBrand, NavHamburger, NavUl } from "flowbite-svelte";
+    import SimpleLogo from "./SimpleLogo.svelte";
 
     export let establishment: string;
     export let seller: string;

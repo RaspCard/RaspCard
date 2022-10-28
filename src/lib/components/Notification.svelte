@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { Toast } from 'flowbite-svelte';
     import { fly } from 'svelte/transition';
+    import { Toast } from 'flowbite-svelte';
     import * as Icon from 'svelte-heros-v2';
     
     export let success: boolean | unknown;
