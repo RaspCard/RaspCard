@@ -1,6 +1,7 @@
-import { db } from '$lib/server/database';
 import { invalid, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import { db } from '$lib/server/database';
+import type { CardRequest } from '$lib/utils/types';
 
 
 export const load: PageServerLoad = async({ locals }) => {
@@ -16,11 +17,27 @@ export const actions: Actions = {
             return invalid(401);
         }
 
-        const data = Object.fromEntries(await request.formData());
-        return {};
-        const parsedPhoneNumber = parseInt(data.get('phoneNumber')?.toString() || '');
-        // const parsedMigrationID = parseInt(data.get('migrationID')?.toString() || '');
-        const parsedDeposit = parseInt(data.get('deposit')?.toString() || '');
+        const data: CardRequest = Object.fromEntries(await request.formData());
+
+        if(!data.cardId || typeof(data.cardId) !== 'string') {
+            return invalid(400);
+        }
+
+        const user = await db.user.findUnique({
+            where: {
+                cardId_establishmentId: {
+                    cardId: data.cardId,
+                    establishmentId: locals.currentAdmin.establishmentId
+                }
+            }
+        });
+
+        if(user) {
+            return invalid(400, {success: false, message: "L'utente esiste già"});
+        }
+
+        const parsedPhoneNumber = parseInt(data.phoneNumber || '');
+        const parsedDeposit = parseFloat(data.amount || '');
 
         if(!isNaN(parsedPhoneNumber)) {
             const user = await db.user.findFirst({
@@ -37,8 +54,9 @@ export const actions: Actions = {
     
         await db.user.create({
             data: {
-                name: data.get('name')?.toString() || null,
-                surname: data.get('surname')?.toString() || null,
+                cardId: data.cardId,
+                name: data.name || null,
+                surname: data.surname || null,
                 phoneNumber: isNaN(parsedPhoneNumber) ? null : parsedPhoneNumber,
                 balance: isNaN(parsedDeposit) ? 0 : parsedDeposit,
                 establishmentId: locals.currentAdmin.establishmentId
