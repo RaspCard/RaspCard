@@ -28,7 +28,7 @@
 </script>
 
 <div class="flex justify-center w-screen">
-    <Toast class="mb-2 absolute w-96 top-20 shadow" color={success ? 'green': 'red'} transition={fly} params="{{x: 200}}" bind:visible={show}> 
+    <Toast class="mb-2 absolute w-96 top-20 shadow" color={success ? 'green': 'red'} transition={fly} params="{{x: 200}}" bind:open={show}> 
         <svelte:fragment slot="icon">
             {#if success}
                 <Icon.Check class="w-5 h-5"/>
