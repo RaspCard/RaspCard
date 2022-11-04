@@ -15,4 +15,4 @@ node_modules
 *.sqlite3-journal
 *.db
 
-/migrations
+**/migrations
