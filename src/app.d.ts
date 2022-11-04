@@ -10,8 +10,8 @@ declare namespace App {
 			establishmentName: string;
 		}
 	}
-
+	
 	// interface PageData {}
-
+	// interface Error {}
 	// interface Platform {}
 }
