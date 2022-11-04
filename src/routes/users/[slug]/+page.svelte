@@ -91,7 +91,7 @@
 
 
 <!-- Delete modal -->
-<Modal bind:open={deleteModal} size="sm">
+<Modal bind:open={deleteModal} size="sm" autoclose={false}>
     <form
         method="POST"
         action="?/delete"
@@ -102,14 +102,14 @@
             <Icon.ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"/>
             <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Sei sicuro di voler eliminare quest'utente? Quest'operazione è irreversibile</h3>
             <Button type="submit" color="red" class="mr-2">Yes, I'm sure</Button>
-            <Button color='alternative'>No, cancel</Button>
+            <Button on:click={() => deleteModal = false} color='alternative'>No, cancel</Button>
         </div>
     </form>
 </Modal>
 
 
 <!-- Rollback modal -->
-<Modal bind:open={rollbackModal} size="sm">
+<Modal bind:open={rollbackModal} size="sm" autoclose={false}>
     <form
         method="POST"
         action="?/rollback"
@@ -118,6 +118,7 @@
             return async ({ result }) => {
                 invalidateAll();
                 await applyAction(result);
+                rollbackModal = false;
             }
         }}
     >
@@ -132,7 +133,7 @@
 
 
 <!-- Transaction modal -->
-<Modal bind:open={transactionModal} size="xs">
+<Modal bind:open={transactionModal} size="xs" autoclose={false}>
     <form
         method="POST"
         action="?/balance"
@@ -142,6 +143,7 @@
                 form.reset();
                 invalidateAll();
                 await applyAction(result);
+                transactionModal = false;
             }
         }}
     >
@@ -158,7 +160,7 @@
         </div>
 		<Button type="submit" name="operationType" value="-" gradient color="red" class="w-full">-</Button>
 		<Button type="submit" name="operationType" value="+" gradient color="green" class="w-full">+</Button>
-	</form>
+    </form>
 </Modal>
 
 
