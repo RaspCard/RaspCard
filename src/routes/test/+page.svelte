@@ -3,6 +3,7 @@
     import * as Icon from 'svelte-heros-v2';
     import { sineIn } from 'svelte/easing';
     import { onMount } from 'svelte';
+    import { enhance } from '$app/forms';
 
     let test = "flex flex-col items-center justify-between w-full h-full bg-gray-100 p-4";
 
@@ -99,9 +100,10 @@
                     <form
                         method="POST"
                         action="/logout"
+                        use:enhance
                         bind:this={form}
                     >
-                        <SidebarItem on:click={() => form.submit()} label="Logout" aClass={"flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100"}>
+                        <SidebarItem on:click={() => form.requestSubmit()} label="Logout" aClass={"flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100"}>
                             <svelte:fragment slot="icon">
                                 <Icon.ArrowLeftOnRectangle/>
                             </svelte:fragment>
