@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Sidebar, SidebarWrapper, SidebarGroup, SidebarBrand, SidebarItem, Drawer, CloseButton, Navbar, NavBrand, NavHamburger } from 'flowbite-svelte';
+    import { Sidebar, SidebarWrapper, SidebarGroup, SidebarBrand, SidebarItem, Drawer, CloseButton, Navbar, NavBrand, NavHamburger, P, Heading } from 'flowbite-svelte';
     import * as Icon from 'svelte-heros-v2';
     import { sineIn } from 'svelte/easing';
     import { onMount } from 'svelte';
@@ -42,6 +42,9 @@
 
     let form: HTMLFormElement;
 
+    let establishment: string = "stregatto";
+    let seller: string = "mario";
+
     let site = {
         name: 'RaspCard',
         href: '/',
@@ -57,12 +60,13 @@
         <NavBrand href="/" class="lg:ml-64">
             <Icon.Cog/>
             <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white pl-4">
-                My Website
+                RaspCard
             </span>
         </NavBrand>
     </Navbar>
 {/if}
 
+<!-- TODO make transition not available in full screen mode -->
 <div class="container-raspcard b-d">
     <Drawer
         transitionType="fly"
@@ -79,6 +83,15 @@
                     <div class="flex items-center">
                         <SidebarBrand {site} />
                         <CloseButton on:click={() => (drawerHidden = true)} class="mb-4 dark:text-white lg:hidden" />
+                    </div>
+                    <div class="mt-4 mb-4 p-2 bg-gray-600 rounded-md ">
+                        <div class="text-center">
+                            <Heading tag="h5" color="text-gray-200">{establishment.toUpperCase()}</Heading>
+                        </div>
+                        <div class="flex flex-row justify-between mr-4 ml-4">
+                            <P weight="semibold" color="text-gray-200">Utente:</P>
+                            <P weight="bold" color="text-gray-200">{seller}</P>
+                        </div>
                     </div>
                     <SidebarItem label="Home" href='/'>
                         <svelte:fragment slot="icon">
