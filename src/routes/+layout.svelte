@@ -6,6 +6,6 @@
   <title>RaspCard</title>
 </svelte:head>
 
-<main>
+<main class="b-d">
   <slot />
 </main>
