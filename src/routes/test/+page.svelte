@@ -5,45 +5,41 @@
     import { onMount } from 'svelte';
     import { enhance } from '$app/forms';
 
-    let test = "flex flex-col items-center justify-between w-full h-full bg-gray-100 p-4";
-
+    export let establishment: string = "stregatto";
+    export let seller: string = "mario";
+    
     let transitionParams = {
-		x: -320,
+        x: -320,
 		duration: 200,
 		easing: sineIn
 	};
-
+    
     let breakPoint: number = 1100;
 	let width: number;
+
     let drawerHidden: boolean = false;
     let activateClickOutside = true;
-
-    $: if (width >= breakPoint) {
-		drawerHidden = false;
-		activateClickOutside = false;
-	} else {
-		drawerHidden = true;
-		activateClickOutside = true;
-	}
-
-	onMount(() => {
-		if (width >= breakPoint) {
-			drawerHidden = false;
-			activateClickOutside = false;
-		} else {
-			drawerHidden = true;
-			activateClickOutside = true;
-		}
-	});
-
-	const toggleDrawer = () => {
-		drawerHidden = false;
-	};
-
+    
     let form: HTMLFormElement;
 
-    let establishment: string = "stregatto";
-    let seller: string = "mario";
+	onMount(() => checkWidth());
+    $: if (width >= breakPoint) {
+        drawerHidden = false;
+        activateClickOutside = false;
+    } else {
+        drawerHidden = true;
+        activateClickOutside = true;
+    };
+    
+    function checkWidth() {
+        if (width >= breakPoint) {
+            drawerHidden = false;
+            activateClickOutside = false;
+        } else {
+            drawerHidden = true;
+            activateClickOutside = true;
+        }
+    }
 
     let site = {
         name: 'RaspCard',
@@ -56,7 +52,7 @@
 
 {#if width < breakPoint}
     <Navbar>
-        <NavHamburger on:click={toggleDrawer} btnClass="ml-3 lg:hidden" />
+        <NavHamburger on:click={() => drawerHidden=false} btnClass="ml-3 lg:hidden" />
         <NavBrand href="/" class="lg:ml-64">
             <Icon.Cog/>
             <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white pl-4">
@@ -66,10 +62,9 @@
     </Navbar>
 {/if}
 
-<!-- TODO make transition not available in full screen mode -->
-<div class="container-raspcard b-d">
+<div class="flex flex-row w-auto lg:h-full">
     <Drawer
-        transitionType="fly"
+        transitionType={width < breakPoint ? "fly" : undefined}
         backdrop={false}
         divClass="lg:!static"
         {transitionParams}
@@ -78,13 +73,13 @@
         id="sidebar"
     >
         <Sidebar asideClass="w-64 h-full">
-            <SidebarWrapper divClass={test}>
+            <SidebarWrapper divClass="flex flex-col items-center justify-between w-full h-full bg-gray-100 p-4">
                 <SidebarGroup ulClass="w-full">
-                    <div class="flex items-center">
+                    <div class="max-md:flex max-md:items-center">
                         <SidebarBrand {site} />
-                        <CloseButton on:click={() => (drawerHidden = true)} class="mb-4 dark:text-white lg:hidden" />
+                        <CloseButton on:click={() => drawerHidden=true} class="mb-4 dark:text-white lg:hidden" />
                     </div>
-                    <div class="mt-4 mb-4 p-2 bg-gray-600 rounded-md ">
+                    <div class="mt-4 mb-4 p-2 bg-gray-600 rounded-md">
                         <div class="text-center">
                             <Heading tag="h5" color="text-gray-200">{establishment.toUpperCase()}</Heading>
                         </div>
@@ -139,11 +134,6 @@
 
 
 <style>
-    .container-raspcard {
-        display: flex;
-        flex-direction: row;
-    }
-
     .container-data {
         display: flex;
         flex-direction: column;
