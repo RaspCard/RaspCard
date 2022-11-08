@@ -1,27 +1,18 @@
 <script lang="ts">
     import { applyAction, enhance } from '$app/forms';
-    import type { PageData, ActionData } from './$types';
+    import type { ActionData } from './$types';
     import { Button, Label, Input } from 'flowbite-svelte';
     import * as Icon from 'svelte-heros-v2';
-    import HeadWithButtons from '$lib/components/HeadWithButtons.svelte';
-    import Nav from '$lib/components/Nav.svelte';
     import Notification from '$lib/components/Notification.svelte';
 
     export let form: ActionData;
-    export let data: PageData;
-    const { currentAdmin } = data;
 
     let checkedDate: Date | undefined;
 </script>
 
 <Notification success={form?.success} message={form?.message} checkedDate={checkedDate}/>
 
-<div class="container-raspcard b-d">
-    <Nav fixedButton={true} establishment={currentAdmin.establishmentName} seller={currentAdmin.name}>
-        <svelte:fragment slot="fixed">
-            <Button href="/" gradient color="blue"><Icon.RectangleGroup class="mr-2 -ml-1 w-7 h-7"/>Home</Button>
-        </svelte:fragment>
-    </Nav>
+<div class="container-raspcard">
     <form
         class="form-container"
         method="POST"

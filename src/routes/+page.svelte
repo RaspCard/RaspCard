@@ -1,41 +1,16 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { enhance } from '$app/forms';
-    import type { PageData } from './$types';
-    import { Button } from 'flowbite-svelte';
-    import * as Icon from 'svelte-heros-v2';
-    import Head from '$lib/components/Head.svelte';
     import Scanner from "$lib/components/Scanner.svelte";
-
-    export let data: PageData;
-    const { currentAdmin } = data;
 </script>
 
 <Scanner on:scan={(event) => goto(`/users/${event.detail.id}`)}/>
-<div class="container-raspcard b-d">
-    <div class="m-4 container-data"> <!-- column 1 -->
-        <Head establishment={currentAdmin.establishmentName} seller={currentAdmin.name}/>
-        <div class="text"> <!-- row 2 -->
+<div class="container-raspcard">
+    <div class="m-4 container-data">
+        <div class="text">
             <h1>WELCOME</h1>
             <p>
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus eligendi similique beatae quam ratione sit at optio reprehenderit voluptatem et vitae dolores repudiandae quo, in sapiente officiis nam iure necessitatibus.
             </p>
-        </div>
-    </div>
-    <div class="m-4 button-group"> <!-- column 2 -->
-        <div class="button-list">
-            <Button href="/users" gradient color="blue" class="h-20 w-full text-lg"><Icon.Users class="mr-2 -ml-1 w-7 h-7"/>Utenti</Button>
-            <Button href="/create" gradient color="blue" class="h-20 w-full text-lg"><Icon.Plus class="mr-2 -ml-1 w-7 h-7"/>Crea Carta</Button>
-        </div>
-        <div class="button-list">
-            <form
-                class="h-16 w-full"
-                method="POST"
-                action="/logout"
-                use:enhance
-            >
-                <Button type="submit" gradient color="blue" class="h-full w-full text-lg"><Icon.ArrowLeftOnRectangle class="mr-2 -ml-1 w-7 h-7"/>Logout</Button>
-            </form>
         </div>
     </div>
 </div>

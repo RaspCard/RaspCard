@@ -4,12 +4,11 @@
     import type { PageData } from './$types';
     import { Button, Modal, Listgroup, Input, Label, Radio } from 'flowbite-svelte';
     import * as Icon from 'svelte-heros-v2'
-    import HeadWithButtons from '$lib/components/HeadWithButtons.svelte';
     import BaseCard from '$lib/components/BaseCard.svelte';
     import ListItem from '$lib/components/ListItem.svelte';
 
     export let data: PageData;
-    $: ({ user, currentAdmin } = data );
+    $: ({ user } = data );
 
     let list = [
         { name: "Made in Abyss 11", status: "to be shipped soon" },
@@ -28,8 +27,7 @@
 </script>
 
 
-<div class="container-raspcard b-d">
-    <HeadWithButtons establishment={currentAdmin.establishmentName} seller={currentAdmin.name} userPage={true}/>
+<div class="container-raspcard">
     <div class="container-content">
         <div style="width: 30vw">
             <div> <!-- Top card -->

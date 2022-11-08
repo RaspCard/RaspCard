@@ -14,8 +14,7 @@
 </script>
 
 <Scanner/>
-<div class="container-raspcard b-d">
-    <HeadWithButtons establishment={currentAdmin.establishmentName} seller={currentAdmin.name}/>
+<div class="container-raspcard">
     <div class="mr-4 ml-4">
         <Input bind:value={searchInput} placeholder="Ricerca" class="w-full"/>
     </div>
