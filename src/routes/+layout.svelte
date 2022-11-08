@@ -1,5 +1,7 @@
 <script>
   import "../app.postcss";
+  import Sidebar from "$lib/components/Sidebar.svelte";
+  import { page } from '$app/stores';
 </script>
 
 <svelte:head>
@@ -7,5 +9,12 @@
 </svelte:head>
 
 <main class="b-d">
-  <slot />
+  {#if $page.url.pathname === '/login'}
+    <slot />
+  {:else}
+    <Sidebar establishment={$page.data.currentAdmin.establishmentName} seller={$page.data.currentAdmin.name}>
+      <slot />
+    </Sidebar>
+  {/if}
+
 </main>
