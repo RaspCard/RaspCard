@@ -14,6 +14,7 @@
 
 <div class="container-raspcard">
     <form
+        on:keypress={(event) => event.key !== 'Enter'}
         class="form-container"
         method="POST"
         use:enhance={() => {
