@@ -20,7 +20,7 @@
 
     export let establishment: string | undefined;
     export let seller: string | undefined;
-    export let divClass: string | undefined;
+    export let divClass: string = "";
     
     let transitionParams = {
         x: -320,
@@ -96,7 +96,7 @@
                     </div>
                     <div class="mt-4 mb-4 p-2 bg-gray-600 rounded-md">
                         <div class="text-center">
-                            <Heading tag="h5" color="text-gray-200">{establishment.toUpperCase()}</Heading>
+                            <Heading tag="h5" color="text-gray-200">{establishment?.toUpperCase()}</Heading>
                         </div>
                         <div class="flex flex-row justify-between mr-4 ml-4">
                             <P weight="semibold" color="text-gray-200">Utente:</P>
@@ -136,7 +136,7 @@
             </SidebarWrapper>
         </Sidebar>
     </Drawer>
-    <div class={divClass}">
+    <div class={divClass}>
         <slot />
     </div>
 </div>
