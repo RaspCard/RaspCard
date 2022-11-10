@@ -109,7 +109,7 @@
                             <Icon.Home/>
                         </svelte:fragment>
                     </SidebarItem>
-                    <SidebarItem label="Utenti" href='/users/' active={activeURL === "/users"}>
+                    <SidebarItem label="Utenti" href='/users/' active={activeURL.startsWith("/users")}>
                         <svelte:fragment slot="icon">
                             <Icon.Users/>
                         </svelte:fragment>
