@@ -91,7 +91,7 @@
 <!-- Delete modal -->
 <Modal bind:open={deleteModal} size="sm" autoclose={false}>
     <form
-        on:keypress={e => e.key === 'Enter'}
+        
         method="POST"
         action="?/delete"
         class="flex flex-col space-y-6"
