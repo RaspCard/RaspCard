@@ -20,7 +20,8 @@
 
     export let establishment: string | undefined;
     export let seller: string | undefined;
-    export let divClass: string = "";
+    export let divClass: string = "w-full lg:w-[80%] xl:w-[87%]";
+    export let activeURL: string;
     
     let transitionParams = {
         x: -320,
@@ -62,7 +63,6 @@
     }
 </script>
 
-
 <svelte:window bind:innerWidth={width} />
 
 {#if width < breakPoint}
@@ -85,9 +85,10 @@
         {transitionParams}
         bind:hidden={drawerHidden}
         bind:activateClickOutside
+        width="w-64 lg:w-[20%] xl:w-[13%]"
         id="sidebar"
     >
-        <Sidebar asideClass="w-64 h-full">
+        <Sidebar asideClass="w-full h-full">
             <SidebarWrapper divClass="flex flex-col items-center justify-between w-full h-full bg-gray-100 p-4">
                 <SidebarGroup ulClass="w-full">
                     <div class="max-md:flex max-md:items-center">
@@ -98,22 +99,22 @@
                         <div class="text-center">
                             <Heading tag="h5" color="text-gray-200">{establishment?.toUpperCase()}</Heading>
                         </div>
-                        <div class="flex flex-row justify-between mr-4 ml-4">
+                        <div class="flex flex-row justify-between mr-[10%] ml-[10%]">
                             <P weight="semibold" color="text-gray-200">Utente:</P>
                             <P weight="bold" color="text-gray-200">{seller}</P>
                         </div>
                     </div>
-                    <SidebarItem label="Home" href='/'>
+                    <SidebarItem label="Home" href='/' active={activeURL === "/"}>
                         <svelte:fragment slot="icon">
                             <Icon.Home/>
                         </svelte:fragment>
                     </SidebarItem>
-                    <SidebarItem label="Utenti" href='/users/'>
+                    <SidebarItem label="Utenti" href='/users/' active={activeURL === "/users"}>
                         <svelte:fragment slot="icon">
                             <Icon.Users/>
                         </svelte:fragment>
                     </SidebarItem>
-                    <SidebarItem label="Crea una carta" href='/create/'>
+                    <SidebarItem label="Crea una carta" href='/create/' active={activeURL === "/create"}>
                         <svelte:fragment slot="icon">
                             <Icon.UserPlus/>
                         </svelte:fragment>
