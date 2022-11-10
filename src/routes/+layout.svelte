@@ -12,9 +12,8 @@
   {#if $page.url.pathname === '/login'}
     <slot />
   {:else}
-    <Sidebar establishment={$page.data.currentAdmin.establishmentName} seller={$page.data.currentAdmin.name}>
+    <Sidebar establishment={$page.data.currentAdmin.establishmentName} seller={$page.data.currentAdmin.name} activeURL={$page.url.pathname}>
       <slot />
     </Sidebar>
   {/if}
-
 </main>
