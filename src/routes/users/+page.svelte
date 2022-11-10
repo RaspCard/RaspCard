@@ -13,7 +13,7 @@
 </script>
 
 <Scanner/>
-<div class="container-raspcard">
+<div class="container-raspcard m-4">
     <div class="mr-4 ml-4">
         <Input bind:value={searchInput} placeholder="Ricerca" class="w-full"/>
     </div>
