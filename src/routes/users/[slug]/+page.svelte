@@ -91,7 +91,6 @@
 <!-- Delete modal -->
 <Modal bind:open={deleteModal} size="sm" autoclose={false}>
     <form
-        
         method="POST"
         action="?/delete"
         class="flex flex-col space-y-6"
@@ -110,7 +109,6 @@
 <!-- Rollback modal -->
 <Modal bind:open={rollbackModal} size="sm" autoclose={false}>
     <form
-        on:keypress={e => e.key === 'Enter'}
         method="POST"
         action="?/rollback"
         class="flex flex-col space-y-6"
@@ -135,7 +133,7 @@
 <!-- Transaction modal -->
 <Modal bind:open={transactionModal} size="xs" autoclose={false}>
     <form
-        on:keypress={e => e.key === "Enter"}
+        on:keypress={(event) => (event.key == "Enter") ? event.preventDefault() : null}
         method="POST"
         action="?/balance"
         class="flex flex-col space-y-6"
