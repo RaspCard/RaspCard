@@ -2,10 +2,10 @@
     import { P, Heading, Card } from 'flowbite-svelte';
     import { goto } from '$app/navigation';
     import Scanner from "$lib/components/Scanner.svelte";
+    import type { PageData } from './$types';
 
-    
+    export let data: PageData;
 </script>
-
 
 <Scanner on:scan={(event) => goto(`/users/${event.detail.id}`)}/>
 <div class="m-4 flex flex-col items-start gap-4">
@@ -17,7 +17,7 @@
         <div class="flex flex-col items-center">
             <Heading tag="h5" class="mb-2">Utenti Attivi</Heading>
             <div class="flex space-x-3">
-                <P size="lg" weight="semibold">{"123"}</P>
+                <P size="lg" weight="semibold">{data.userLenght}</P>
             </div>
         </div>
       </Card>
