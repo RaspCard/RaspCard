@@ -4,14 +4,17 @@
     import { Button, Label, Input } from 'flowbite-svelte';
     import * as Icon from 'svelte-heros-v2';
     import Notification from '$lib/components/Notification.svelte';
+    import Scanner from '$lib/components/Scanner.svelte';
 
     export let form: ActionData;
 
+    let cardID: string = "";
     let checkedDate: Date | undefined;
 </script>
 
 <Notification success={form?.success} message={form?.message} checkedDate={checkedDate}/>
 
+<Scanner on:scan={(event) => cardID = event.detail.id}/>
 <div class="container-raspcard">
     <form
         on:keypress={(event) => (event.key == "Enter") ? event.preventDefault() : null}
@@ -38,7 +41,7 @@
                 <div class="w-full flex flex-col gap-4">
                     <Label class="space-y-2">
                         <span>ID carta</span>
-                        <Input autocomplete="off" required type="text" name="cardId" size="lg"/>
+                        <Input bind:value={cardID} autocomplete="off" required type="text" name="cardId" size="lg"/>
                     </Label>
                     <Label class="space-y-2">
                         <span>Nome</span>
