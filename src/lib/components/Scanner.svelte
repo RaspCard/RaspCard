@@ -17,5 +17,4 @@
     onDestroy(() => {
         if (browser) onScan.detachFrom(document);
     });
-
 </script>
