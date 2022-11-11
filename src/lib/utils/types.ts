@@ -1,5 +1,6 @@
 export interface BalanceRequest {
     amount?: string;
+    cashback?: string;
     operationType?: '+' | '-';
 };
 

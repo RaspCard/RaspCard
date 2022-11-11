@@ -1,13 +1,15 @@
 <script lang="ts">
     import { invalidateAll } from '$app/navigation';
     import { applyAction, enhance } from '$app/forms';
-    import type { PageData } from './$types';
+    import type { ActionData, PageData } from './$types';
     import { Button, Modal, Listgroup, Input, Label, Radio } from 'flowbite-svelte';
     import * as Icon from 'svelte-heros-v2'
     import BaseCard from '$lib/components/BaseCard.svelte';
     import ListItem from '$lib/components/ListItem.svelte';
+    import Notification from '$lib/components/Notification.svelte';
 
     export let data: PageData;
+    export let form: ActionData;
     $: ({ user } = data );
 
     let list = [
@@ -23,9 +25,12 @@
     let transactionModal: boolean = false;
     let rollbackModal: boolean = false;
 
+    let checkedDate: Date | undefined;
+
     let choice: string = "normal";
 </script>
 
+<Notification success={form?.success} message={form?.message} checkedDate={checkedDate}/>
 
 <div class="container-raspcard">
     <div class="container-content">
@@ -143,6 +148,7 @@
                 invalidateAll();
                 await applyAction(result);
                 transactionModal = false;
+                checkedDate = new Date();
             }
         }}
     >
@@ -151,6 +157,10 @@
             <Label class="space-y-2">
                 <span>Amount</span>
                 <Input min="0.01" step="0.01" type="number" name="amount" placeholder="0" required class="w-24"/>
+		    </Label>
+            <Label class="space-y-2">
+                <span>Cashback</span>
+                <Input min="0" max="100" type="number" name="cashback" placeholder="0" class="w-24"/>
 		    </Label>
             <div class="flex flex-col gap-1">
                 <Radio bind:group={choice} value="comics">Comics</Radio>

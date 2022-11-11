@@ -31,9 +31,10 @@ export const actions: Actions = {
 
         const data: BalanceRequest = Object.fromEntries(await request.formData());
         const amount = parseFloat(data?.amount || '');
+        const cashback = parseInt(data?.cashback || '0');
         const operationType = data?.operationType === '+' ? 1 : -1;
 
-        if(isNaN(amount)) {
+        if(isNaN(amount) || cashback < 0 || cashback > 100) {
             return invalid(400, {success: false, message: 'Saldo invalido'});
         }
 
@@ -46,7 +47,7 @@ export const actions: Actions = {
                     }
                 }, data: {
                     balance: {
-                        increment: amount * operationType
+                        increment: operationType === 1 ? amount + (amount/100 * cashback) : amount * operationType
                     }
                 }
             });
@@ -54,7 +55,7 @@ export const actions: Actions = {
             return invalid(400, {success: false, message: 'Qualcosa è andato storto nella richiesta'});
         }
 
-        return {success: true, message: '', balance: amount};
+        return {success: true, message: `Saldo aggiornato con successo: ${data?.operationType}${amount}€`};
     },
 
     async rollback({locals, params}) {
