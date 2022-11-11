@@ -1,6 +1,7 @@
 <script lang="ts">
-    import type { PageData } from './$types';
     import { Table, Input } from 'flowbite-svelte';
+    import { goto } from '$app/navigation';
+    import type { PageData } from './$types';
     import TableRowUser from '$lib/components/TableRowUser.svelte';
     import TableHeadUsers from '$lib/components/TableHeadUsers.svelte';
     import Scanner from "$lib/components/Scanner.svelte";
@@ -12,7 +13,7 @@
     $: dynamicUsers = users.filter(user => user.cardId.includes(searchInput));
 </script>
 
-<Scanner/>
+<Scanner on:scan={(event) => goto(`/users/${event.detail.id}`)}/>
 <div class="container-raspcard m-4">
     <div class="mr-4 ml-4">
         <Input bind:value={searchInput} placeholder="Ricerca" class="w-full"/>
