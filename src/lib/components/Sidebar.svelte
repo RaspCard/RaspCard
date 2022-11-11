@@ -104,21 +104,23 @@
                             <P weight="bold" color="text-gray-200">{seller}</P>
                         </div>
                     </div>
-                    <SidebarItem label="Home" href='/' active={activeURL === "/"}>
-                        <svelte:fragment slot="icon">
-                            <Icon.Home/>
-                        </svelte:fragment>
-                    </SidebarItem>
-                    <SidebarItem label="Utenti" href='/users/' active={activeURL.startsWith("/users")}>
-                        <svelte:fragment slot="icon">
-                            <Icon.Users/>
-                        </svelte:fragment>
-                    </SidebarItem>
-                    <SidebarItem label="Crea una carta" href='/create/' active={activeURL === "/create"}>
-                        <svelte:fragment slot="icon">
-                            <Icon.UserPlus/>
-                        </svelte:fragment>
-                    </SidebarItem>
+                    <div class="flex flex-col gap-2">
+                        <SidebarItem label="Home" href='/' active={activeURL === "/"} class="hover:bg-gray-200">
+                            <svelte:fragment slot="icon">
+                                <Icon.Home/>
+                            </svelte:fragment>
+                        </SidebarItem>
+                        <SidebarItem label="Utenti" href='/users/' active={activeURL.startsWith("/users")} class="hover:bg-gray-200">
+                            <svelte:fragment slot="icon">
+                                <Icon.Users/>
+                            </svelte:fragment>
+                        </SidebarItem>
+                        <SidebarItem label="Crea una carta" href='/create/' active={activeURL === "/create"} class="hover:bg-gray-200">
+                            <svelte:fragment slot="icon">
+                                <Icon.UserPlus/>
+                            </svelte:fragment>
+                        </SidebarItem>
+                    </div>
                 </SidebarGroup>
                 <SidebarGroup ulClass="w-full">
                     <form
@@ -127,7 +129,7 @@
                         use:enhance
                         bind:this={form}
                     >
-                        <SidebarItem on:click={() => form.requestSubmit()} label="Logout" aClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100">
+                        <SidebarItem on:click={() => form.requestSubmit()} label="Logout" aClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-200">
                             <svelte:fragment slot="icon">
                                 <Icon.ArrowLeftOnRectangle/>
                             </svelte:fragment>
