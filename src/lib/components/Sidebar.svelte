@@ -81,7 +81,7 @@
     <Drawer
         transitionType={width < breakPoint ? "fly" : undefined}
         backdrop={false}
-        divClass="lg:!static"
+        divClass="z-50 lg:!static"
         {transitionParams}
         bind:hidden={drawerHidden}
         bind:activateClickOutside
