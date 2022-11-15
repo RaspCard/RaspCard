@@ -8,7 +8,8 @@ export const load: PageServerLoad = async({ locals }) => {
     }
 
     const users = await db.user.findMany({
-        where: { establishmentId: locals.currentAdmin.establishmentId, active: true }
+        where: { establishmentId: locals.currentAdmin.establishmentId },
+        orderBy: { active: 'desc' }
     });
 
     return { users };
