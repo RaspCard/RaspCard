@@ -7,7 +7,7 @@
     import Scanner from "$lib/components/Scanner.svelte";
 
     export let data: PageData;
-    const { users } = data;
+    $: ({ users } = data);
 
     let searchInput = '';
     $: dynamicUsers = users.filter(user => user.cardId.includes(searchInput));
