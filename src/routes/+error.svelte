@@ -5,7 +5,7 @@
 
 <div class="flex flex-col gap-2 max-w-[20rem]">
     <div class="flex flex-row">
-        <P weight="thin" size="5xl" class="mr-2">
+        <P weight="thin" size="5xl" class="flex items-center mr-2">
             {$page.status}
         </P>
         <P weight="thin" size="2xl" class="flex items-center border-l-[1px] border-l-gray-400 pl-2">
@@ -18,5 +18,5 @@
             {/if}
         </P>
     </div>
-    <Button outline color="dark" href="/">Torna indietro!</Button>
+    <Button outline color="red" href="/">Torna indietro!</Button>
 </div>
