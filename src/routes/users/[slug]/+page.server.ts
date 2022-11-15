@@ -38,6 +38,24 @@ export const actions: Actions = {
             return invalid(400, {success: false, message: 'Saldo invalido'});
         }
 
+        const user = await db.user.findUnique({
+            where: {
+                cardId_establishmentId: {
+                    cardId: params.slug,
+                    establishmentId: locals.currentAdmin.establishmentId
+                }
+            },
+            include: {
+                rollback: true
+            }
+        });
+
+        if(!user) {
+            return invalid(404, {success: false, message: 'Utente non trovato'});
+        }
+        
+        console.log(user);
+
         try {
             await db.user.update({
                 where: {
@@ -45,7 +63,8 @@ export const actions: Actions = {
                         cardId: params.slug,
                         establishmentId: locals.currentAdmin.establishmentId
                     }
-                }, data: {
+                },
+                data: {
                     balance: {
                         increment: operationType === 1 ? amount + (amount/100 * cashback) : amount * operationType
                     }
@@ -62,6 +81,47 @@ export const actions: Actions = {
         if(!locals.currentAdmin) {
             return invalid(401);
         }
+
+        const currentRollback = await db.user.findUnique({
+            where: {
+                cardId_establishmentId: {
+                    cardId: params.slug,
+                    establishmentId: locals.currentAdmin.establishmentId
+                }
+            },
+            include: {
+                rollback: true
+            }
+        });
+
+        if(!currentRollback?.rollback) {
+            return invalid(400, {success: false, message: 'Nessun rollback trovato'});
+        }
+
+        try {
+            await db.user.update({
+                where: {
+                    cardId_establishmentId: {
+                        cardId: params.slug,
+                        establishmentId: locals.currentAdmin.establishmentId
+                    }
+                }, data: {
+                    balance: {
+                        increment: currentRollback.rollback.balance
+                    },
+                    func: {
+                        set: currentRollback.rollback.func
+                    },
+                    rollback: {
+                        delete: true
+                    }
+                }
+            });
+        } catch {
+            return invalid(400, {success: false, message: 'Qualcosa è andato storto nella richiesta'});
+        }
+
+        return {success: true, message: 'Rollback effettuato con successo'};
 
     },
 
@@ -87,5 +147,29 @@ export const actions: Actions = {
         }
 
         throw redirect(302, '/users');
+    },
+
+    async active({ locals, params }) {
+        if(!locals.currentAdmin) {
+            return invalid(401);
+        }
+
+        try {
+            await db.user.update({
+                where: {
+                    cardId_establishmentId: {
+                        cardId: params.slug,
+                        establishmentId: locals.currentAdmin.establishmentId
+                    }
+                },
+                data: {
+                    active: true
+                }
+            });
+        } catch {
+            return invalid(400, {success: false, message: "Errore nella richiesta"});
+        }
+
+        return {success: true, message: "Utente riattivato con successo"};
     }
 }
