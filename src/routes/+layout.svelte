@@ -9,11 +9,11 @@
 </svelte:head>
 
 <main class="b-d">
-  {#if $page.url.pathname === '/login' || $page.status !== 200}
+  {#if $page.url.pathname === '/login' || $page.status === 404 || $page.status === 500}
     <div class="h-full w-full flex justify-center items-center">
       <slot />
     </div>
-  {:else if $page.status === 200}
+  {:else}
     <Sidebar establishment={$page.data.currentAdmin.establishmentName} seller={$page.data.currentAdmin.name} activeURL={$page.url.pathname}>
       <slot />
     </Sidebar>
