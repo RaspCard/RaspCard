@@ -27,7 +27,7 @@ model User {
   cardId          String
   name            String?
   surname         String?
-  phoneNumber     Int?
+  phoneNumber     String?
   @@unique([cardId, establishmentId])
 
   // data
@@ -56,12 +56,12 @@ model Establishment {
 
 model Rollback {
   id              Int @id @default(autoincrement())
-  balance         Float
+  balance         Float @default(0)
   func            String?
-  createdAt       DateTime @default(now())
+  active          Boolean @default(false)
   updatedAt       DateTime @updatedAt
 
   // Relation between User and Rollback many-to-1
-  user            User @relation(fields: [userId], references: [id])
+  user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId          Int @unique
 }
