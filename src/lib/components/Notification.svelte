@@ -27,15 +27,13 @@
     }
 </script>
 
-<div class="flex justify-center w-screen">
-    <Toast simple class="mb-2 absolute w-96 top-20 shadow" color={success ? 'green': 'red'} transition={fly} params="{{x: 200}}" bind:open={show}> 
-        <svelte:fragment slot="icon">
-            {#if success}
-                <Icon.Check class="w-5 h-5"/>
-            {:else}
-                <Icon.XMark class="w-5 h-5"/>
-            {/if}
-        </svelte:fragment>
-        {message}
-    </Toast>
-</div>
+<Toast simple class="absolute w-96 right-10 top-10 shadow" color={success ? 'green': 'red'} transition={fly} params="{{x: 200}}" bind:open={show}> 
+    <svelte:fragment slot="icon">
+        {#if success}
+            <Icon.Check class="w-5 h-5"/>
+        {:else}
+            <Icon.XMark class="w-5 h-5"/>
+        {/if}
+    </svelte:fragment>
+    {message}
+</Toast>
