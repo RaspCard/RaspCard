@@ -1,9 +1,13 @@
 <script lang="ts">
-    import { Card, Button, Label, Input, Heading } from "flowbite-svelte";
-    import Scanner from '$lib/components/Scanner.svelte';
+    import { Card, Button, Label, Input, Heading, Alert, Span } from "flowbite-svelte";
+    import * as Icons from "svelte-heros-v2";
     import { applyAction, enhance } from "$app/forms";
     import { invalidateAll } from "$app/navigation";
+    import type { ActionData } from "./$types";
+    import Scanner from '$lib/components/Scanner.svelte';
+    
     let input: string = "";
+    export let form: ActionData;
 </script>
 
 <Scanner on:scan={(event) => input=event.detail.id}/>
@@ -28,6 +32,14 @@
             <span>PIN</span>
             <Input type="password" name="password" placeholder="•••••" required/>
         </Label>
+        {#if form?.success === false}
+            <Alert color="red" class="p-4">
+                <div class="w-full flex flex-row gap-2">
+                    <Span class="text-red-800"><Icons.ExclamationTriangle class="w-5 h-5"/></Span>
+                    <Span class="text-red-800">{form?.message}</Span>
+                </div>
+            </Alert>
+        {/if}
         <Button type="submit" outline color="blue" class="w-full">Login to your account</Button>
     </form>
 </Card>
