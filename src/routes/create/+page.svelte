@@ -53,7 +53,7 @@
                     </Label>
                     <Label class="space-y-2">
                         <span>Numero di Telefono</span>
-                        <Input autocomplete="off" type="number" name="phoneNumber" size="lg"/>
+                        <Input autocomplete="off" type="tel" name="phoneNumber" size="lg"/>
                     </Label>
                 </div>
                 <div class="flex flex-col gap-4">

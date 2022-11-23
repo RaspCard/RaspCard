@@ -5,7 +5,7 @@
     export let cardId: string;
     export let name: string | null;
     export let surname: string | null;
-    export let phoneNumber: number | null;
+    export let phoneNumber: string | null;
     export let active: boolean;
 </script>
 
