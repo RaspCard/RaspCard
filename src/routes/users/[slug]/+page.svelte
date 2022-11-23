@@ -2,7 +2,7 @@
     import { invalidateAll } from '$app/navigation';
     import { applyAction, enhance } from '$app/forms';
     import type { ActionData, PageData } from './$types';
-    import { Button, Modal, Listgroup, Input, Label, Radio } from 'flowbite-svelte';
+    import { Button, Modal, Listgroup, Input, Label, Radio, Heading } from 'flowbite-svelte';
     import * as Icon from 'svelte-heros-v2'
     import BaseCard from '$lib/components/BaseCard.svelte';
     import ListItem from '$lib/components/ListItem.svelte';
@@ -53,18 +53,23 @@
             </div>
         </div>
         <div style="width: 30vw"> <!-- Last Transaction card -->
-            <BaseCard title="Last Transaction">
-                <ul>
-                    <ListItem fieldName={"Transaction"} fieldValue={null}/>
-                    <ListItem fieldName={"Date"} fieldValue={null} border={true}/>
-                    <ListItem fieldName={"Field"} fieldValue={null} border={true}/>
-                    <ListItem fieldName={"Field"} fieldValue={null} border={true}/>
-                </ul>
+            <BaseCard title="Ultima transazione">
+                {#if user.rollback?.active}
+                    <ul>
+                        <ListItem fieldName={"Vecchio saldo"} fieldValue={user.rollback?.balance}/>
+                        <ListItem fieldName={"Ultima transazione"} fieldValue={user.rollback?.updatedAt} border={true}/>
+                        {#each [] as item}
+                            <ListItem fieldName={""} fieldValue={null} border={true}/>
+                        {/each}
+                    </ul>
+                {:else}
+                    <Heading tag="h6">Nessuna transazione disponibile</Heading>
+                {/if}
             </BaseCard>
         </div>
-        <div style="width: 40vw"> <!-- Func card -->
+        <div class="w-[40vw]"> <!-- Func card -->
             <BaseCard title="Field">
-                <div class="overflow-scroll">
+                <div class="overflow-scroll scrollbar-none">
                     <ul>
                         <ListItem fieldName={"Field"} fieldValue={null}/>
                         <ListItem fieldName={"Field"} fieldValue={null} border={true}/>

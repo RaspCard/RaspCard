@@ -14,6 +14,9 @@ export const load: PageServerLoad = async({ locals, params }) => {
             establishmentId: locals.currentAdmin.establishmentId,
             active: true
         },
+        include: {
+            rollback: true
+        }
     });
 
     if(!user) {
@@ -53,8 +56,6 @@ export const actions: Actions = {
         if(!user) {
             return invalid(404, {success: false, message: 'Utente non trovato'});
         }
-        
-        console.log(user);
 
         try {
             await db.user.update({
@@ -67,6 +68,13 @@ export const actions: Actions = {
                 data: {
                     balance: {
                         increment: operationType === 1 ? amount + (amount/100 * cashback) : amount * operationType
+                    },
+                    rollback: {
+                        update: {
+                            active: true,
+                            balance: user.balance,
+                            func: user.func
+                        }
                     }
                 }
             });
@@ -94,7 +102,7 @@ export const actions: Actions = {
             }
         });
 
-        if(!currentRollback?.rollback) {
+        if(!currentRollback || !currentRollback.rollback?.active) {
             return invalid(400, {success: false, message: 'Nessun rollback trovato'});
         }
 
@@ -107,13 +115,15 @@ export const actions: Actions = {
                     }
                 }, data: {
                     balance: {
-                        increment: currentRollback.rollback.balance
+                        set: currentRollback.rollback.balance
                     },
                     func: {
                         set: currentRollback.rollback.func
                     },
                     rollback: {
-                        delete: true
+                        update: {
+                            active: false
+                        }
                     }
                 }
             });
@@ -122,7 +132,6 @@ export const actions: Actions = {
         }
 
         return {success: true, message: 'Rollback effettuato con successo'};
-
     },
 
     async delete({ locals, params }) {
