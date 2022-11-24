@@ -7,6 +7,8 @@
     const dispatch = createEventDispatcher();
 
     onMount(() => {
+        if (onScan.isAttachedTo(document)) return;
+
         onScan.attachTo(document, {
             onScan: function(sScanned: string, iQty: number) {
                 dispatch("scan", { id: sScanned });
@@ -15,6 +17,6 @@
     });
 
     onDestroy(() => {
-        if (browser) onScan.detachFrom(document);
+        if (browser && onScan.isAttachedTo(document)) onScan.detachFrom(document);
     });
 </script>
