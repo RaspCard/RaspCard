@@ -178,10 +178,6 @@
                 <span>Cashback</span>
                 <Input min="0" max="100" type="number" name="cashback" placeholder="0" class="w-24"/>
 		    </Label>
-            <div class="flex flex-col gap-1">
-                <Radio bind:group={choice} value="comics">Comics</Radio>
-                <Radio bind:group={choice} value="normal">Normal</Radio>
-            </div>
         </div>
 		<Button type="submit" name="operationType" value="-" gradient color="red" class="w-full">-</Button>
 		<Button type="submit" name="operationType" value="+" gradient color="green" class="w-full">+</Button>
