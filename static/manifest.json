@@ -1,10 +1,21 @@
 {
     "name": "RaspCard",
     "short_name": "RaspCard",
-    "start_url": ".",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#fff",
+    "theme-color": "#fff",
     "description": "A hackable fidelty card system.",
-    "icons": [],
+    "icons": [
+        {
+            "src": "/img/Logo512Clear.png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "/img/logo_maskable_x512.png",
+            "sizes": "512x512",
+            "purpose": "maskable"
+        }
+    ],
     "shortcuts": []
 }
