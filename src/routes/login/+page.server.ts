@@ -22,6 +22,10 @@ export const actions: Actions = {
             return invalid(400, {success: false, message: 'Invalid user'});
         }
 
+        if (user.pin !== parseInt(data.get('password')?.toString() ?? '')) { // temporary
+            return invalid(400, {success: false, message: 'Invalid pin'});
+        }
+
 		cookies.set('session', user.id, {
 			path: '/',
             secure: true,
