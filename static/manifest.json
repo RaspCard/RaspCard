@@ -5,7 +5,6 @@
     "display": "standalone",
     "background_color": "#fff",
     "theme-color": "#fff",
-    "description": "A hackable fidelty card system.",
     "icons": [
         {
             "src": "/img/Logo512Clear.png",
@@ -16,6 +15,5 @@
             "sizes": "512x512",
             "purpose": "maskable"
         }
-    ],
-    "shortcuts": []
+    ]
 }
