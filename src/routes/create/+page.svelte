@@ -52,17 +52,7 @@
                 </Label>
                 <Label class="space-y-2">
                     <Span>Numero di Telefono</Span>
-                    <Input autocomplete="off" type="tel" name="phoneNumber" placeholder="+39" value="+39" size="lg"/>
-                </Label>
-            </div>
-            <div class="flex flex-col gap-4">
-                <Label class="space-y-2">
-                    <Span>Deposito iniziale</Span>
-                    <Input autocomplete="off" min="0" step="0.01" type="number" name="deposit" placeholder="0" size="lg"/>
-                </Label>
-                <Label class="space-y-2">
-                    <Span>Cashback</Span>
-                    <Input autocomplete="off" min="0" max="100" type="number" name="cashback" placeholder="0" size="lg"/>
+                    <Input autocomplete="off" type="tel" name="phoneNumber" placeholder="+39" size="lg"/>
                 </Label>
             </div>
         </div>

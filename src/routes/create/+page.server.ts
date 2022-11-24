@@ -36,9 +36,6 @@ export const actions: Actions = {
             return invalid(400, {success: false, message: "L'utente esiste già"});
         }
 
-        const parsedDeposit = parseFloat(data.amount || '');
-        const cashback = parseInt(data?.cashback || '0');
-
         if(data.phoneNumber && data.phoneNumber !== '') {
             const user = await db.user.findFirst({
                 where: {
@@ -58,7 +55,6 @@ export const actions: Actions = {
                 name: data.name || null,
                 surname: data.surname || null,
                 phoneNumber: data.phoneNumber || null,
-                balance: isNaN(parsedDeposit) ? 0 : parsedDeposit + (parsedDeposit/100 * cashback),
                 establishmentId: locals.currentAdmin.establishmentId,
                 rollback: {
                     create: {}

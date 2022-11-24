@@ -6,8 +6,6 @@ export interface BalanceRequest {
 
 export interface CardRequest {
     cardId?: string;
-    amount?: string;
-    cashback?: string;
     name?: string;
     surname?: string;
     phoneNumber?: string;
