@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Card, Button, Label, Input, Heading, Alert, Span } from "flowbite-svelte";
-    import * as Icons from "svelte-heros-v2";
+    import { ExclamationTriangle } from "svelte-heros-v2";
     import { applyAction, enhance } from "$app/forms";
     import { invalidateAll } from "$app/navigation";
     import type { ActionData } from "./$types";
@@ -35,7 +35,7 @@
         {#if form?.success === false}
             <Alert color="red" class="p-4">
                 <div class="w-full flex flex-row gap-2">
-                    <Span class="text-red-800"><Icons.ExclamationTriangle class="w-5 h-5"/></Span>
+                    <Span class="text-red-800"><ExclamationTriangle class="w-5 h-5"/></Span>
                     <Span class="text-red-800">{form?.message}</Span>
                 </div>
             </Alert>

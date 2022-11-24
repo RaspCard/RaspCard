@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Button, Label, Input, Heading, P, Span } from 'flowbite-svelte';
-    import * as Icon from 'svelte-heros-v2';
+    import { Plus } from 'svelte-heros-v2';
     import type { ActionData } from './$types';
     import { applyAction, enhance } from '$app/forms';
     import Notification from '$lib/components/Notification.svelte';
@@ -58,7 +58,7 @@
         </div>
     </div>
     <div class="absolute bottom-4 right-4">
-        <Button type="submit" gradient color="green" class="w-72 h-20 text-lg"><Icon.Plus class="mr-2 -ml-1 w-7 h-7"/>Crea la Carta</Button>
+        <Button type="submit" gradient color="green" class="w-72 h-20 text-lg"><Plus class="mr-2 -ml-1 w-7 h-7"/>Crea la Carta</Button>
     </div>
 </form>
 

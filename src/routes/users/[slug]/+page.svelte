@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { Button, Modal, Listgroup, Input, Label, Radio, Heading, Span, Hr } from 'flowbite-svelte';
-    import * as Icon from 'svelte-heros-v2'
+    import { Button, Modal, Listgroup, Input, Label, Heading, Span, Hr } from 'flowbite-svelte';
+    import { Trash, ArrowPathRoundedSquare, CurrencyEuro, ExclamationTriangle } from 'svelte-heros-v2'
     import type { ActionData, PageData } from './$types';
     import { applyAction, enhance } from '$app/forms';
     import { invalidateAll } from '$app/navigation';
@@ -87,10 +87,10 @@
         </div>
     </div>
     <div class="m-4 flex flex-row align-middle justify-between">
-        <Button on:click={() => deleteModal = true} gradient color="red" class="w-56"><Icon.Trash/> Delete User</Button>
+        <Button on:click={() => deleteModal = true} gradient color="red" class="w-56"><Trash/> Delete User</Button>
         <div class="flex flex-row align-middle gap-4">
-            <Button on:click={() => rollbackModal = user.rollback?.active ? true : false} gradient color="blue" class="w-56"><Icon.ArrowPathRoundedSquare/>Rollback</Button>
-            <Button on:click={() => transactionModal = true} gradient color="blue" class="w-56"><Icon.CurrencyEuro/>New Transaction</Button>    
+            <Button on:click={() => rollbackModal = user.rollback?.active ? true : false} gradient color="blue" class="w-56"><ArrowPathRoundedSquare/>Rollback</Button>
+            <Button on:click={() => transactionModal = true} gradient color="blue" class="w-56"><CurrencyEuro/>New Transaction</Button>    
         </div>
     </div>
 </div>
@@ -105,7 +105,7 @@
         use:enhance
     >
         <div class="text-center">
-            <Icon.ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"/>
+            <ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"/>
             <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Sei sicuro di voler eliminare quest'utente? Quest'operazione è irreversibile</h3>
             <Button type="submit" color="red" class="mr-2">Yes, I'm sure</Button>
             <Button on:click={() => deleteModal = false} color='alternative'>No, cancel</Button>
@@ -129,7 +129,7 @@
         }}
     >
         <div class="text-center">
-            <Icon.ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-red-900"/>
+            <ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-red-900"/>
             <Heading tag="h5" class="font-normal text-gray-500">Sei sicuro di voler annullare la precedente transazione?</Heading>
             <Hr class="my-4" height="h-px" />
             <div class="flex flex-col gap-2">

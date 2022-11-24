@@ -13,7 +13,7 @@
         P, 
         Heading
     } from 'flowbite-svelte';
-    import * as Icon from 'svelte-heros-v2';
+    import { Cog, Home, Users, UserPlus, ArrowLeftOnRectangle } from 'svelte-heros-v2';
     import { sineIn } from 'svelte/easing';
     import { onMount } from 'svelte';
     import { enhance } from '$app/forms';
@@ -69,7 +69,7 @@
     <Navbar>
         <NavHamburger on:click={() => drawerHidden=false} btnClass="ml-3 lg:hidden" />
         <NavBrand href="/" class="lg:ml-64">
-            <Icon.Cog/>
+            <Cog/>
             <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white pl-4">
                 RaspCard
             </span>
@@ -107,17 +107,17 @@
                     <div class="flex flex-col gap-2">
                         <SidebarItem label="Home" href='/' active={activeURL === "/"} class="hover:!bg-gray-200">
                             <svelte:fragment slot="icon">
-                                <Icon.Home/>
+                                <Home/>
                             </svelte:fragment>
                         </SidebarItem>
                         <SidebarItem label="Utenti" href='/users/' active={activeURL.startsWith("/users")} class="hover:!bg-gray-200">
                             <svelte:fragment slot="icon">
-                                <Icon.Users/>
+                                <Users/>
                             </svelte:fragment>
                         </SidebarItem>
                         <SidebarItem label="Crea una carta" href='/create/' active={activeURL === "/create"} class="hover:!bg-gray-200">
                             <svelte:fragment slot="icon">
-                                <Icon.UserPlus/>
+                                <UserPlus/>
                             </svelte:fragment>
                         </SidebarItem>
                     </div>
@@ -131,7 +131,7 @@
                     >
                         <SidebarItem on:click={() => form.requestSubmit()} label="Logout" aClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:!bg-gray-200">
                             <svelte:fragment slot="icon">
-                                <Icon.ArrowLeftOnRectangle/>
+                                <ArrowLeftOnRectangle/>
                             </svelte:fragment>
                         </SidebarItem>
                     </form>
