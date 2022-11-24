@@ -10,7 +10,7 @@
     let show: boolean = false;
     
     function timeout() {
-        let counter = 6;
+        let counter = 3;
 
         const trigger = () : NodeJS.Timeout | void => {
             if (--counter > 0)
@@ -27,7 +27,7 @@
     }
 </script>
 
-<Toast simple class="absolute w-96 right-10 top-10 shadow" color={success ? 'green': 'red'} transition={fly} params="{{x: 200}}" bind:open={show}> 
+<Toast simple class="fixed w-96 right-10 top-10 shadow" color={success ? 'green': 'red'} transition={fly} params="{{x: 200}}" bind:open={show}> 
     <svelte:fragment slot="icon">
         {#if success}
             <Icon.Check class="w-5 h-5"/>
