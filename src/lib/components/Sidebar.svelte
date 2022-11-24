@@ -93,7 +93,7 @@
                 <SidebarGroup ulClass="w-full">
                     <div class="max-md:flex max-md:items-center">
                         <SidebarBrand {site} />
-                        <CloseButton on:click={() => drawerHidden=true} class="mb-4 dark:text-white lg:hidden" />
+                        <CloseButton on:click={() => drawerHidden=true} class="mb-4 lg:hidden" />
                     </div>
                     <div class="mt-4 mb-4 p-2 bg-gray-600 rounded-md">
                         <div class="text-center">
@@ -105,17 +105,17 @@
                         </div>
                     </div>
                     <div class="flex flex-col gap-2">
-                        <SidebarItem label="Home" href='/' active={activeURL === "/"} class="hover:bg-gray-300">
+                        <SidebarItem label="Home" href='/' active={activeURL === "/"} class="hover:!bg-gray-200">
                             <svelte:fragment slot="icon">
                                 <Icon.Home/>
                             </svelte:fragment>
                         </SidebarItem>
-                        <SidebarItem label="Utenti" href='/users/' active={activeURL.startsWith("/users")} class="hover:bg-gray-300">
+                        <SidebarItem label="Utenti" href='/users/' active={activeURL.startsWith("/users")} class="hover:!bg-gray-200">
                             <svelte:fragment slot="icon">
                                 <Icon.Users/>
                             </svelte:fragment>
                         </SidebarItem>
-                        <SidebarItem label="Crea una carta" href='/create/' active={activeURL === "/create"} class="hover:bg-gray-300">
+                        <SidebarItem label="Crea una carta" href='/create/' active={activeURL === "/create"} class="hover:!bg-gray-200">
                             <svelte:fragment slot="icon">
                                 <Icon.UserPlus/>
                             </svelte:fragment>
@@ -129,7 +129,7 @@
                         use:enhance
                         bind:this={form}
                     >
-                        <SidebarItem on:click={() => form.requestSubmit()} label="Logout" aClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-300">
+                        <SidebarItem on:click={() => form.requestSubmit()} label="Logout" aClass="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:!bg-gray-200">
                             <svelte:fragment slot="icon">
                                 <Icon.ArrowLeftOnRectangle/>
                             </svelte:fragment>
