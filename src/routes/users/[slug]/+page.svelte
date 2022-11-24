@@ -32,7 +32,7 @@
 
 <Notification success={form?.success} message={form?.message} checkedDate={checkedDate}/>
 
-<div class="container-raspcard">
+<div class="flex flex-col h-full">
     <div class="container-content">
         <div style="width: 30vw">
             <div> <!-- Top card -->
@@ -86,10 +86,10 @@
             </BaseCard>
         </div>
     </div>
-    <div class="m-4 bottom-buttons-container">
+    <div class="m-4 flex flex-row align-middle justify-between">
         <Button on:click={() => deleteModal = true} gradient color="red" class="w-56"><Icon.Trash/> Delete User</Button>
-        <div class="container-buttons">
-            <Button on:click={() => rollbackModal = true} gradient color="blue" class="w-56"><Icon.ArrowPathRoundedSquare/>Rollback</Button>
+        <div class="flex flex-row align-middle gap-4">
+            <Button on:click={() => rollbackModal = user.rollback?.active ? true : false} gradient color="blue" class="w-56"><Icon.ArrowPathRoundedSquare/>Rollback</Button>
             <Button on:click={() => transactionModal = true} gradient color="blue" class="w-56"><Icon.CurrencyEuro/>New Transaction</Button>    
         </div>
     </div>
@@ -169,7 +169,7 @@
         }}
     >
 		<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">New Transaction</h3>
-		<div class="container-transaction-conent">
+		<div class="container-transaction-content">
             <Label class="space-y-2">
                 <span>Amount</span>
                 <Input min="0.01" step="0.01" type="number" name="amount" placeholder="0" required class="w-24"/>
@@ -190,39 +190,12 @@
 
 
 <style>
-    .container-raspcard {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .container-buttons {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-
-        gap: 1rem;
-    }
-
     .container-content {
-        height: 80vh;
+        height: 100%;
         width: 100%;
 
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
-    }
-
-    .bottom-buttons-container {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .container-transaction-conent {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
     }
 </style>
