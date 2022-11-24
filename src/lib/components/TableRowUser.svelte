@@ -17,7 +17,7 @@
     <TableBodyCell>{phoneNumber}</TableBodyCell>
     <TableBodyCell>
         {#if active}
-            <Button data-sveltekit-prefetch href={`/users/${cardId}`} outline>
+            <Button data-sveltekit-prefetch="" href={`/users/${cardId}`} outline>
                 Modifica
             </Button>
         {:else}
