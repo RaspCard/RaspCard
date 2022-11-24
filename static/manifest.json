@@ -1,7 +1,7 @@
 {
     "name": "RaspCard",
     "short_name": "RaspCard",
-    "start_url": "/",
+    "start_url": "/login",
     "display": "standalone",
     "background_color": "#fff",
     "theme-color": "#fff",
