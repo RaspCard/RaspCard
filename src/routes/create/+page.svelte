@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { applyAction, enhance } from '$app/forms';
-    import type { ActionData } from './$types';
-    import { Button, Label, Input } from 'flowbite-svelte';
+    import { Button, Label, Input, Heading, P, Span } from 'flowbite-svelte';
     import * as Icon from 'svelte-heros-v2';
+    import type { ActionData } from './$types';
+    import { applyAction, enhance } from '$app/forms';
     import Notification from '$lib/components/Notification.svelte';
     import Scanner from '$lib/components/Scanner.svelte';
 
@@ -15,68 +15,65 @@
 <Notification success={form?.success} message={form?.message} checkedDate={checkedDate}/>
 
 <Scanner on:scan={(event) => cardID = event.detail.id}/>
-<div class="container-raspcard">
-    <form
-        on:keypress={(event) => (event.key == "Enter") ? event.preventDefault() : null}
-        class="form-container"
-        method="POST"
-        use:enhance={() => {
-            return async ({ result, form }) => {
-                if(result.type === "success") form.reset();
-                
-                checkedDate = new Date();
+<form
+    on:keypress={(event) => (event.key == "Enter") ? event.preventDefault() : null}
+    class="form-container"
+    method="POST"
+    use:enhance={() => {
+        return async ({ result, form }) => {
+            if(result.type === "success") form.reset();
+            
+            checkedDate = new Date();
 
-                await applyAction(result);
-            }
-        }}
-    >
-        <div class="m-4 mt-6">
-            <div>
-                <h1 class="mb-4 text-4xl font-bold tracking-tight leading-none text-gray-900">Crea una carta</h1>
-                <p class="mb-6 text-lg font-normal text-gray-500">
-                    Tutti i campi sono facoltativi, ma per una gestione più semplice è preferibile l'inserimento di tutti i dati.
-                </p>
+            await applyAction(result);
+        }
+    }}
+>
+    <div class="m-4 mt-6">
+        <div>
+            <Heading tag="h2" class="mb-4 text-gray-700">Crea una carta</Heading>
+            <P size="lg" weight="normal" color="text-gray-500" class="mb-6">
+                Tutti i campi sono facoltativi, ma per una gestione più semplice è preferibile l'inserimento di tutti i dati.
+            </P>
+        </div>
+        <div class="container-content w-3/4">
+            <div class="w-full flex flex-col gap-4">
+                <Label class="space-y-2">
+                    <Span>ID carta</Span>
+                    <Input bind:value={cardID} autocomplete="off" required type="text" name="cardId" placeholder="ID numerico" size="lg"/>
+                </Label>
+                <Label class="space-y-2">
+                    <Span>Nome</Span>
+                    <Input autocomplete="off" type="text" name="name" placeholder="Nome" size="lg"/>
+                </Label>
+                <Label class="space-y-2">
+                    <Span>Cognome</Span>
+                    <Input autocomplete="off" type="text" name="surname" placeholder="Cognome" size="lg"/>
+                </Label>
+                <Label class="space-y-2">
+                    <Span>Numero di Telefono</Span>
+                    <Input autocomplete="off" type="tel" name="phoneNumber" placeholder="+39" value="+39" size="lg"/>
+                </Label>
             </div>
-            <div class="container-content w-3/4">
-                <div class="w-full flex flex-col gap-4">
-                    <Label class="space-y-2">
-                        <span>ID carta</span>
-                        <Input bind:value={cardID} autocomplete="off" required type="text" name="cardId" size="lg"/>
-                    </Label>
-                    <Label class="space-y-2">
-                        <span>Nome</span>
-                        <Input autocomplete="off" type="text" name="name" size="lg"/>
-                    </Label>
-                    <Label class="space-y-2">
-                        <span>Cognome</span>
-                        <Input autocomplete="off" type="text" name="surname" size="lg"/>
-                    </Label>
-                    <Label class="space-y-2">
-                        <span>Numero di Telefono</span>
-                        <Input autocomplete="off" type="tel" name="phoneNumber" size="lg"/>
-                    </Label>
-                </div>
-                <div class="flex flex-col gap-4">
-                    <Label class="space-y-2">
-                        <span>Deposito iniziale</span>
-                        <Input autocomplete="off" min="0" step="0.01" type="number" name="deposit" size="lg"/>
-                    </Label>
-                </div>
+            <div class="flex flex-col gap-4">
+                <Label class="space-y-2">
+                    <Span>Deposito iniziale</Span>
+                    <Input autocomplete="off" min="0" step="0.01" type="number" name="deposit" placeholder="0" size="lg"/>
+                </Label>
+                <Label class="space-y-2">
+                    <Span>Cashback</Span>
+                    <Input autocomplete="off" min="0" max="100" type="number" name="cashback" placeholder="0" size="lg"/>
+                </Label>
             </div>
         </div>
-        <div class="m-4 bottom-button-container">
-            <Button type="submit" gradient color="green" class="w-72 h-20 text-lg"><Icon.Plus class="mr-2 -ml-1 w-7 h-7"/>Crea la Carta</Button>
-        </div>
-    </form>
-</div>
+    </div>
+    <div class="absolute bottom-4 right-4">
+        <Button type="submit" gradient color="green" class="w-72 h-20 text-lg"><Icon.Plus class="mr-2 -ml-1 w-7 h-7"/>Crea la Carta</Button>
+    </div>
+</form>
 
 
 <style>
-    .container-raspcard {
-        display: flex;
-        flex-direction: column;
-    }
-
     .form-container {
         width: 100%;
         height: 100%;
@@ -90,11 +87,5 @@
         display: flex;
         flex-direction: row;
         gap: 2rem;
-    }
-
-    .bottom-button-container {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
     }
 </style>
