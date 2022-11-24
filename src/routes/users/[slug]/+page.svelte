@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { invalidateAll } from '$app/navigation';
-    import { applyAction, enhance } from '$app/forms';
-    import type { ActionData, PageData } from './$types';
-    import { Button, Modal, Listgroup, Input, Label, Radio, Heading } from 'flowbite-svelte';
+    import { Button, Modal, Listgroup, Input, Label, Radio, Heading, Span, Hr } from 'flowbite-svelte';
     import * as Icon from 'svelte-heros-v2'
+    import type { ActionData, PageData } from './$types';
+    import { applyAction, enhance } from '$app/forms';
+    import { invalidateAll } from '$app/navigation';
     import BaseCard from '$lib/components/BaseCard.svelte';
     import ListItem from '$lib/components/ListItem.svelte';
     import Notification from '$lib/components/Notification.svelte';
@@ -36,18 +36,18 @@
     <div class="container-content">
         <div style="width: 30vw">
             <div> <!-- Top card -->
-                <BaseCard title="Profile Data">
+                <BaseCard title="Dati del profilo">
                     <ul>
-                        <ListItem fieldName={"Name"} fieldValue={user.name}/>
-                        <ListItem fieldName={"Surname"} fieldValue={user.surname} border={true}/>
-                        <ListItem fieldName={"PhoneNumber"} fieldValue={user.phoneNumber} border={true}/>
+                        <ListItem fieldName={"Nome"} fieldValue={user.name}/>
+                        <ListItem fieldName={"Cognome"} fieldValue={user.surname} border={true}/>
+                        <ListItem fieldName={"Numero di Telefono"} fieldValue={user.phoneNumber} border={true}/>
                     </ul>
                 </BaseCard>
             </div>
             <div> <!-- Bottom card -->
-                <BaseCard title="Balance">
+                <BaseCard title="Saldo">
                     <div class="w-full flex items-center text-lg">
-                        <p>{user.balance}€</p>
+                        <Span class="font-medium text-lg text-gray-500">{user.balance}€</Span>
                     </div>
                 </BaseCard>
             </div>
@@ -56,35 +56,33 @@
             <BaseCard title="Ultima transazione">
                 {#if user.rollback?.active}
                     <ul>
-                        <ListItem fieldName={"Vecchio saldo"} fieldValue={user.rollback?.balance}/>
-                        <ListItem fieldName={"Ultima transazione"} fieldValue={user.rollback?.updatedAt} border={true}/>
+                        <ListItem fieldName={"Transazione"} fieldValue={user.balance - user.rollback?.balance} currency={"€"}/>
+                        <ListItem fieldName={"Data Ultima Transazione"} fieldValue={`${user.rollback?.updatedAt.toLocaleDateString()} ${user.rollback?.updatedAt.toLocaleTimeString()}`} border={true}/>
                         {#each [] as item}
                             <ListItem fieldName={""} fieldValue={null} border={true}/>
                         {/each}
                     </ul>
                 {:else}
-                    <Heading tag="h6">Nessuna transazione disponibile</Heading>
+                    <Heading tag="h6" color="text-gray-500">Nessuna transazione disponibile</Heading>
                 {/if}
             </BaseCard>
         </div>
         <div class="w-[40vw]"> <!-- Func card -->
             <BaseCard title="Field">
-                <div class="overflow-scroll scrollbar-none">
-                    <ul>
-                        <ListItem fieldName={"Field"} fieldValue={null}/>
-                        <ListItem fieldName={"Field"} fieldValue={null} border={true}/>
-                    </ul>
-                    <div class="text-lg text-gray-500 border-t-2 my-2">{"Field"}</div>
-                    <Listgroup items={list} let:item class="border-0 h-52">
-                        <div class="flex items-center space-x-4">
-                            <div class="flex-1 space-y-1 font-medium">
-                              <div>{item.name}</div>
-                              <div class="text-sm text-gray-500">{item.status}</div>
-                            </div>
-                            <Button gradient color="green" class="h-8">Details</Button>
+                <ul>
+                    <ListItem fieldName={"Field"} fieldValue={null}/>
+                    <ListItem fieldName={"Field"} fieldValue={null} border={true}/>
+                </ul>
+                <div class="text-lg text-gray-500 border-t-2 my-2">{"Field"}</div>
+                <Listgroup items={list} let:item class="border-0">
+                    <div class="flex items-center space-x-4">
+                        <div class="flex-1 space-y-1 font-medium">
+                            <div>{item.name}</div>
+                            <div class="text-sm text-gray-500">{item.status}</div>
                         </div>
-                    </Listgroup>
-                </div>
+                        <Button gradient color="green" class="h-8">Details</Button>
+                    </div>
+                </Listgroup>
             </BaseCard>
         </div>
     </div>
@@ -131,10 +129,23 @@
         }}
     >
         <div class="text-center">
-            <Icon.ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"/>
-            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Sei sicuro di voler effettuare un rollback su quest'utente? Quest'operazione è irreversibile</h3>
-            <Button type="submit" color="blue" class="mr-2">Yes, I'm sure</Button>
-            <Button color='alternative'>No, cancel</Button>
+            <Icon.ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-red-900"/>
+            <Heading tag="h5" class="font-normal text-gray-500">Sei sicuro di voler annullare la precedente transazione?</Heading>
+            <Hr class="my-4" height="h-px" />
+            <div class="flex flex-col gap-2">
+                <Span class="font-semibold text-gray-500">Ciò comporta le seguenti modifiche:</Span>
+                <div class="max-h-[10rem] overflow-scroll scrollbar-none text-start">
+                    <ul>
+                        <ListItem fieldName={"Effettuare La Transazione:"} fieldValue={(user.balance - user.rollback?.balance) * -1} currency={"€"}/>
+                        {#each [] as item}
+                            <ListItem fieldName={""} fieldValue={null} border={true}/>
+                        {/each}
+                    </ul>
+                </div>
+            </div>
+            <Hr class="my-4" height="h-px" />
+            <Button type="submit" gradient color="red" class="mr-2">SI, sono sicuro</Button>
+            <Button on:click={() => rollbackModal = false} color='alternative'>NO, torna indietro</Button>
         </div>
     </form>
 </Modal>
