@@ -11,12 +11,14 @@
         NavBrand, 
         NavHamburger, 
         P, 
-        Heading
+        Heading,
+        Span
     } from 'flowbite-svelte';
     import { Cog, Home, Users, UserPlus, ArrowLeftOnRectangle } from 'svelte-heros-v2';
     import { sineIn } from 'svelte/easing';
     import { onMount } from 'svelte';
     import { enhance } from '$app/forms';
+    import Brand from '$lib/components/Brand.svelte';
 
     export let establishment: string | undefined;
     export let seller: string | undefined;
@@ -69,10 +71,7 @@
     <Navbar>
         <NavHamburger on:click={() => drawerHidden=false} btnClass="ml-3 lg:hidden" />
         <NavBrand href="/" class="lg:ml-64">
-            <Cog/>
-            <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white pl-4">
-                RaspCard
-            </span>
+            <Brand width={30} height={30}/>
         </NavBrand>
     </Navbar>
 {/if}
@@ -92,7 +91,9 @@
             <SidebarWrapper divClass="flex flex-col items-center justify-between w-full h-full bg-gray-100 p-4">
                 <SidebarGroup ulClass="w-full">
                     <div class="max-md:flex max-md:items-center">
-                        <SidebarBrand {site} />
+                        <div class="flex flex-row">
+                            <Brand width={30} height={30}/>
+                        </div>
                         <CloseButton on:click={() => drawerHidden=true} class="mb-4 lg:hidden" />
                     </div>
                     <div class="mt-4 mb-4 p-2 bg-gray-600 rounded-md">
