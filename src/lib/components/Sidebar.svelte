@@ -94,7 +94,7 @@
                         <div class="flex flex-row">
                             <Brand width={30} height={30}/>
                         </div>
-                        <CloseButton on:click={() => drawerHidden=true} class="mb-4 lg:hidden" />
+                        <CloseButton on:click={() => drawerHidden=true} class="lg:hidden" />
                     </div>
                     <div class="mt-4 mb-4 p-2 bg-gray-600 rounded-md">
                         <div class="text-center">
