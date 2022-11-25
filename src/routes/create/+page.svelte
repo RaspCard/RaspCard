@@ -36,7 +36,7 @@
                 Tutti i campi sono facoltativi, ma per una gestione più semplice è preferibile l'inserimento di tutti i dati.
             </P>
         </div>
-        <div class="container-content w-full lg:w-3/4">
+        <div class="container-content w-full lg:w-3/4 overflow-scroll scrollbar-none">
             <div class="w-full flex flex-col gap-4">
                 <Label class="space-y-2">
                     <Span>ID carta</Span>
@@ -57,8 +57,8 @@
             </div>
         </div>
     </div>
-    <div class="fixed bottom-4 w-screen flex justify-center lg:right-4 lg:w-72">
-        <Button type="submit" gradient color="green" class="min-w-[90%] lg:w-72 h-20 text-lg"><Plus class="mr-2 -ml-1 w-7 h-7"/>Crea la Carta</Button>
+    <div class="lg:fixed lg:bottom-4 w-screen flex justify-center lg:right-4 lg:w-72">
+        <Button type="submit" gradient color="green" class="m-4 w-full lg:m-0 lg:w-72 h-20 text-lg"><Plus class="mr-2 -ml-1 w-7 h-7"/>Crea la Carta</Button>
     </div>
 </form>
 
