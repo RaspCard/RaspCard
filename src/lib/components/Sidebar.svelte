@@ -11,10 +11,9 @@
         NavBrand, 
         NavHamburger, 
         P, 
-        Heading,
-        Span
+        Heading
     } from 'flowbite-svelte';
-    import { Cog, Home, Users, UserPlus, ArrowLeftOnRectangle } from 'svelte-heros-v2';
+    import { Home, Users, UserPlus, ArrowLeftOnRectangle } from 'svelte-heros-v2';
     import { sineIn } from 'svelte/easing';
     import { onMount } from 'svelte';
     import { enhance } from '$app/forms';
@@ -68,7 +67,7 @@
 <svelte:window bind:innerWidth={width} />
 
 {#if width < breakPoint}
-    <Navbar>
+    <Navbar class="sticky top-0">
         <NavHamburger on:click={() => drawerHidden=false} btnClass="ml-3 lg:hidden" />
         <NavBrand href="/" class="lg:ml-64">
             <Brand width={30} height={30}/>
@@ -78,7 +77,7 @@
 
 <div class="flex flex-row w-auto lg:h-full">
     <Drawer
-        transitionType={width < breakPoint ? "fly" : undefined}
+        transitionType="fly"
         backdrop={false}
         divClass="z-50 lg:!static"
         {transitionParams}
@@ -90,7 +89,7 @@
         <Sidebar asideClass="w-full h-full">
             <SidebarWrapper divClass="flex flex-col items-center justify-between w-full h-full bg-gray-100 p-4">
                 <SidebarGroup ulClass="w-full">
-                    <div class="max-md:flex max-md:items-center">
+                    <div class="flex items-center">
                         <div class="flex flex-row">
                             <Brand width={30} height={30}/>
                         </div>
