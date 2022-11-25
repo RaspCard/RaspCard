@@ -33,8 +33,8 @@
 <Notification success={form?.success} message={form?.message} checkedDate={checkedDate}/>
 
 <div class="flex flex-col h-full">
-    <div class="container-content">
-        <div style="width: 30vw">
+    <div class="w-full h-full flex flex-col lg:flex-row justify-start">
+        <div class="w-full lg:w-[30vw]">
             <div> <!-- Top card -->
                 <BaseCard title="Dati del profilo">
                     <ul>
@@ -52,7 +52,7 @@
                 </BaseCard>
             </div>
         </div>
-        <div style="width: 30vw"> <!-- Last Transaction card -->
+        <div class="w-full lg:w-[30vw]"> <!-- Last Transaction card -->
             <BaseCard title="Ultima transazione">
                 {#if user.rollback?.active}
                     <ul>
@@ -67,7 +67,7 @@
                 {/if}
             </BaseCard>
         </div>
-        <div class="w-[40vw]"> <!-- Func card -->
+        <div class="w-full lg:w-[40vw]"> <!-- Func card -->
             <BaseCard title="Field">
                 <ul>
                     <ListItem fieldName={"Field"} fieldValue={null}/>
@@ -80,17 +80,17 @@
                             <div>{item.name}</div>
                             <div class="text-sm text-gray-500">{item.status}</div>
                         </div>
-                        <Button gradient color="green" class="h-8">Details</Button>
+                        <Button gradient color="blue" class="h-8">Details</Button>
                     </div>
                 </Listgroup>
             </BaseCard>
         </div>
     </div>
-    <div class="m-4 flex flex-row align-middle justify-between">
-        <Button on:click={() => deleteModal = true} gradient color="red" class="w-56"><Trash/> Delete User</Button>
-        <div class="flex flex-row align-middle gap-4">
-            <Button on:click={() => rollbackModal = user.rollback?.active ? true : false} gradient color="blue" class="w-56"><ArrowPathRoundedSquare/>Rollback</Button>
-            <Button on:click={() => transactionModal = true} gradient color="blue" class="w-56"><CurrencyEuro/>New Transaction</Button>    
+    <div class="w-full lg:w-auto lg:fixed lg:bottom-4 lg:right-4">
+        <div class="m-4 lg:m-0 flex flex-col lg:flex-row align-middle gap-4">
+            <Button on:click={() => deleteModal = true} gradient color="red" class="w-full lg:w-56"><Trash/>Delete User</Button>
+            <Button on:click={() => rollbackModal = user.rollback?.active ? true : false} gradient color="green" class="w-full lg:w-56"><ArrowPathRoundedSquare/>Rollback</Button>
+            <Button on:click={() => transactionModal = true} gradient color="blue" class="w-full lg:w-56"><CurrencyEuro/>New Transaction</Button>    
         </div>
     </div>
 </div>
