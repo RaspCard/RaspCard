@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Span } from 'flowbite-svelte';
+    import { Span, Badge } from 'flowbite-svelte';
 
     export let width: number | undefined = 512;
     export let height: number | undefined = 512;
@@ -14,3 +14,4 @@
 <Span class="self-center whitespace-nowrap text-xl font-semibold pl-4">
     RaspCard
 </Span>
+<Badge class="ml-3 bg-gray-600 text-gray-300 h-1/2" color="custom">V2</Badge>

@@ -89,10 +89,8 @@
         <Sidebar asideClass="w-full h-full">
             <SidebarWrapper divClass="flex flex-col items-center justify-between w-full h-full bg-gray-100 p-4">
                 <SidebarGroup ulClass="w-full">
-                    <div class="flex items-center">
-                        <div class="flex flex-row">
-                            <Brand width={30} height={30}/>
-                        </div>
+                    <div class="flex flex-row items-center lg:justify-center">
+                        <Brand width={30} height={30}/>
                         <CloseButton on:click={() => drawerHidden=true} class="lg:hidden" />
                     </div>
                     <div class="mt-4 mb-4 p-2 bg-gray-600 rounded-md">
