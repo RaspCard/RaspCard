@@ -1,10 +1,10 @@
 {
     "name": "RaspCard",
     "short_name": "RaspCard",
-    "start_url": "/login",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#fff",
-    "theme-color": "#fff",
+    "theme_color": "#fff",
     "icons": [
         {
             "src": "/img/Logo512Clear.png",
