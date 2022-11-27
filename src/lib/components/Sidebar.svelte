@@ -3,7 +3,6 @@
         Sidebar, 
         SidebarWrapper, 
         SidebarGroup, 
-        SidebarBrand, 
         SidebarItem, 
         Drawer, 
         CloseButton, 
@@ -55,12 +54,6 @@
             drawerHidden = true;
             activateClickOutside = true;
         }
-    }
-
-    let site = {
-        name: 'RaspCard',
-        href: '/',
-        img: '/raspcard-logo.svg'
     }
 </script>
 

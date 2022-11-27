@@ -12,22 +12,13 @@
     export let form: ActionData;
     $: ({ user } = data );
 
-    let list = [
-        { name: "Made in Abyss 11", status: "to be shipped soon" },
-        { name: "Berserk 33", status: "shipped" },
-        { name: "Grand Blue jp 1", status: "delivered" },
-        { name: "Grand Blue jp 1", status: "delivered" },
-        { name: "Grand Blue jp 1", status: "delivered" },
-        { name: "Grand Blue jp 1", status: "delivered" },
-    ];
+    let list: any[] = [];
 
     let deleteModal: boolean = false;
     let transactionModal: boolean = false;
     let rollbackModal: boolean = false;
 
     let checkedDate: Date | undefined;
-
-    let choice: string = "normal";
 </script>
 
 <Notification success={form?.success} message={form?.message} checkedDate={checkedDate}/>
@@ -68,21 +59,26 @@
             </BaseCard>
         </div>
         <div class="w-full lg:w-[40vw]"> <!-- Func card -->
-            <BaseCard title="Field">
-                <ul>
-                    <ListItem fieldName={"Field"} fieldValue={null}/>
-                    <ListItem fieldName={"Field"} fieldValue={null} border={true}/>
-                </ul>
-                <div class="text-lg text-gray-500 border-t-2 my-2">{"Field"}</div>
-                <Listgroup items={list} let:item class="border-0">
-                    <div class="flex items-center space-x-4">
-                        <div class="flex-1 space-y-1 font-medium">
-                            <div>{item.name}</div>
-                            <div class="text-sm text-gray-500">{item.status}</div>
+            <BaseCard title="Dati Speciali">
+                {#if list.length > 0}
+                    <ul>
+                        {#each [] as item}
+                            <ListItem fieldName={""} fieldValue={null} border={true}/>
+                        {/each}
+                    </ul>
+                    <div class="text-lg text-gray-500 border-t-2 my-2">{"Field"}</div>
+                    <Listgroup items={list} let:item class="border-0">
+                        <div class="flex items-center space-x-4">
+                            <div class="flex-1 space-y-1 font-medium">
+                                <div>{item.name}</div>
+                                <div class="text-sm text-gray-500">{item.status}</div>
+                            </div>
+                            <Button gradient color="blue" class="h-8">Details</Button>
                         </div>
-                        <Button gradient color="blue" class="h-8">Details</Button>
-                    </div>
-                </Listgroup>
+                    </Listgroup>
+                {:else}
+                    <Heading tag="h6" color="text-gray-500">Nessun Informazione Disponibile</Heading>
+                {/if}
             </BaseCard>
         </div>
     </div>
@@ -136,7 +132,7 @@
                 <Span class="font-semibold text-gray-500">Ciò comporta le seguenti modifiche:</Span>
                 <div class="max-h-[10rem] overflow-scroll scrollbar-none text-start">
                     <ul>
-                        <ListItem fieldName={"Effettuare La Transazione:"} fieldValue={(user.balance - user.rollback?.balance) * -1} currency={"€"}/>
+                        <ListItem fieldName={"Effettuare La Transazione:"} fieldValue={(user.balance - (user.rollback?.balance || 0)) * -1} currency={"€"}/>
                         {#each [] as item}
                             <ListItem fieldName={""} fieldValue={null} border={true}/>
                         {/each}
@@ -183,15 +179,3 @@
 		<Button type="submit" name="operationType" value="+" gradient color="green" class="w-full">+</Button>
     </form>
 </Modal>
-
-
-<style>
-    .container-content {
-        height: 100%;
-        width: 100%;
-
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-    }
-</style>
