@@ -84,9 +84,9 @@
     </div>
     <div class="w-full lg:w-auto lg:fixed lg:bottom-4 lg:right-4">
         <div class="m-4 lg:m-0 flex flex-col lg:flex-row align-middle gap-4">
-            <Button on:click={() => deleteModal = true} gradient color="red" class="w-full lg:w-56"><Trash/>Delete User</Button>
-            <Button on:click={() => rollbackModal = user.rollback?.active ? true : false} gradient color="green" class="w-full lg:w-56"><ArrowPathRoundedSquare/>Rollback</Button>
-            <Button on:click={() => transactionModal = true} gradient color="blue" class="w-full lg:w-56"><CurrencyEuro/>New Transaction</Button>    
+            <Button on:click={() => deleteModal = true} gradient color="red" class="w-full lg:w-56"><Trash/>Elimina Utente</Button>
+            <Button on:click={() => rollbackModal = user.rollback?.active ? true : false} gradient color="green" class="w-full lg:w-56"><ArrowPathRoundedSquare/>Annulla L'ultima Transazione</Button>
+            <Button on:click={() => transactionModal = true} gradient color="blue" class="w-full lg:w-56"><CurrencyEuro/>Nuova Transazione</Button>    
         </div>
     </div>
 </div>
@@ -102,9 +102,9 @@
     >
         <div class="text-center">
             <ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"/>
-            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Sei sicuro di voler eliminare quest'utente? Quest'operazione è irreversibile</h3>
-            <Button type="submit" color="red" class="mr-2">Yes, I'm sure</Button>
-            <Button on:click={() => deleteModal = false} color='alternative'>No, cancel</Button>
+            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Sei sicuro di voler eliminare quest'utente?<br>L'utente verrà disattivato e sarà possibile riattivarlo in seguito.</h3>
+            <Button type="submit" color="red" class="mr-2">SI, sono sicuro</Button>
+            <Button on:click={() => deleteModal = false} color='alternative'>NO, torna indietro</Button>
         </div>
     </form>
 </Modal>
@@ -150,7 +150,7 @@
 <!-- Transaction modal -->
 <Modal bind:open={transactionModal} size="xs" autoclose={false}>
     <form
-        on:keypress={(event) => (event.key == "Enter") ? event.preventDefault() : null}
+        on:keypress={e => e.key == "Enter" ? e.preventDefault() : null}
         method="POST"
         action="?/balance"
         class="flex flex-col space-y-6"
@@ -164,10 +164,10 @@
             }
         }}
     >
-		<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">New Transaction</h3>
+		<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Nuova Transazione</h3>
 		<div class="container-transaction-content">
             <Label class="space-y-2">
-                <span>Amount</span>
+                <span>Importo</span>
                 <Input min="0.01" step="0.01" type="number" name="amount" placeholder="0" required class="w-24"/>
 		    </Label>
             <Label class="space-y-2">
@@ -175,7 +175,7 @@
                 <Input min="0" max="100" type="number" name="cashback" placeholder="0" class="w-24"/>
 		    </Label>
         </div>
-		<Button type="submit" name="operationType" value="-" gradient color="red" class="w-full">-</Button>
-		<Button type="submit" name="operationType" value="+" gradient color="green" class="w-full">+</Button>
+		<Button type="submit" name="operationType" value="-" gradient color="red" class="w-full">- Sottrai</Button>
+		<Button type="submit" name="operationType" value="+" gradient color="green" class="w-full">+ Aggiungi</Button>
     </form>
 </Modal>
