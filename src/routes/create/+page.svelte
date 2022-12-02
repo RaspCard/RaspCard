@@ -14,9 +14,9 @@
 
 <Notification success={form?.success} message={form?.message} checkedDate={checkedDate}/>
 
-<Scanner on:scan={(event) => cardID = event.detail.id}/>
+<Scanner on:scan={e => cardID = e.detail.id}/>
 <form
-    on:keypress={(event) => (event.key == "Enter") ? event.preventDefault() : null}
+    on:keypress={e => e.key == "Enter" ? e.preventDefault() : null}
     class="form-container"
     method="POST"
     use:enhance={() => {

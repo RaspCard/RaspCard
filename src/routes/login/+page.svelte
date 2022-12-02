@@ -6,11 +6,11 @@
     import type { ActionData } from "./$types";
     import Scanner from '$lib/components/Scanner.svelte';
     
-    let input: string = "";
+    let idInput: string = "";
     export let form: ActionData;
 </script>
 
-<Scanner on:scan={(event) => input=event.detail.id}/>
+<Scanner on:scan={e => idInput = e.detail.id}/>
 <Card class="sm:max-w-[20rem] lg:min-w-[30rem]">
     <form 
         class="flex flex-col space-y-6"
@@ -21,12 +21,12 @@
                 await applyAction(result);
             }
         }}
-        on:keypress={(event) => (event.key == "Enter") ? event.preventDefault() : null}
+        on:keypress={e => e.key == "Enter" ? e.preventDefault() : null}
     >
         <Heading tag="h3" class="p-0">Accedi a RaspCard</Heading>
         <Label class="space-y-2">
             <span>Codice della carta</span>
-            <Input name="uuid" type="text" placeholder="codice della carta" required bind:value={input}/>
+            <Input name="uuid" type="text" placeholder="codice della carta" required bind:value={idInput}/>
         </Label>
         <Label class="space-y-2">
             <span>PIN</span>

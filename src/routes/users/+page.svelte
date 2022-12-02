@@ -13,7 +13,7 @@
     $: dynamicUsers = users.filter(user => user.cardId.includes(searchInput));
 </script>
 
-<Scanner on:scan={(event) => goto(`/users/${event.detail.id}`)}/>
+<Scanner on:scan={e => goto(`/users/${e.detail.id}`)}/>
 <div class="container-raspcard m-4">
     <div class="mx-4 h-[5vh]">
         <Input autocomplete="off" id="search" placeholder="Search" size="md" bind:value={searchInput}>
