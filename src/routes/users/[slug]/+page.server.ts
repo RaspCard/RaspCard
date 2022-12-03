@@ -1,7 +1,7 @@
 import { redirect, error, invalid } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 import { db } from '$lib/server/database';
-import type { BalanceRequest } from '$lib/utils/types';
+import type { BalanceRequest, EditRequest } from '$lib/utils/types';
 
 export const load: PageServerLoad = async({ locals, params }) => {
     if(!locals.currentAdmin) {
@@ -27,6 +27,34 @@ export const load: PageServerLoad = async({ locals, params }) => {
 }
 
 export const actions: Actions = {
+    async edit({ locals, params, request}) {
+        if(!locals.currentAdmin) {
+            throw redirect(302, '/login');
+        }
+
+        const data: EditRequest = Object.fromEntries(await request.formData());
+
+        try {
+            await db.user.update({
+                where: {
+                    cardId_establishmentId: {
+                        cardId: params.slug,
+                        establishmentId: locals.currentAdmin.establishmentId
+                    }
+                },
+                data: {
+                    name: data.name,
+                    surname: data.surname,
+                    phoneNumber: data.phoneNumber,
+                }
+            });
+        } catch {
+            return invalid(400, {success: false, message: 'Qualcosa è andato storto nella richiesta'});
+        }
+
+        return {success: true, message: "Dati aggiornati con successo"}; 
+    },
+
     async balance({locals, params, request}) {
         if(!locals.currentAdmin) {
             return invalid(401);

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Button, Modal, Listgroup, Input, Label, Heading, Span, Hr } from 'flowbite-svelte';
+    import { Button, Modal, Listgroup, Input, Label, Heading, Span, Hr, Radio } from 'flowbite-svelte';
     import { Trash, ArrowPathRoundedSquare, CurrencyEuro, ExclamationTriangle } from 'svelte-heros-v2'
     import type { ActionData, PageData } from './$types';
     import { applyAction, enhance } from '$app/forms';
@@ -17,6 +17,7 @@
     let deleteModal: boolean = false;
     let transactionModal: boolean = false;
     let rollbackModal: boolean = false;
+    let editModal: boolean = false;
 
     let checkedDate: Date | undefined;
 </script>
@@ -26,22 +27,21 @@
 <div class="flex flex-col h-full">
     <div class="w-full h-full flex flex-col lg:flex-row justify-start">
         <div class="w-full lg:w-[30vw]">
-            <div> <!-- Top card -->
-                <BaseCard title="Dati del profilo">
-                    <ul>
-                        <ListItem fieldName={"Nome"} fieldValue={user.name}/>
-                        <ListItem fieldName={"Cognome"} fieldValue={user.surname} border={true}/>
-                        <ListItem fieldName={"Numero di Telefono"} fieldValue={user.phoneNumber} border={true}/>
-                    </ul>
-                </BaseCard>
-            </div>
-            <div> <!-- Bottom card -->
-                <BaseCard title="Saldo">
-                    <div class="w-full flex items-center text-lg">
-                        <Span class="font-medium text-lg text-gray-500">{user.balance}€</Span>
-                    </div>
-                </BaseCard>
-            </div>
+            <BaseCard title="Dati del profilo"> <!-- Top card -->
+                <svelte:fragment slot="head">
+                    <Button on:click={() => editModal = true} outline color="dark" class="!border-none !text-gray-900 hover:!bg-transparent hover:!text-gray-600">modifica</Button>
+                </svelte:fragment>
+                <ul>
+                    <ListItem fieldName={"Nome"} fieldValue={user.name}/>
+                    <ListItem fieldName={"Cognome"} fieldValue={user.surname} border={true}/>
+                    <ListItem fieldName={"Numero di Telefono"} fieldValue={user.phoneNumber} border={true}/>
+                </ul>
+            </BaseCard>
+            <BaseCard title="Saldo"> <!-- Bottom card -->
+                <div class="w-full flex items-center text-lg">
+                    <Span class="font-medium text-lg text-gray-500">{user.balance}€</Span>
+                </div>
+            </BaseCard>
         </div>
         <div class="w-full lg:w-[30vw]"> <!-- Last Transaction card -->
             <BaseCard title="Ultima transazione">
@@ -92,6 +92,47 @@
 </div>
 
 
+<!-- Edit modal -->
+<Modal bind:open={editModal} size="sm" autoclose={false}>
+    <form
+        method="POST"
+        action="?/edit"
+        class="flex flex-col space-y-6"
+        use:enhance={() => {
+            return async ({ result, form }) => {
+                form.reset();
+                invalidateAll();
+                await applyAction(result);
+                editModal = false;
+                checkedDate = new Date();
+            }
+        }}
+    >
+        <div class="text-center">
+            <Heading tag="h4">Modifica i dati utente</Heading>
+            <div class="text-left flex flex-col gap-2 my-3">
+                <Label class="space-y-2">
+                    <Span>Nome</Span>
+                    <Input type="text" name="name" value={user.name || ""} />
+                </Label>
+                <Label class="space-y-2">
+                    <Span>Cognome</Span>
+                    <Input type="text" name="surname" value={user.surname || ""} />
+                </Label>
+                <Label class="space-y-2">
+                    <Span>Numero di telefono</Span>
+                    <Input type="tel" name="phoneNumber" value={user.phoneNumber || ""} pattern={"3[0-9]{9}"} />
+                </Label>
+            </div>
+            <div class="flex flex-row">
+                <Button type="submit" color="blue" class="mr-2 w-full">Salva</Button>
+                <Button on:click={() => editModal = false} color='alternative' class="w-full">Annulla</Button>
+            </div>
+        </div>
+    </form>
+</Modal>
+
+
 <!-- Delete modal -->
 <Modal bind:open={deleteModal} size="sm" autoclose={false}>
     <form
@@ -101,8 +142,8 @@
         use:enhance
     >
         <div class="text-center">
-            <ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"/>
-            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Sei sicuro di voler eliminare quest'utente?<br>L'utente verrà disattivato e sarà possibile riattivarlo in seguito.</h3>
+            <ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-gray-400"/>
+            <h3 class="mb-5 text-lg font-normal text-gray-500">Sei sicuro di voler eliminare quest'utente?<br>L'utente verrà disattivato e sarà possibile riattivarlo in seguito.</h3>
             <Button type="submit" color="red" class="mr-2">SI, sono sicuro</Button>
             <Button on:click={() => deleteModal = false} color='alternative'>NO, torna indietro</Button>
         </div>
@@ -125,7 +166,7 @@
         }}
     >
         <div class="text-center">
-            <ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-red-900"/>
+            <ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-gray-400"/>
             <Heading tag="h5" class="font-normal text-gray-500">Sei sicuro di voler annullare la precedente transazione?</Heading>
             <Hr class="my-4" height="h-px" />
             <div class="flex flex-col gap-2">
@@ -164,7 +205,6 @@
             }
         }}
     >
-		<h3 class="text-xl font-medium text-gray-900 dark:text-white p-0">Nuova Transazione</h3>
 		<div class="container-transaction-content">
             <Label class="space-y-2">
                 <span>Importo</span>
@@ -174,8 +214,11 @@
                 <span>Cashback</span>
                 <Input min="0" max="100" type="number" name="cashback" placeholder="0" class="w-24"/>
 		    </Label>
+        <Heading tag="h3" class="p-0">Nuova Transazione</Heading>
         </div>
-		<Button type="submit" name="operationType" value="-" gradient color="red" class="w-full">- Sottrai</Button>
-		<Button type="submit" name="operationType" value="+" gradient color="green" class="w-full">+ Aggiungi</Button>
+        <div class="flex flex-row gap-2">
+            <Button type="submit" name="operationType" value="-" gradient color="red" class="w-full">- Sottrai</Button>
+            <Button type="submit" name="operationType" value="+" gradient color="green" class="w-full">+ Aggiungi</Button>
+        </div>
     </form>
 </Modal>

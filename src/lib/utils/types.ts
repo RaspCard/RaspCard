@@ -10,3 +10,9 @@ export interface CardRequest {
     surname?: string;
     phoneNumber?: string;
 };
+
+export interface EditRequest {
+    name?: string;
+    surname?: string;
+    phoneNumber?: string;
+}
