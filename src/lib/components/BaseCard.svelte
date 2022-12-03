@@ -10,6 +10,7 @@
         <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
             {title}
         </h5>
+        <slot name="head"/>
     </div>
     <div class="overflow-scroll scrollbar-none">
         <slot/>
