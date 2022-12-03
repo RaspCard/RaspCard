@@ -205,17 +205,15 @@
             }
         }}
     >
-		<div class="container-transaction-content">
-            <Label class="space-y-2">
-                <span>Importo</span>
-                <Input min="0.01" step="0.01" type="number" name="amount" placeholder="0" required class="w-24"/>
-		    </Label>
-            <Label class="space-y-2">
-                <span>Cashback</span>
-                <Input min="0" max="100" type="number" name="cashback" placeholder="0" class="w-24"/>
-		    </Label>
         <Heading tag="h3" class="p-0">Nuova Transazione</Heading>
-        </div>
+        <Label class="space-y-2">
+            <span>Importo</span>
+            <Input min="0.01" step="0.01" type="number" name="amount" placeholder="0" required class="w-24"/>
+        </Label>
+        <Label class="space-y-2">
+            <span>Cashback</span>
+            <Input min="0" max="100" type="number" name="cashback" placeholder="0" class="w-24"/>
+        </Label>
         <div class="flex flex-row gap-2">
             <Button type="submit" name="operationType" value="-" gradient color="red" class="w-full">- Sottrai</Button>
             <Button type="submit" name="operationType" value="+" gradient color="green" class="w-full">+ Aggiungi</Button>
