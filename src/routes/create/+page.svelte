@@ -52,7 +52,7 @@
                 </Label>
                 <Label class="space-y-2">
                     <Span>Numero di Telefono</Span>
-                    <Input autocomplete="off" type="tel" name="phoneNumber" placeholder="+39" size="lg"/>
+                    <Input autocomplete="off" type="tel" name="phoneNumber" placeholder="+39" size="lg" pattern={"3[0-9]{9}"}/>
                 </Label>
             </div>
         </div>
