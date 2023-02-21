@@ -1,9 +1,8 @@
 <script lang="ts">
+    import { enhance } from "$app/forms";
+    import type { ActionData } from "./$types";
     import { Card, Button, Label, Input, Heading, Alert, Span } from "flowbite-svelte";
     import { ExclamationTriangle } from "svelte-heros-v2";
-    import { applyAction, enhance } from "$app/forms";
-    import { invalidateAll } from "$app/navigation";
-    import type { ActionData } from "./$types";
     import Scanner from '$lib/components/Scanner.svelte';
     
     let idInput: string = "";
@@ -15,12 +14,7 @@
     <form 
         class="flex flex-col space-y-6"
         method="POST"
-        use:enhance={() => {
-            return async ({ result }) => {
-                invalidateAll();
-                await applyAction(result);
-            }
-        }}
+        use:enhance
         on:keypress={e => e.key == "Enter" ? e.preventDefault() : null}
     >
         <Heading tag="h3" class="p-0">Accedi a RaspCard</Heading>
