@@ -5,7 +5,7 @@
     import { ExclamationTriangle } from "svelte-heros-v2";
     import Scanner from '$lib/components/Scanner.svelte';
     
-    let idInput: string = "";
+    let idInput = "";
     export let form: ActionData;
 </script>
 

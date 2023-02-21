@@ -6,7 +6,7 @@
     import Scanner from '$lib/components/Scanner.svelte';
 
 
-    let cardID: string = "";
+    let cardID = "";
 </script>
 
 
