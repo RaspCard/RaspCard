@@ -3,16 +3,12 @@
     import { Plus } from 'svelte-heros-v2';
     import type { ActionData } from './$types';
     import { applyAction, enhance } from '$app/forms';
-    import Notification from '$lib/components/Notification.svelte';
     import Scanner from '$lib/components/Scanner.svelte';
 
-    export let form: ActionData;
 
     let cardID: string = "";
-    let checkedDate: Date | undefined;
 </script>
 
-<Notification success={form?.success} message={form?.message} checkedDate={checkedDate}/>
 
 <Scanner on:scan={e => cardID = e.detail.id}/>
 <form

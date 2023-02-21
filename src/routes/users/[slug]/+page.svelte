@@ -6,10 +6,8 @@
     import { invalidateAll } from '$app/navigation';
     import BaseCard from '$lib/components/BaseCard.svelte';
     import ListItem from '$lib/components/ListItem.svelte';
-    import Notification from '$lib/components/Notification.svelte';
 
     export let data: PageData;
-    export let form: ActionData;
     $: ({ user } = data );
 
     let list: any[] = [];
@@ -18,11 +16,8 @@
     let transactionModal: boolean = false;
     let rollbackModal: boolean = false;
     let editModal: boolean = false;
-
-    let checkedDate: Date | undefined;
 </script>
 
-<Notification success={form?.success} message={form?.message} checkedDate={checkedDate}/>
 
 <div class="flex flex-col h-full">
     <div class="w-full h-full flex flex-col lg:flex-row justify-start">
@@ -104,7 +99,6 @@
                 invalidateAll();
                 await applyAction(result);
                 editModal = false;
-                checkedDate = new Date();
             }
         }}
     >
@@ -201,7 +195,6 @@
                 invalidateAll();
                 await applyAction(result);
                 transactionModal = false;
-                checkedDate = new Date();
             }
         }}
     >
