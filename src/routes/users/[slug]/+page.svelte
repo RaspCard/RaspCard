@@ -4,6 +4,7 @@
     import type { ActionData, PageData } from './$types';
     import { applyAction, enhance } from '$app/forms';
     import { invalidateAll } from '$app/navigation';
+    import toast, { Toaster } from 'svelte-french-toast';
     import BaseCard from '$lib/components/BaseCard.svelte';
     import ListItem from '$lib/components/ListItem.svelte';
 
@@ -18,6 +19,7 @@
     let editModal: boolean = false;
 </script>
 
+<Toaster/>
 
 <div class="flex flex-col h-full">
     <div class="w-full h-full flex flex-col lg:flex-row justify-start">
@@ -94,10 +96,13 @@
         action="?/edit"
         class="flex flex-col space-y-6"
         use:enhance={() => {
-            return async ({ result, form }) => {
-                form.reset();
-                invalidateAll();
-                await applyAction(result);
+            return async ({ update, result }) => {
+                if (result.type === "success") {
+                    await update();
+                    toast.success(result.data?.message);
+                } else if (result.type === "failure"){
+                    toast.error(result.data?.message);
+                }
                 editModal = false;
             }
         }}
@@ -152,9 +157,13 @@
         action="?/rollback"
         class="flex flex-col space-y-6"
         use:enhance={() => {
-            return async ({ result }) => {
-                invalidateAll();
-                await applyAction(result);
+            return async ({ update, result }) => {
+                if (result.type === "success") {
+                    await update();
+                    toast.success(result.data?.message);
+                } else if (result.type === "failure"){
+                    toast.error(result.data?.message);
+                }
                 rollbackModal = false;
             }
         }}
@@ -190,10 +199,14 @@
         action="?/balance"
         class="flex flex-col space-y-6"
         use:enhance={() => {
-            return async ({ result, form }) => {
+            return async ({ update, result, form }) => {
                 form.reset();
-                invalidateAll();
-                await applyAction(result);
+                if (result.type === "success") {
+                    await update();
+                    toast.success(result.data?.message);
+                } else if (result.type === "failure"){
+                    toast.error(result.data?.message);
+                }
                 transactionModal = false;
             }
         }}

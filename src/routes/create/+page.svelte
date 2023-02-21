@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Button, Label, Input, Heading, P, Span } from 'flowbite-svelte';
     import { Plus } from 'svelte-heros-v2';
-    import type { ActionData } from './$types';
+    import toast, { Toaster } from 'svelte-french-toast';
     import { applyAction, enhance } from '$app/forms';
     import Scanner from '$lib/components/Scanner.svelte';
 
@@ -10,18 +10,21 @@
 </script>
 
 
+<Toaster/>
 <Scanner on:scan={e => cardID = e.detail.id}/>
+
 <form
     on:keypress={e => e.key == "Enter" ? e.preventDefault() : null}
     class="form-container"
     method="POST"
     use:enhance={() => {
         return async ({ result, form }) => {
-            if(result.type === "success") form.reset();
-            
-            checkedDate = new Date();
-
-            await applyAction(result);
+            if(result.type === "success") {
+                form.reset();
+                toast.success(result.data?.message);
+            } else if(result.type === "failure") {
+                toast.error(result.data?.message);
+            }
         }
     }}
 >
