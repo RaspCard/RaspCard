@@ -32,7 +32,7 @@ export const actions: Actions = {
             throw redirect(302, '/login');
         }
 
-        const data: EditRequest = Object.fromEntries(await request.formData());
+        const data = Object.fromEntries(await request.formData()) as unknown as EditRequest;
 
         try {
             await db.user.update({
@@ -60,10 +60,10 @@ export const actions: Actions = {
             return fail(401);
         }
 
-        const data: BalanceRequest = Object.fromEntries(await request.formData());
-        const amount = parseFloat(data?.amount || '');
+        const data = Object.fromEntries(await request.formData()) as unknown as BalanceRequest;
+        const amount = parseFloat(data.amount || '');
         const cashback = parseInt(data?.cashback || '0');
-        const operationType = data?.operationType === '+' ? 1 : -1;
+        const operationType = data.operationType === '+' ? 1 : -1;
 
         if(isNaN(amount) || cashback < 0 || cashback > 100) {
             return fail(400, {success: false, message: 'Saldo invalido'});
@@ -110,7 +110,7 @@ export const actions: Actions = {
             return fail(400, {success: false, message: 'Qualcosa è andato storto nella richiesta'});
         }
 
-        return {success: true, message: `Saldo aggiornato con successo: ${data?.operationType}${amount}€`};
+        return {success: true, message: `Saldo aggiornato con successo: ${data.operationType}${amount}€`};
     },
 
     async rollback({locals, params}) {

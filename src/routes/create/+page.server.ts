@@ -17,7 +17,7 @@ export const actions: Actions = {
             return fail(401);
         }
 
-        const data: CardRequest = Object.fromEntries(await request.formData());
+        const data = Object.fromEntries(await request.formData()) as unknown as CardRequest;
 
         if(!data.cardId || typeof(data.cardId) !== 'string') {
             return fail(400);
