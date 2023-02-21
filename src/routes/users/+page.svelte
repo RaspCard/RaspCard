@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Table, Input, Button } from 'flowbite-svelte';
+    import { Table, Input } from 'flowbite-svelte';
     import { goto } from '$app/navigation';
     import type { PageData } from './$types';
     import TableRowUser from '$lib/components/TableRowUser.svelte';
