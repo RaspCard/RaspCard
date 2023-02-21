@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { Button, Modal, Listgroup, Input, Label, Heading, Span, Hr, Radio } from 'flowbite-svelte';
-    import { Trash, ArrowPathRoundedSquare, CurrencyEuro, ExclamationTriangle } from 'svelte-heros-v2'
+    import { Button, Modal, Listgroup, Input, Label, Heading, Span, Hr } from 'flowbite-svelte';
+    import { Trash, ArrowPathRoundedSquare, CurrencyEuro, ExclamationTriangle } from 'svelte-heros-v2';
     import type { ActionData, PageData } from './$types';
     import { applyAction, enhance } from '$app/forms';
     import { invalidateAll } from '$app/navigation';
