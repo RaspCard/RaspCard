@@ -1,4 +1,4 @@
-import { redirect, error, invalid } from '@sveltejs/kit';
+import { redirect, error, fail } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 import { db } from '$lib/server/database';
 import type { BalanceRequest, EditRequest } from '$lib/utils/types';
@@ -49,7 +49,7 @@ export const actions: Actions = {
                 }
             });
         } catch {
-            return invalid(400, {success: false, message: 'Qualcosa è andato storto nella richiesta'});
+            return fail(400, {success: false, message: 'Qualcosa è andato storto nella richiesta'});
         }
 
         return {success: true, message: "Dati aggiornati con successo"}; 
@@ -57,7 +57,7 @@ export const actions: Actions = {
 
     async balance({locals, params, request}) {
         if(!locals.currentAdmin) {
-            return invalid(401);
+            return fail(401);
         }
 
         const data: BalanceRequest = Object.fromEntries(await request.formData());
@@ -66,7 +66,7 @@ export const actions: Actions = {
         const operationType = data?.operationType === '+' ? 1 : -1;
 
         if(isNaN(amount) || cashback < 0 || cashback > 100) {
-            return invalid(400, {success: false, message: 'Saldo invalido'});
+            return fail(400, {success: false, message: 'Saldo invalido'});
         }
 
         const user = await db.user.findUnique({
@@ -82,7 +82,7 @@ export const actions: Actions = {
         });
 
         if(!user) {
-            return invalid(404, {success: false, message: 'Utente non trovato'});
+            return fail(404, {success: false, message: 'Utente non trovato'});
         }
 
         try {
@@ -107,7 +107,7 @@ export const actions: Actions = {
                 }
             });
         } catch {
-            return invalid(400, {success: false, message: 'Qualcosa è andato storto nella richiesta'});
+            return fail(400, {success: false, message: 'Qualcosa è andato storto nella richiesta'});
         }
 
         return {success: true, message: `Saldo aggiornato con successo: ${data?.operationType}${amount}€`};
@@ -115,7 +115,7 @@ export const actions: Actions = {
 
     async rollback({locals, params}) {
         if(!locals.currentAdmin) {
-            return invalid(401);
+            return fail(401);
         }
 
         const currentRollback = await db.user.findUnique({
@@ -131,7 +131,7 @@ export const actions: Actions = {
         });
 
         if(!currentRollback || !currentRollback.rollback?.active) {
-            return invalid(400, {success: false, message: 'Nessun rollback trovato'});
+            return fail(400, {success: false, message: 'Nessun rollback trovato'});
         }
 
         try {
@@ -156,7 +156,7 @@ export const actions: Actions = {
                 }
             });
         } catch {
-            return invalid(400, {success: false, message: 'Qualcosa è andato storto nella richiesta'});
+            return fail(400, {success: false, message: 'Qualcosa è andato storto nella richiesta'});
         }
 
         return {success: true, message: 'Rollback effettuato con successo'};
@@ -164,7 +164,7 @@ export const actions: Actions = {
 
     async delete({ locals, params }) {
         if(!locals.currentAdmin) {
-            return invalid(401);
+            return fail(401);
         }
 
         try {
@@ -180,7 +180,7 @@ export const actions: Actions = {
                 }
             });
         } catch {
-            return invalid(400, {success: false, message: "Errore nella richiesta"});
+            return fail(400, {success: false, message: "Errore nella richiesta"});
         }
 
         throw redirect(302, '/users');
@@ -188,7 +188,7 @@ export const actions: Actions = {
 
     async active({ locals, params }) {
         if(!locals.currentAdmin) {
-            return invalid(401);
+            return fail(401);
         }
 
         try {
@@ -204,7 +204,7 @@ export const actions: Actions = {
                 }
             });
         } catch {
-            return invalid(400, {success: false, message: "Errore nella richiesta"});
+            return fail(400, {success: false, message: "Errore nella richiesta"});
         }
 
         return {success: true, message: "Utente riattivato con successo"};

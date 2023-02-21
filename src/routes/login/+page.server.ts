@@ -1,4 +1,4 @@
-import { invalid, redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { db } from '$lib/server/database';
 
@@ -19,11 +19,11 @@ export const actions: Actions = {
         });
 
         if(!user) {
-            return invalid(400, {success: false, message: 'Invalid user'});
+            return fail(400, {success: false, message: 'Invalid user'});
         }
 
         if (user.pin !== parseInt(data.get('password')?.toString() ?? '')) { // temporary
-            return invalid(400, {success: false, message: 'Invalid pin'});
+            return fail(400, {success: false, message: 'Invalid pin'});
         }
 
 		cookies.set('session', user.id, {

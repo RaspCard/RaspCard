@@ -1,4 +1,4 @@
-import { invalid, redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { db } from '$lib/server/database';
 import type { CardRequest } from '$lib/utils/types';
@@ -14,13 +14,13 @@ export const load: PageServerLoad = async({ locals }) => {
 export const actions: Actions = {
     async default({request, locals}) {
         if(!locals.currentAdmin) {
-            return invalid(401);
+            return fail(401);
         }
 
         const data: CardRequest = Object.fromEntries(await request.formData());
 
         if(!data.cardId || typeof(data.cardId) !== 'string') {
-            return invalid(400);
+            return fail(400);
         }
 
         const user = await db.user.findUnique({
@@ -33,7 +33,7 @@ export const actions: Actions = {
         });
 
         if(user) {
-            return invalid(400, {success: false, message: "L'utente esiste già"});
+            return fail(400, {success: false, message: "L'utente esiste già"});
         }
 
         if(data.phoneNumber && data.phoneNumber !== '') {
@@ -45,7 +45,7 @@ export const actions: Actions = {
             });
 
             if(user) {
-                return invalid(400, {success: false, message: 'Numero di telefono già in uso'});
+                return fail(400, {success: false, message: 'Numero di telefono già in uso'});
             }
         }
 
