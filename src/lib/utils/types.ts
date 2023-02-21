@@ -1,18 +1,18 @@
 export interface BalanceRequest {
-    amount?: string;
+    amount: string;
     cashback?: string;
-    operationType?: '+' | '-';
+    operationType: '+' | '-';
 };
 
 export interface CardRequest {
-    cardId?: string;
+    cardId: string;
     name?: string;
     surname?: string;
     phoneNumber?: string;
 };
 
 export interface EditRequest {
-    name?: string;
-    surname?: string;
-    phoneNumber?: string;
+    name: string;
+    surname: string;
+    phoneNumber: string;
 }
