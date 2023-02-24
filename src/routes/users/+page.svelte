@@ -1,16 +1,15 @@
 <script lang="ts">
-    import { Table, Input } from 'flowbite-svelte';
-    import { goto } from '$app/navigation';
     import type { PageData } from './$types';
+    import { goto } from '$app/navigation';
+    import { Table, Input } from 'flowbite-svelte';
     import TableRowUser from '$lib/components/TableRowUser.svelte';
     import TableHeadUsers from '$lib/components/TableHeadUsers.svelte';
     import Scanner from "$lib/components/Scanner.svelte";
 
     export let data: PageData;
-    $: ({ users } = data);
 
     let searchInput = '';
-    $: dynamicUsers = users.filter(user => user.cardId.includes(searchInput));
+    $: dynamicUsers = data.users.filter(user => user.cardId.includes(searchInput));
 </script>
 
 <Scanner on:scan={e => goto(`/users/${e.detail.id}`)}/>
