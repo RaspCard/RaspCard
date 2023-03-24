@@ -2,7 +2,7 @@
     import { Button, Label, Input, Heading, P, Span } from 'flowbite-svelte';
     import { Plus } from 'svelte-heros-v2';
     import toast, { Toaster } from 'svelte-french-toast';
-    import { applyAction, enhance } from '$app/forms';
+    import { enhance } from '$app/forms';
     import Scanner from '$lib/components/Scanner.svelte';
 
 
