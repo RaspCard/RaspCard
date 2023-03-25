@@ -11,7 +11,9 @@
 <main class="w-screen h-screen">
   {#if $page.data.currentAdmin}
     <Navbar />
-    <slot />
+    <div style="height: calc(100vh - 6rem)" class="w-full">
+      <slot />
+    </div>
   {:else}
     <div class="h-full w-full flex justify-center items-center">
       <slot />
