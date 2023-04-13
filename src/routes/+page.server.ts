@@ -8,12 +8,19 @@ export const load: PageServerLoad = async({ locals }) => {
         throw redirect(302, '/login');
     }
 
-    const userLenght = await db.user.count({
+    const activeUsers = await db.user.count({
         where: {
             establishmentId: locals.currentAdmin.establishmentId,
             active: true
         }
     });
 
-    return { userLenght };
+    const inactiveUsers = await db.user.count({
+        where: {
+            establishmentId: locals.currentAdmin.establishmentId,
+            active: false
+        }
+    });
+
+    return { activeUsersCount: activeUsers, inactiveUsersCount: inactiveUsers };
 }
