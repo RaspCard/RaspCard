@@ -54,29 +54,6 @@
                 {/if}
             </BaseCard>
         </div>
-        <div class="w-full lg:w-[40vw]"> <!-- Func card -->
-            <BaseCard title="Dati Speciali">
-                {#if list.length > 0}
-                    <ul>
-                        {#each [] as item}
-                            <ListItem fieldName={""} fieldValue={null} border={true}/>
-                        {/each}
-                    </ul>
-                    <div class="text-lg text-gray-500 border-t-2 my-2">{"Field"}</div>
-                    <Listgroup items={list} let:item class="border-0">
-                        <div class="flex items-center space-x-4">
-                            <div class="flex-1 space-y-1 font-medium">
-                                <div>{item.name}</div>
-                                <div class="text-sm text-gray-500">{item.status}</div>
-                            </div>
-                            <Button gradient color="blue" class="h-8">Details</Button>
-                        </div>
-                    </Listgroup>
-                {:else}
-                    <Heading tag="h6" color="text-gray-500">Nessun Informazione Disponibile</Heading>
-                {/if}
-            </BaseCard>
-        </div>
     </div>
     <div class="w-full lg:w-auto lg:fixed lg:bottom-4 lg:right-4">
         <div class="m-4 lg:m-0 flex flex-col lg:flex-row align-middle gap-4">
