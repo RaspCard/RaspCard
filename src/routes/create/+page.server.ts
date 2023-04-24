@@ -56,7 +56,7 @@ export const actions: Actions = {
                 surname: data.surname || null,
                 phoneNumber: data.phoneNumber || null,
                 establishmentId: locals.currentAdmin.establishmentId,
-                rollback: {
+                rollback: { // TODO remove the creation of rollback in user creation
                     create: {}
                 }
             }

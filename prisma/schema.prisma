@@ -57,7 +57,7 @@ model Rollback {
   id              Int @id @default(autoincrement())
   balance         Float @default(0)
   func            String?
-  active          Boolean @default(false)
+  active          Boolean @default(false) // TODO check for usage and if possible remove
   updatedAt       DateTime @updatedAt
 
   // Relation between User and Rollback many-to-1

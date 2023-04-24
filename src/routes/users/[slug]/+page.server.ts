@@ -99,7 +99,7 @@ export const actions: Actions = {
                     },
                     rollback: {
                         update: {
-                            active: true,
+                            active: true, // TODO check if active is needed
                             balance: user.balance,
                             func: user.func
                         }
