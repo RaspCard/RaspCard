@@ -1,7 +1,7 @@
-<tr class="h-12 sticky top-0 bg-gray-200 text-left">
-    <th>ID</th>
-    <th>Nome</th>
-    <th>Cognome</th>
-    <th>Numero di Telefono</th>
+<tr class="h-12 sticky top-0 bg-stone-300 text-left">
+    <th class="min-w-[8rem] pl-2">ID</th>
+    <th class="min-w-[7rem]">Nome</th>
+    <th class="min-w-[7rem]">Cognome</th>
+    <th class="min-w-[12rem]">Numero di Telefono</th>
     <th></th>
 </tr>
