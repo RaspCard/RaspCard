@@ -22,7 +22,7 @@
 
 <div class="flex flex-col h-full">
     <div class="w-full h-full flex flex-col lg:flex-row justify-start">
-        <div class="w-full lg:w-[30vw]">
+        <div class="w-full lg:w-4/12">
             <BaseCard title="Dati del profilo"> <!-- Top card -->
                 <svelte:fragment slot="head">
                     <Button on:click={() => editModal = true} outline color="dark" class="!border-none !text-gray-900 hover:!bg-transparent hover:!text-gray-600">modifica</Button>
@@ -39,8 +39,8 @@
                 </div>
             </BaseCard>
         </div>
-        <div class="w-full lg:w-[30vw]"> <!-- Last Transaction card -->
-            <BaseCard title="Ultima transazione">
+        <div class="w-full lg:w-8/12"> <!-- Last Transaction card -->
+            <BaseCard title="Cronologia Transazioni">
                 {#if user.rollback?.active}
                     <ul>
                         <ListItem fieldName={"Transazione"} fieldValue={user.balance - user.rollback?.balance} currency={"€"}/>
