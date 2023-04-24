@@ -4,6 +4,7 @@
 
     export let chartName: string;
     export let data: any;
+    export let divClass: string;
 
     // Update register to make the component handle the registration
     Chart.register(DoughnutController);
@@ -15,6 +16,6 @@
     });
 </script>
 
-<div>
+<div class={divClass}>
     <canvas id={chartName}></canvas>
 </div>
