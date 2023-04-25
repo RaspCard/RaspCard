@@ -14,8 +14,8 @@
 
 <li class="py-2 w-full text-sm font-medium" class:border-t-2={border}>
     <div class="flex items-center space-x-4">
-        <div class="flex-1 space-y-1 font-medium">
-            <div class="text-base text-gray-500">{fieldName}</div>
+        <div class="flex-1 space-y-1 font-medium text-gray-500">
+            <div class="text-base font-bold">{fieldName}</div>
             <div class="text-sm">
                 {`${fieldValue}${currency !== undefined ? currency : ""}`}
                 {#if isNumber(fieldValue) && fieldValue < 0}
