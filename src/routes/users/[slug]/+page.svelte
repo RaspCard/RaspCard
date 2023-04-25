@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Button, Modal, Listgroup, Input, Label, Heading, Span, Hr } from 'flowbite-svelte';
-    import { Trash, ArrowPathRoundedSquare, CurrencyEuro, ExclamationTriangle } from 'svelte-heros-v2';
+    import { Trash, ArrowPathRoundedSquare, CurrencyEuro, ExclamationTriangle, FingerPrint, Identification, Banknotes, ArrowPath } from 'svelte-heros-v2';
     import toast, { Toaster } from 'svelte-french-toast';
     import type { PageData } from './$types';
     import { enhance } from '$app/forms';
@@ -22,10 +22,16 @@
     <div class="w-full h-full flex flex-col lg:flex-row justify-start">
         <div class="w-full lg:w-4/12">
             <BaseCard title="ID Utente"> <!-- Top card -->
-                <Span class="font-medium text-lg text-gray-500">{user.cardId}</Span>
+                <svelte:fragment slot="icon">
+                    <FingerPrint class="w-6 h-6 text-gray-500"/>
+                </svelte:fragment>
+                <Span class="font-medium text-lg !text-gray-500">{user.cardId}</Span>
             </BaseCard>
             <BaseCard title="Dati del profilo"> <!-- Middle card -->
-                <svelte:fragment slot="head">
+                <svelte:fragment slot="icon">
+                    <Identification class="w-6 h-6 text-gray-500"/>
+                </svelte:fragment>
+                <svelte:fragment slot="head-left">
                     <Button on:click={() => editModal = true} outline color="dark" class="!border-none !text-gray-900 hover:!bg-transparent hover:!text-gray-600">modifica</Button>
                 </svelte:fragment>
                 <ul>
@@ -35,11 +41,17 @@
                 </ul>
             </BaseCard>
             <BaseCard title="Saldo"> <!-- Bottom card -->
-                <Span class="font-medium text-lg text-gray-500">{user.balance}€</Span>
+                <svelte:fragment slot="icon">
+                    <Banknotes class="w-6 h-6 text-gray-500"/>
+                </svelte:fragment>
+                <Span class="font-medium text-lg !text-gray-500">{user.balance}€</Span>
             </BaseCard>
         </div>
         <div class="w-full lg:w-8/12"> <!-- Last Transaction card -->
             <BaseCard title="Cronologia Transazioni">
+                <svelte:fragment slot="icon">
+                    <ArrowPath class="w-6 h-6 text-gray-500"/>
+                </svelte:fragment>
                 {#if user.rollback.length !== 0}
                     {#each user.rollback as transaction}
                         <ul>
