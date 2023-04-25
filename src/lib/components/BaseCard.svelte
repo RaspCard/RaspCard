@@ -5,12 +5,15 @@
 </script>
 
 
-<Card class="m-3 max-h-[90%]" size="xl" padding="lg">
+<Card class="m-3 max-h-[85%]" size="xl" padding="lg">
     <div class="flex justify-between items-center mb-4">
-        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
-            {title}
-        </h5>
-        <slot name="head"/>
+        <div class="flex items-center gap-2">
+            <slot name="icon"/>
+            <h5 class="text-xl font-bold leading-none text-gray-500 dark:text-white">
+                {title}
+            </h5>
+        </div>
+        <slot name="head-left"/>
     </div>
     <div class="overflow-scroll scrollbar-none">
         <slot/>
