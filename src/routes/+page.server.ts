@@ -22,5 +22,24 @@ export const load: PageServerLoad = async({ locals }) => {
         }
     });
 
-    return { activeUsersCount: activeUsers, inactiveUsersCount: inactiveUsers };
+    const latestTransactions = await db.rollback.findMany({
+        where: {
+            user: {
+                establishmentId: locals.currentAdmin.establishmentId
+            }
+        },
+        orderBy: {
+            createdAt: 'desc'
+        },
+        include: {
+            user: true
+        },
+        take: 50
+    });
+
+    return {
+        activeUsersCount: activeUsers,
+        inactiveUsersCount: inactiveUsers,
+        latestTransactions
+    };
 }
