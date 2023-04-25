@@ -4,7 +4,7 @@
     import { ArrowLeftOnRectangle, Users, UserPlus, BookmarkSquare, QuestionMarkCircle, Home } from "svelte-heros-v2";
 </script>
 
-<Navbar class="h-24 relative z-10" let:hidden let:toggle>
+<Navbar class="h-24 relative z-10 shadow" let:hidden let:toggle>
     <NavBrand href="/">
         <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo"/>
         <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Raspcard</span>
