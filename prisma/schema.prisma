@@ -34,7 +34,7 @@ model User {
   active          Boolean @default(true)
   balance         Float @default(0)
   func            String?
-  rollback        Rollback?
+  rollback        Rollback[]
 
   // establishment
   establishment   Establishment @relation(fields: [establishmentId], references: [id])
@@ -55,12 +55,11 @@ model Establishment {
 
 model Rollback {
   id              Int @id @default(autoincrement())
-  balance         Float @default(0)
+  transaction     Float @default(0)
   func            String?
-  active          Boolean @default(false) // TODO check for usage and if possible remove
-  updatedAt       DateTime @updatedAt
+  createdAt       DateTime @default(now())
 
   // Relation between User and Rollback many-to-1
   user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId          Int @unique
+  userId          Int 
 }
