@@ -10,8 +10,6 @@
     export let data: PageData;
     $: ({ user } = data );
 
-    let list: any[] = [];
-
     let deleteModal: boolean = false;
     let transactionModal: boolean = false;
     let rollbackModal: boolean = false;
@@ -22,6 +20,7 @@
 
 <div class="flex flex-col h-full">
     <div class="w-full h-full flex flex-col lg:flex-row justify-start">
+        <!-- TODO add card ID CARD -->
         <div class="w-full lg:w-4/12">
             <BaseCard title="Dati del profilo"> <!-- Top card -->
                 <svelte:fragment slot="head">
@@ -41,14 +40,13 @@
         </div>
         <div class="w-full lg:w-8/12"> <!-- Last Transaction card -->
             <BaseCard title="Cronologia Transazioni">
-                {#if user.rollback?.active}
-                    <ul>
-                        <ListItem fieldName={"Transazione"} fieldValue={user.balance - user.rollback?.balance} currency={"€"}/>
-                        <ListItem fieldName={"Data Ultima Transazione"} fieldValue={`${user.rollback?.updatedAt.toLocaleDateString()} ${user.rollback?.updatedAt.toLocaleTimeString()}`} border={true}/>
-                        {#each [] as item}
-                            <ListItem fieldName={""} fieldValue={null} border={true}/>
-                        {/each}
-                    </ul>
+                {#if user.rollback.length !== 0}
+                    {#each user.rollback as transaction}
+                        <ul>
+                            <ListItem fieldName={"Transazione"} fieldValue={transaction.transaction} currency={"€"}/>
+                            <ListItem fieldName={"Data Transazione"} fieldValue={`${transaction.createdAt.toLocaleDateString()} ${transaction.createdAt.toLocaleTimeString()}`} border={true}/>
+                        </ul>
+                    {/each}
                 {:else}
                     <Heading tag="h6" color="text-gray-500">Nessuna transazione disponibile</Heading>
                 {/if}
@@ -58,7 +56,7 @@
     <div class="w-full lg:w-auto lg:fixed lg:bottom-4 lg:right-4">
         <div class="m-4 lg:m-0 flex flex-col lg:flex-row align-middle gap-4">
             <Button on:click={() => deleteModal = true} gradient color="red" class="w-full lg:w-56"><Trash/>Elimina Utente</Button>
-            <Button on:click={() => rollbackModal = user.rollback?.active ? true : false} gradient color="green" class="w-full lg:w-56"><ArrowPathRoundedSquare/>Annulla L'ultima Transazione</Button>
+            <Button on:click={() => rollbackModal = user.rollback.length !== 0 ? true : false} gradient color="green" class="w-full lg:w-56"><ArrowPathRoundedSquare/>Annulla L'ultima Transazione</Button>
             <Button on:click={() => transactionModal = true} gradient color="blue" class="w-full lg:w-56"><CurrencyEuro/>Nuova Transazione</Button>    
         </div>
     </div>
@@ -152,10 +150,7 @@
                 <Span class="font-semibold text-gray-500">Ciò comporta le seguenti modifiche:</Span>
                 <div class="max-h-[10rem] overflow-scroll scrollbar-none text-start">
                     <ul>
-                        <ListItem fieldName={"Effettuare La Transazione:"} fieldValue={(user.balance - (user.rollback?.balance || 0)) * -1} currency={"€"}/>
-                        {#each [] as item}
-                            <ListItem fieldName={""} fieldValue={null} border={true}/>
-                        {/each}
+                        <ListItem fieldName={"Valore restituito"} fieldValue={user.rollback.length !== 0 ? user.rollback[0].transaction * -1 : 0} currency={"€"}/>
                     </ul>
                 </div>
             </div>
