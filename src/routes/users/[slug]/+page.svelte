@@ -20,9 +20,11 @@
 
 <div class="flex flex-col h-full">
     <div class="w-full h-full flex flex-col lg:flex-row justify-start">
-        <!-- TODO add card ID CARD -->
         <div class="w-full lg:w-4/12">
-            <BaseCard title="Dati del profilo"> <!-- Top card -->
+            <BaseCard title="ID Utente"> <!-- Top card -->
+                <Span class="font-medium text-lg text-gray-500">{user.cardId}</Span>
+            </BaseCard>
+            <BaseCard title="Dati del profilo"> <!-- Middle card -->
                 <svelte:fragment slot="head">
                     <Button on:click={() => editModal = true} outline color="dark" class="!border-none !text-gray-900 hover:!bg-transparent hover:!text-gray-600">modifica</Button>
                 </svelte:fragment>
@@ -33,9 +35,7 @@
                 </ul>
             </BaseCard>
             <BaseCard title="Saldo"> <!-- Bottom card -->
-                <div class="w-full flex items-center text-lg">
-                    <Span class="font-medium text-lg text-gray-500">{user.balance}€</Span>
-                </div>
+                <Span class="font-medium text-lg text-gray-500">{user.balance}€</Span>
             </BaseCard>
         </div>
         <div class="w-full lg:w-8/12"> <!-- Last Transaction card -->
@@ -53,7 +53,7 @@
             </BaseCard>
         </div>
     </div>
-    <div class="w-full lg:w-auto lg:fixed lg:bottom-4 lg:right-4">
+    <div class="w-full bg-white border-t-2 pt-2 lg:bg-none lg:border-t-0 lg:p-0 lg:w-auto lg:fixed lg:bottom-4 lg:right-4">
         <div class="m-4 lg:m-0 flex flex-col lg:flex-row align-middle gap-4">
             <Button on:click={() => deleteModal = true} gradient color="red" class="w-full lg:w-56"><Trash/>Elimina Utente</Button>
             <Button on:click={() => rollbackModal = user.rollback.length !== 0 ? true : false} gradient color="green" class="w-full lg:w-56"><ArrowPathRoundedSquare/>Annulla L'ultima Transazione</Button>
