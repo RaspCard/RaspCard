@@ -15,7 +15,11 @@ export const load: PageServerLoad = async({ locals, params }) => {
             active: true
         },
         include: {
-            rollback: true
+            rollback: {
+                orderBy: {
+                    createdAt: 'desc'
+                }
+            }
         }
     });
 
@@ -75,15 +79,14 @@ export const actions: Actions = {
                     cardId: params.slug,
                     establishmentId: locals.currentAdmin.establishmentId
                 }
-            },
-            include: {
-                rollback: true
             }
         });
 
         if(!user) {
             return fail(404, {success: false, message: 'Utente non trovato'});
         }
+
+        const calculedValue = operationType === 1 ? amount + (amount/100 * cashback) : amount * operationType;
 
         try {
             await db.user.update({
@@ -95,18 +98,17 @@ export const actions: Actions = {
                 },
                 data: {
                     balance: {
-                        increment: operationType === 1 ? amount + (amount/100 * cashback) : amount * operationType
+                        increment: calculedValue
                     },
                     rollback: {
-                        update: {
-                            active: true, // TODO check if active is needed
-                            balance: user.balance,
+                        create: {
+                            transaction: calculedValue,
                             func: user.func
                         }
                     }
                 }
             });
-        } catch {
+        } catch (e) {
             return fail(400, {success: false, message: 'Qualcosa è andato storto nella richiesta'});
         }
 
@@ -118,7 +120,7 @@ export const actions: Actions = {
             return fail(401);
         }
 
-        const currentRollback = await db.user.findUnique({
+        const currentUserData = await db.user.findUnique({
             where: {
                 cardId_establishmentId: {
                     cardId: params.slug,
@@ -126,13 +128,19 @@ export const actions: Actions = {
                 }
             },
             include: {
-                rollback: true
+                rollback: {
+                    orderBy: {
+                        createdAt: 'desc'
+                    },
+                }
             }
         });
 
-        if(!currentRollback || !currentRollback.rollback?.active) {
+        if(!currentUserData || currentUserData.rollback.length === 0) {
             return fail(400, {success: false, message: 'Nessun rollback trovato'});
         }
+
+        const newBalance = currentUserData.balance + (currentUserData.rollback[0].transaction * -1);
 
         try {
             await db.user.update({
@@ -143,14 +151,14 @@ export const actions: Actions = {
                     }
                 }, data: {
                     balance: {
-                        set: currentRollback.rollback.balance
+                        set: newBalance
                     },
                     func: {
-                        set: currentRollback.rollback.func
+                        set: currentUserData.rollback[0].func
                     },
                     rollback: {
-                        update: {
-                            active: false
+                        delete: {
+                            id: currentUserData.rollback[0].id
                         }
                     }
                 }
