@@ -5,7 +5,7 @@
 </script>
 
 
-<Card class="m-3 max-h-[85%]" size="xl" padding="lg">
+<Card class="max-h-[85%] !p-3" size="xl">
     <div class="flex justify-between items-center mb-4">
         <div class="flex items-center gap-2">
             <slot name="icon"/>

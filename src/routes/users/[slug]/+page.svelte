@@ -19,8 +19,8 @@
 <Toaster/>
 
 <div class="flex flex-col h-full">
-    <div class="w-full h-full flex flex-col lg:flex-row justify-start">
-        <div class="w-full lg:w-4/12">
+    <div class="px-3 pt-3 w-full h-full flex flex-col lg:flex-row justify-start gap-3">
+        <div class="w-full h-full lg:w-4/12 flex flex-col gap-3 overflow-y-scroll scrollbar-none">
             <BaseCard title="ID Utente"> <!-- Top card -->
                 <svelte:fragment slot="icon">
                     <FingerPrint class="w-6 h-6 text-gray-500"/>
@@ -47,7 +47,7 @@
                 <Span class="font-medium text-lg !text-gray-500">{user.balance}€</Span>
             </BaseCard>
         </div>
-        <div class="w-full lg:w-8/12"> <!-- Last Transaction card -->
+        <div class="pb-3 w-full lg:w-8/12"> <!-- Last Transaction card -->
             <BaseCard title="Cronologia Transazioni">
                 <svelte:fragment slot="icon">
                     <ArrowPath class="w-6 h-6 text-gray-500"/>
