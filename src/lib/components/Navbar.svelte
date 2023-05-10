@@ -4,13 +4,14 @@
     import { ArrowLeftOnRectangle, Users, UserPlus, BookmarkSquare, QuestionMarkCircle, Home } from "svelte-heros-v2";
 </script>
 
+<!-- TODO: fix navbar dimentions -->
 <Navbar class="h-24 relative z-10 shadow" let:hidden let:toggle>
     <NavBrand href="/">
         <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo"/>
         <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Raspcard</span>
     </NavBrand>
     <div class="flex items-center md:order-2">
-        <Button id="more-info" class="font-semibold md:order-1"> Disconnessione </Button>
+        <Button id="more-info" class="font-semibold md:order-1">admin</Button>
         <NavHamburger on:click={toggle} class1="w-full md:flex md:w-auto md:order-1"/>
     </div>
     <Dropdown placement="bottom" triggeredBy="#more-info">
