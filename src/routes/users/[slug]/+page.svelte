@@ -18,7 +18,7 @@
 
 <Toaster/>
 
-<div class="flex flex-col h-full">
+<div class="flex flex-col lg:h-full">
     <div class="px-3 pt-3 w-full h-full flex flex-col lg:flex-row justify-start gap-3">
         <div class="w-full h-full lg:w-4/12 flex flex-col gap-3 overflow-y-scroll scrollbar-none">
             <BaseCard title="ID Utente"> <!-- Top card -->
