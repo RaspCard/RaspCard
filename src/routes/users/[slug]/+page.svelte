@@ -65,8 +65,8 @@
             </BaseCard>
         </div>
     </div>
-    <div class="w-full bg-white border-t-2 pt-2 lg:bg-none lg:border-t-0 lg:p-0 lg:w-auto lg:fixed lg:bottom-4 lg:right-4">
-        <div class="m-4 lg:m-0 flex flex-col lg:flex-row align-middle gap-4">
+    <div class="w-full bg-white border-t-2 pt-2 lg:bg-none lg:border-t-0 lg:p-0 lg:w-auto lg:fixed lg:bottom-3 lg:right-3">
+        <div class="m-3 lg:m-0 flex flex-col lg:flex-row align-middle gap-4">
             <Button on:click={() => deleteModal = true} gradient color="red" class="w-full lg:w-56"><Trash/>Elimina Utente</Button>
             <Button on:click={() => rollbackModal = user.rollback.length !== 0 ? true : false} gradient color="green" class="w-full lg:w-56"><ArrowPathRoundedSquare/>Annulla L'ultima Transazione</Button>
             <Button on:click={() => transactionModal = true} gradient color="blue" class="w-full lg:w-56"><CurrencyEuro/>Nuova Transazione</Button>    
