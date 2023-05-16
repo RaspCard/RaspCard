@@ -3,14 +3,15 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-}
-
-body {
-    font-family: monospace;
+@layer base {
+    :root {
+        --color-text-base: #000000;
+        --color-text-inverted: #ffffff;
+        --color-fill: #ffffff;
+        --color-button-base: #1a1a1a;
+        --color-button-muted: #f2ecdb;
+        --color-accent: #825f0d;
+    }
 }
 
 .scrollbar-none {
