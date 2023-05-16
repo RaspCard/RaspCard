@@ -39,25 +39,25 @@
             <div class="w-full flex flex-col gap-4">
                 <Label class="space-y-2">
                     <Span>ID carta</Span>
-                    <Input bind:value={cardID} autocomplete="off" required type="text" name="cardId" placeholder="ID numerico" size="lg"/>
+                    <Input bind:value={cardID} autocomplete="off" required type="text" name="cardId" placeholder="ID numerico" size="lg" class="focus:ring-0 focus:border-secondary-button"/>
                 </Label>
                 <Label class="space-y-2">
                     <Span>Nome</Span>
-                    <Input autocomplete="off" type="text" name="name" placeholder="Nome" size="lg"/>
+                    <Input autocomplete="off" type="text" name="name" placeholder="Nome" size="lg" class="focus:ring-0 focus:border-secondary-button"/>
                 </Label>
                 <Label class="space-y-2">
                     <Span>Cognome</Span>
-                    <Input autocomplete="off" type="text" name="surname" placeholder="Cognome" size="lg"/>
+                    <Input autocomplete="off" type="text" name="surname" placeholder="Cognome" size="lg" class="focus:ring-0 focus:border-secondary-button"/>
                 </Label>
                 <Label class="space-y-2">
                     <Span>Numero di Telefono</Span>
-                    <Input autocomplete="off" type="tel" name="phoneNumber" placeholder="+39" size="lg" pattern={"3[0-9]{9}"}/>
+                    <Input autocomplete="off" type="tel" name="phoneNumber" placeholder="+39" size="lg" pattern={"3[0-9]{9}"} class="focus:ring-0 focus:border-secondary-button"/>
                 </Label>
             </div>
         </div>
     </div>
     <div class="lg:fixed lg:bottom-4 w-screen flex justify-center lg:right-4 lg:w-72">
-        <Button type="submit" gradient color="green" class="m-4 w-full lg:m-0 lg:w-72 h-20 text-lg"><Plus class="mr-2 -ml-1 w-7 h-7"/>Crea la Carta</Button>
+        <Button type="submit" class="m-4 w-full lg:m-0 lg:w-72 h-20 text-lg bg-primary-button hover:bg-primary-button hover:opacity-90 active:ring-0"><Plus class="mr-2 -ml-1 w-7 h-7"/>Crea la Carta</Button>
     </div>
 </form>
 

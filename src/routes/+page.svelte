@@ -33,7 +33,7 @@
 <Scanner on:scan={e => goto(`/users/${e.detail.id}`)}/>
 <div class="p-4 flex flex-col lg:items-start items-center gap-4">
     <Heading class="!text-primary" tag="h2">Bentornato {data.currentAdmin.name}</Heading>
-    <div class="flex flex-col lg:flex-row gap-2">
+    <div class="flex flex-col md:flex-row gap-2">
         <Card class="p-4 w-full lg:w-auto border-none shadow-none relative">
             <!-- TODO: update card with new table -->
             <div class="flex flex-col">
