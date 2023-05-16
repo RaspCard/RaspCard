@@ -10,8 +10,8 @@
 
 <main class="w-screen h-screen">
   {#if $page.data.currentAdmin}
-    <Navbar />
-    <div style="height: calc(100vh - 6rem)" class="w-full">
+    <Navbar username={$page.data.currentAdmin.name} systemName={$page.data.currentAdmin.establishmentName}/>
+    <div class="w-full h-[calc(100svh-5rem)]">
       <slot />
     </div>
   {:else}
