@@ -16,16 +16,14 @@
     <td>{phoneNumber}</td>
     <td class="pr-2">
         {#if active}
-            <Button href={`/users/${cardId}`} outline>
-                Modifica
-            </Button>
+            <Button href={`/users/${cardId}`} class="bg-primary-button !text-secondary hover:opacity-90 hover:bg-primary-button focus:!ring-0">Modifica</Button>
         {:else}
             <form
                 action={`/users/${cardId}?/active`}
                 method="POST"
                 use:enhance
             >
-                <Button type="submit" outline color="green">Riattiva</Button>
+                <Button type="submit" class="bg-secondary-button !text-primary hover:opacity-90 hover:bg-secondary-button focus:!ring-0">Riattiva</Button>
             </form>
         {/if}
     </td>
