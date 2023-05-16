@@ -8,8 +8,8 @@ const config = {
     colors: {
       'primary': 'var(--color-primary)',
       'secondary': 'var(--color-secondary)',
-      'primary-button': 'var(--color-primary-button)',
-      'secondary-button': 'var(--color-secondary-button)',
+      'primary-button': 'var(--color-button-base)',
+      'secondary-button': 'var(--color-button-muted)',
       'accent': 'var(--color-accent)',
     }
   },
