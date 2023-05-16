@@ -5,7 +5,13 @@ const config = {
   ],
 
   theme: {
-    extend: {},
+    colors: {
+      'primary': 'var(--color-primary)',
+      'secondary': 'var(--color-secondary)',
+      'primary-button': 'var(--color-primary-button)',
+      'secondary-button': 'var(--color-secondary-button)',
+      'accent': 'var(--color-accent)',
+    }
   },
 
   plugins: [
