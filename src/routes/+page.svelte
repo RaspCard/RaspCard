@@ -34,7 +34,7 @@
 <div class="p-4 flex flex-col lg:items-start items-center gap-4">
     <Heading class="!text-primary" tag="h2">Bentornato {data.currentAdmin.name}</Heading>
     <div class="flex flex-col md:flex-row gap-2">
-        <Card class="p-4 w-full lg:w-auto border-none shadow-none relative">
+        <Card class="p-4 w-full lg:w-auto shadow">
             <!-- TODO: update card with new table -->
             <div class="flex flex-col">
                 {#each data.latestTransactions as transaction}
@@ -45,9 +45,8 @@
                     </div>
                 {/each}
             </div>
-            <div class="absolute w-full h-full flex-1 bg-primary opacity-5 top-0 left-0 rounded-md"></div>
         </Card>
-        <Card class="p-4 w-full lg:w-auto border-none shadow-none relative text-primary">
+        <Card class="p-4 w-full lg:w-auto shadow text-primary">
             <div class="flex flex-col items-center">
                 <Heading tag="h5" class="text-center">Utenti Registrati</Heading>
                 <div class="w-full flex flex-row items-center justify-center gap-5 sm:gap-0 sm:flex-col sm:items-center">
@@ -70,7 +69,6 @@
                     </div>
                 </div>
             </div>
-            <div class="absolute w-full h-full flex-1 bg-primary opacity-5 top-0 left-0 rounded-md"></div>
         </Card>
     </div>
 </div>
