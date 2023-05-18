@@ -18,8 +18,15 @@
 
 <Toaster/>
 
-<div class="flex flex-col lg:h-full">
-    <div class="px-3 pt-3 w-full h-full flex flex-col lg:flex-row justify-start gap-3">
+<div class="relative flex flex-col lg:h-full">
+    <div class="absolute w-full lg:static">
+        <div class="p-3 w-full flex justify-end flex-col-reverse h-52 lg:h-20 lg:flex-row gap-4">
+            <Button on:click={() => deleteModal = true} class="w-ful h-full lg:w-56 bg-secondary-button !text-primary hover:bg-secondary-button hover:opacity-90 active:ring-0"><Trash/>Elimina Utente</Button>
+            <Button on:click={() => rollbackModal = true} disabled={user.rollback.length !== 0 ? false : true} class="w-full h-full lg:w-56 bg-primary-button hover:bg-primary-button enabled:hover:opacity-90 active:ring-0"><ArrowPathRoundedSquare/>Annulla L'ultima Transazione</Button>
+            <Button on:click={() => transactionModal = true} class="w-full h-full lg:w-56 bg-primary-button hover:bg-primary-button hover:opacity-90 active:ring-0"><CurrencyEuro/>Nuova Transazione</Button>    
+        </div>
+    </div>
+    <div class="px-3 pb-3 w-full pt-52 lg:pt-0 lg:h-[calc(100%-5rem)] flex flex-col lg:flex-row justify-start gap-3">
         <div class="w-full h-full lg:w-4/12 flex flex-col gap-3 overflow-y-scroll scrollbar-none">
             <BaseCard title="ID Utente"> <!-- Top card -->
                 <svelte:fragment slot="icon">
@@ -47,7 +54,7 @@
                 <Span class="font-medium text-lg !text-gray-500">{user.balance}€</Span>
             </BaseCard>
         </div>
-        <div class="pb-3 w-full lg:w-8/12"> <!-- Last Transaction card -->
+        <div class="w-full lg:w-8/12"> <!-- Last Transaction card -->
             <BaseCard title="Cronologia Transazioni">
                 <svelte:fragment slot="icon">
                     <ArrowPath class="w-6 h-6 text-gray-500"/>
@@ -65,18 +72,11 @@
             </BaseCard>
         </div>
     </div>
-    <div class="w-full bg-white border-t-2 pt-2 lg:bg-none lg:border-t-0 lg:p-0 lg:w-auto lg:fixed lg:bottom-3 lg:right-3">
-        <div class="m-3 lg:m-0 flex flex-col lg:flex-row align-middle gap-4">
-            <Button on:click={() => deleteModal = true} gradient color="red" class="w-full lg:w-56"><Trash/>Elimina Utente</Button>
-            <Button on:click={() => rollbackModal = user.rollback.length !== 0 ? true : false} gradient color="green" class="w-full lg:w-56"><ArrowPathRoundedSquare/>Annulla L'ultima Transazione</Button>
-            <Button on:click={() => transactionModal = true} gradient color="blue" class="w-full lg:w-56"><CurrencyEuro/>Nuova Transazione</Button>    
-        </div>
-    </div>
 </div>
 
 
 <!-- Edit modal -->
-<Modal bind:open={editModal} size="sm" autoclose={false}>
+<Modal bind:open={editModal} class="w-full max-w-md" autoclose={false}>
     <form
         method="POST"
         action="?/edit"
@@ -119,7 +119,7 @@
 
 
 <!-- Delete modal -->
-<Modal bind:open={deleteModal} size="sm" autoclose={false}>
+<Modal bind:open={deleteModal} class="w-full max-w-md" autoclose={false}>
     <form
         method="POST"
         action="?/delete"
@@ -137,7 +137,7 @@
 
 
 <!-- Rollback modal -->
-<Modal bind:open={rollbackModal} size="sm" autoclose={false}>
+<Modal bind:open={rollbackModal} class="w-full max-w-md" autoclose={false}>
     <form
         method="POST"
         action="?/rollback"
@@ -175,7 +175,7 @@
 
 
 <!-- Transaction modal -->
-<Modal bind:open={transactionModal} size="xs" autoclose={false}>
+<Modal bind:open={transactionModal} class="w-full max-w-md" autoclose={false}>
     <form
         on:keypress={e => e.key == "Enter" ? e.preventDefault() : null}
         method="POST"
