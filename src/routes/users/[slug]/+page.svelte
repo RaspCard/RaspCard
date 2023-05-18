@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Button, Modal, Listgroup, Input, Label, Heading, Span, Hr } from 'flowbite-svelte';
+    import { Button, Modal, Input, Label, Heading, Span, Hr } from 'flowbite-svelte';
     import { Trash, ArrowPathRoundedSquare, CurrencyEuro, ExclamationTriangle, FingerPrint, Identification, Banknotes, ArrowPath } from 'svelte-heros-v2';
     import toast, { Toaster } from 'svelte-french-toast';
     import type { PageData } from './$types';
@@ -14,6 +14,11 @@
     let transactionModal: boolean = false;
     let rollbackModal: boolean = false;
     let editModal: boolean = false;
+
+    function parseFuncData(func: string) {
+        const json = JSON.parse(func);
+        return Object.entries(json);
+    }
 </script>
 
 <Toaster/>
@@ -60,13 +65,32 @@
                     <ArrowPath class="w-6 h-6 text-primary"/>
                 </svelte:fragment>
                 {#if user.rollback.length !== 0}
-                    {#each user.rollback as transaction}
-                        <ul class="grid grid-flow-row lg:grid-flow-col">
-                            <!-- TODO: update with new component -->
-                            <ListItem fieldName={"Transazione"} fieldValue={transaction.transaction} currency={"€"}/>
-                            <ListItem fieldName={"Data Transazione"} fieldValue={`${transaction.createdAt.toLocaleDateString()} ${transaction.createdAt.toLocaleTimeString()}`}/>
-                        </ul>
-                    {/each}
+                    <div class="flex flex-col gap-3">
+                        {#each user.rollback as transaction, i}
+                            <ul class="flex flex-col lg:flex-row gap-4 text-primary">
+                                <!-- TODO: update with new component -->
+                                <li class="flex flex-col">
+                                    <span class="text-lg font-semibold">Transazione</span>
+                                    <span>{transaction.transaction}€</span>
+                                </li>
+                                <li class="flex flex-col">
+                                    <span class="text-lg font-semibold">Data Transazione</span>
+                                    <span>{`${transaction.createdAt.toLocaleDateString()} ${transaction.createdAt.toLocaleTimeString()}`}</span>
+                                </li>
+                                {#if transaction.func !== null}
+                                    {#each parseFuncData(transaction.func) as [key, value]}
+                                        <li class="flex flex-col">
+                                            <span class="text-lg font-semibold">{key}</span>
+                                            <span>{value}</span>
+                                        </li>
+                                    {/each}
+                                {/if}
+                            </ul>
+                            {#if i !== user.rollback.length - 1}
+                                <Hr />
+                            {/if}
+                        {/each}
+                    </div>
                 {:else}
                     <Heading tag="h6" color="text-gray-500">Nessuna transazione disponibile</Heading>
                 {/if}
