@@ -12,16 +12,16 @@
 </script>
 
 
-<li class="py-2 w-full text-sm font-medium" class:border-t-2={border}>
+<li class="w-full text-sm font-medium" class:border-t-2={border}>
     <div class="flex items-center space-x-4">
-        <div class="flex-1 space-y-1 font-medium text-gray-500">
+        <div class="flex-1 space-y-1 font-medium text-primary">
             <div class="text-base font-bold">{fieldName}</div>
             <div class="text-sm">
                 {`${fieldValue}${currency !== undefined ? currency : ""}`}
                 {#if isNumber(fieldValue) && fieldValue < 0}
-                    <Badge class="ml-2" large={true} color="red">PAGAMENTO</Badge>
+                    <Badge class="ml-2 !bg-secondary-button !text-accent" large={true}>PAGAMENTO</Badge>
                 {:else if isNumber(fieldValue) && fieldValue > 0}
-                    <Badge class="ml-2" large={true} color="green">DEPOSITO</Badge>
+                    <Badge class="ml-2 !bg-primary-button !text-secondary" large={true}>DEPOSITO</Badge>
                 {/if}
             </div>
         </div>
