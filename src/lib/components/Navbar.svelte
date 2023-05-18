@@ -14,8 +14,8 @@
     >
         <div class="h-full flex flex-row items-center justify-between container">
             <NavBrand href="/">
-                <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo"/>
-                <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Raspcard</span>
+                <!-- <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo"/> -->
+                <span class="self-center whitespace-nowrap text-2xl font-bold text-accent">Raspcard</span>
             </NavBrand>
             <div class="flex items-center gap-2 md:order-2">
                 <A id="more-info" class="text-primary font-medium hover:no-underline hover:text-accent">ADMIN</A>
