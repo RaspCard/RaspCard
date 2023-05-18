@@ -21,21 +21,21 @@
             <Heading tag="h3" class="p-0">Accedi a RaspCard</Heading>
             <Label class="space-y-2">
                 <span>Codice della carta</span>
-                <Input name="uuid" type="text" placeholder="codice della carta" required bind:value={idInput}/>
+                <Input name="uuid" type="text" placeholder="codice della carta" required bind:value={idInput} class="focus:ring-0 focus:border-secondary-button"/>
             </Label>
             <Label class="space-y-2">
                 <span>PIN</span>
-                <Input type="password" name="password" placeholder="•••••" required/>
+                <Input type="password" name="password" placeholder="•••••" required class="focus:ring-0 focus:border-secondary-button"/>
             </Label>
             {#if form?.success === false}
-                <Alert color="red" class="p-4">
+                <Alert class="p-4 bg-secondary-button">
                     <div class="w-full flex flex-row gap-2">
-                        <Span class="text-red-800"><ExclamationTriangle class="w-5 h-5"/></Span>
-                        <Span class="text-red-800">{form?.message}</Span>
+                        <Span class="text-primary"><ExclamationTriangle class="w-5 h-5"/></Span>
+                        <Span class="text-primary">{form?.message}</Span>
                     </div>
                 </Alert>
             {/if}
-            <Button type="submit" outline color="blue" class="w-full">Accedi</Button>
+            <Button type="submit" class="w-full bg-primary-button">Accedi</Button>
         </form>
     </Card>
 </div>
