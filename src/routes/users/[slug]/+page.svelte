@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Button, Modal, Input, Label, Heading, Span, Hr } from 'flowbite-svelte';
+    import { Button, Modal, Input, Label, Heading, Span, Hr, Badge } from 'flowbite-svelte';
     import { Trash, ArrowPathRoundedSquare, CurrencyEuro, ExclamationTriangle, FingerPrint, Identification, Banknotes, ArrowPath } from 'svelte-heros-v2';
     import toast, { Toaster } from 'svelte-french-toast';
     import type { PageData } from './$types';
@@ -48,8 +48,10 @@
                 </svelte:fragment>
                 <ul class="flex flex-col gap-2">
                     <ListItem fieldName={"Nome"} fieldValue={user.name}/>
-                    <ListItem fieldName={"Cognome"} fieldValue={user.surname} border={true}/>
-                    <ListItem fieldName={"Numero di Telefono"} fieldValue={user.phoneNumber} border={true}/>
+                    <Hr/>
+                    <ListItem fieldName={"Cognome"} fieldValue={user.surname}/>
+                    <Hr/>
+                    <ListItem fieldName={"Numero di Telefono"} fieldValue={user.phoneNumber}/>
                 </ul>
             </BaseCard>
             <BaseCard title="Saldo"> <!-- Bottom card -->
@@ -67,22 +69,12 @@
                 {#if user.rollback.length !== 0}
                     <div class="flex flex-col gap-3">
                         {#each user.rollback as transaction, i}
-                            <ul class="flex flex-col lg:flex-row gap-4 text-primary">
-                                <!-- TODO: update with new component -->
-                                <li class="flex flex-col">
-                                    <span class="text-lg font-semibold">Transazione</span>
-                                    <span>{transaction.transaction}€</span>
-                                </li>
-                                <li class="flex flex-col">
-                                    <span class="text-lg font-semibold">Data Transazione</span>
-                                    <span>{`${transaction.createdAt.toLocaleDateString()} ${transaction.createdAt.toLocaleTimeString()}`}</span>
-                                </li>
+                            <ul class="flex flex-col lg:flex-row gap-6 text-primary">
+                                <ListItem vertical badge fieldName={"Transazione"} fieldValue={transaction.transaction} currency={"€"} width="w-28" />
+                                <ListItem vertical fieldName={"Data Transazione"} fieldValue={`${transaction.createdAt.toLocaleDateString()} ${transaction.createdAt.toLocaleTimeString()}`} />
                                 {#if transaction.func !== null}
                                     {#each parseFuncData(transaction.func) as [key, value]}
-                                        <li class="flex flex-col">
-                                            <span class="text-lg font-semibold">{key}</span>
-                                            <span>{value}</span>
-                                        </li>
+                                        <ListItem vertical fieldName={key} fieldValue={value}/>
                                     {/each}
                                 {/if}
                             </ul>
@@ -187,7 +179,7 @@
                 <Span class="font-semibold text-primary">Ciò comporta le seguenti modifiche:</Span>
                 <div class="max-h-[10rem] overflow-scroll scrollbar-none text-start">
                     <ul>
-                        <ListItem fieldName={"Valore restituito"} fieldValue={user.rollback.length !== 0 ? user.rollback[0].transaction * -1 : 0} currency={"€"}/>
+                        <ListItem badge fieldName={"Valore restituito"} fieldValue={user.rollback.length !== 0 ? user.rollback[0].transaction * -1 : 0} currency={"€"}/>
                     </ul>
                 </div>
             </div>
