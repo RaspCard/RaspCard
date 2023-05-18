@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Button, Label, Input, Heading, P, Span } from 'flowbite-svelte';
+    import { Button, Label, Input, Heading, P, Span, A } from 'flowbite-svelte';
     import { Plus } from 'svelte-heros-v2';
     import toast, { Toaster } from 'svelte-french-toast';
     import { enhance } from '$app/forms';
@@ -32,7 +32,8 @@
         <div>
             <Heading tag="h2" class="mb-4 text-gray-700">Crea una carta</Heading>
             <P size="lg" weight="normal" color="text-gray-500" class="mb-6">
-                Tutti i campi sono facoltativi, ma per una gestione più semplice è preferibile l'inserimento di tutti i dati.
+                Tutti i campi sono facoltativi, ma per una gestione più semplice è preferibile l'inserimento di tutti i dati. <br>
+                La raccolta dei dati personali è soggetta al consenso dell'utente. Creando la carta l'utente accetta i <A href="/tos" class="!text-accent">termini di servizio</A> per l'utilizzo del servizio.
             </P>
         </div>
         <div class="container-content w-full lg:w-3/4 overflow-scroll scrollbar-none">
