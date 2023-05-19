@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { P, Heading, Card } from 'flowbite-svelte';
+    import { Hr, Heading, Card } from 'flowbite-svelte';
     import { goto } from '$app/navigation';
     import Scanner from "$lib/components/Scanner.svelte";
     import Chart from "$lib/components/Chart.svelte";
@@ -34,19 +34,35 @@
 <div class="p-4 flex flex-col lg:items-start items-center gap-4">
     <Heading class="!text-primary" tag="h2">Bentornato {data.currentAdmin.name}</Heading>
     <div class="flex flex-col md:flex-row gap-2">
-        <Card class="p-4 w-full lg:w-auto shadow">
-            <!-- TODO: update card with new table -->
-            <div class="flex flex-col">
-                {#each data.latestTransactions as transaction}
-                    <div class="flex flex-row gap-4 font-mono">
-                        <span>{transaction.createdAt.toLocaleTimeString()}</span>
-                        <span>{transaction.user.cardId}</span>
-                        <span>{transaction.transaction}</span>
-                    </div>
-                {/each}
+        <Card class="p-4 !w-[40rem] max-h-72 lg:w-auto shadow">
+            <Heading tag="h5">Ultime Transazioni</Heading>
+            <div class="w-full flex flex-col h-[calc(100%-1.75rem)] overflow-x-scroll scrollbar-none text-primary">
+                <table class="w-full h-5">
+                    <thead>
+                        <tr class="w-full text-left border-b-2">
+                            <th class="w-5/12">Ora Transazione</th>
+                            <th class="w-5/12">ID Carta</th>
+                            <th class="w-2/12">Importo</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="w-full h-[calc(100%-1.25rem)] overflow-y-scroll scrollbar-none">
+                    <table class="w-full">
+                        <tbody>
+                            {#each data.latestTransactions as transaction}
+                            <tr class="w-full flex flex-row items-center">
+                                <td class="w-5/12">{transaction.createdAt.toLocaleTimeString()}</td>
+                                <td class="w-5/12">{transaction.user.cardId}</td>
+                                <td class="w-2/12">{transaction.transaction}</td>
+                            </tr>
+                            <Hr />
+                            {/each}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </Card>
-        <Card class="p-4 w-full lg:w-auto shadow text-primary">
+        <Card class="p-4 w-full max-h-72 lg:w-auto shadow text-primary">
             <div class="flex flex-col items-center">
                 <Heading tag="h5" class="text-center">Utenti Registrati</Heading>
                 <div class="w-full flex flex-row items-center justify-center gap-5 sm:gap-0 sm:flex-col sm:items-center">
