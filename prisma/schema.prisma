@@ -17,7 +17,7 @@ model Admin {
   pin             Int
 
   // establishment
-  establishment   Establishment @relation(fields: [establishmentId], references: [id])
+  establishment   Establishment @relation(fields: [establishmentId], references: [id], onDelete: Cascade)
   establishmentId Int
 }
 
@@ -37,7 +37,7 @@ model User {
   rollback        Rollback[]
 
   // establishment
-  establishment   Establishment @relation(fields: [establishmentId], references: [id])
+  establishment   Establishment @relation(fields: [establishmentId], references: [id], onDelete: Cascade)
   establishmentId Int
 
   createdAt       DateTime @default(now())
