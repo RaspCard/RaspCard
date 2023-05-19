@@ -14,6 +14,7 @@
     let transactionModal: boolean = false;
     let rollbackModal: boolean = false;
     let editModal: boolean = false;
+    let width: number = 0;
 
     function parseFuncData(func: string) {
         const json = JSON.parse(func);
@@ -21,6 +22,7 @@
     }
 </script>
 
+<svelte:window bind:innerWidth={width}/>
 <Toaster/>
 
 <div class="relative flex flex-col lg:h-full">
@@ -78,7 +80,7 @@
                     <div class="flex flex-col gap-3">
                         {#each user.rollback as transaction, i}
                             <ul class="flex flex-col lg:flex-row gap-6 text-primary">
-                                <ListItem vertical badge fieldName={"Transazione"} fieldValue={transaction.transaction} currency={"€"} width="w-28" />
+                                <ListItem vertical={width >= 1024 ? true : false} badge fieldName={"Transazione"} fieldValue={transaction.transaction} currency={"€"} width="w-28" />
                                 <ListItem vertical fieldName={"Data Transazione"} fieldValue={`${transaction.createdAt.toLocaleDateString()} ${transaction.createdAt.toLocaleTimeString()}`} />
                                 {#if transaction.func !== null}
                                     {#each parseFuncData(transaction.func) as [key, value]}
