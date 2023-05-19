@@ -59,6 +59,14 @@
                     <Banknotes class="w-6 h-6 text-primary"/>
                 </svelte:fragment>
                 <Span class="font-medium text-lg !text-primary">{user.balance}€</Span>
+                {#if user.func !== null}
+                    <ul>
+                        {#each parseFuncData(user.func) as [key, value]}
+                            <Hr/>
+                            <ListItem fieldName={key} fieldValue={value}/>
+                        {/each}
+                    </ul>
+                {/if}
             </BaseCard>
         </div>
         <div class="w-full lg:w-8/12"> <!-- Last Transaction card -->
