@@ -35,7 +35,7 @@
                     </div>
                 </Alert>
             {/if}
-            <Button type="submit" class="w-full bg-primary-button hover:bg-primary-button hover:opacity-90">Accedi</Button>
+            <Button type="submit" class="w-full bg-primary-button hover:bg-primary-button hover:opacity-90 focus:!ring-0">Accedi</Button>
         </form>
     </Card>
 </div>
