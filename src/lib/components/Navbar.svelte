@@ -14,7 +14,7 @@
     >
         <div class="h-full flex flex-row items-center justify-between container">
             <NavBrand href="/" class="bg-primary-button rounded-md px-3 py-2">
-                <span class="self-center whitespace-nowrap text-2xl font-bold text-accent">Raspcard</span>
+                <span class="self-center whitespace-nowrap text-2xl font-bold italic text-accent">Raspcard</span>
             </NavBrand>
             <div class="flex items-center gap-2 md:order-2">
                 <A id="more-info" class="text-primary font-medium hover:no-underline hover:text-accent">ADMIN</A>
