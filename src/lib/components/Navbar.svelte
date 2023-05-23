@@ -13,8 +13,7 @@
       navDivClass="h-full mx-auto"
     >
         <div class="h-full flex flex-row items-center justify-between container">
-            <NavBrand href="/">
-                <!-- <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo"/> -->
+            <NavBrand href="/" class="bg-primary-button rounded-md px-3 py-2">
                 <span class="self-center whitespace-nowrap text-2xl font-bold text-accent">Raspcard</span>
             </NavBrand>
             <div class="flex items-center gap-2 md:order-2">
