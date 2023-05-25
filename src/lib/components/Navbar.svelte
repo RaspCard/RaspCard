@@ -44,12 +44,12 @@
                 <DropdownItem class="!text-primary hover:!text-accent" href="/tos">TERMINI E CONDIZIONI</DropdownItem>
                 <DropdownItem class="!text-primary hover:!text-accent" href="/help">AIUTO</DropdownItem>
             </Dropdown>
-            <NavUl class="hidden lg:flex flex-row">
-                <NavLi class="!text-primary hover:!text-accent" href="/">HOME</NavLi>
-                <NavLi class="!text-primary hover:!text-accent" href="/users">UTENTI</NavLi>
-                <NavLi class="!text-primary hover:!text-accent" href="/create">CREAZIONE UTENTI</NavLi>
-                <NavLi class="!text-primary hover:!text-accent" href="/tos">TERMINI E CONDIZIONI</NavLi>
-                <NavLi class="!text-primary hover:!text-accent" href="/help">AIUTO</NavLi>
+            <NavUl class="!p-0 hidden lg:flex flex-row">
+                <NavLi class="!p-2 !text-primary hover:!text-accent" href="/">HOME</NavLi>
+                <NavLi class="!p-2 !text-primary hover:!text-accent" href="/users">UTENTI</NavLi>
+                <NavLi class="!p-2 !text-primary hover:!text-accent" href="/create">CREAZIONE UTENTI</NavLi>
+                <NavLi class="!p-2 !text-primary hover:!text-accent" href="/tos">TERMINI E CONDIZIONI</NavLi>
+                <NavLi class="!p-2 !text-primary hover:!text-accent" href="/help">AIUTO</NavLi>
             </NavUl>
         </div>
     </Navbar>
