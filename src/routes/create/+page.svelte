@@ -5,8 +5,8 @@
     import { enhance } from '$app/forms';
     import Scanner from '$lib/components/Scanner.svelte';
 
-
     let cardID = "";
+    let cardDisabled = true;
 </script>
 
 
@@ -40,7 +40,10 @@
             <div class="w-full flex flex-col gap-4">
                 <Label class="space-y-2">
                     <Span>ID carta</Span>
-                    <Input bind:value={cardID} autocomplete="off" required type="text" name="cardId" placeholder="ID numerico" size="lg" class="focus:ring-0 focus:border-secondary-button"/>
+                    <div class="w-full flex flex-row gap-2">
+                        <Input bind:value={cardID} disabled={cardDisabled} autocomplete="off" required type="text" name="cardId" placeholder="ID numerico" size="lg" class="focus:ring-0 focus:border-secondary-button"/>
+                        <Button on:click={() => cardDisabled = !cardDisabled} class="bg-primary-button hover:bg-primary-button hover:opacity-90 focus:!ring-0">Inserisci manualmente</Button>
+                    </div>
                 </Label>
                 <Label class="space-y-2">
                     <Span>Nome</Span>
@@ -57,8 +60,8 @@
             </div>
         </div>
     </div>
-    <div class="lg:fixed lg:bottom-4 w-screen flex justify-center lg:right-4 lg:w-72">
-        <Button type="submit" class="m-4 w-full lg:m-0 lg:w-72 h-20 text-lg bg-primary-button hover:bg-primary-button hover:opacity-90 active:ring-0"><Plus class="mr-2 -ml-1 w-7 h-7"/>Crea la Carta</Button>
+    <div class="w-full flex justify-center h-20 p-4 lg:p-0 lg:fixed lg:bottom-4 lg:right-4 lg:w-44">
+        <Button type="submit" class="w-full h-full text-lg bg-primary-button hover:bg-primary-button hover:opacity-90 focus:!ring-0"><Plus class="mr-2 -ml-1 w-7 h-7"/>Crea la Carta</Button>
     </div>
 </form>
 
