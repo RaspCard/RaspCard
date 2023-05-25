@@ -20,7 +20,7 @@ export const actions: Actions = {
         const data = Object.fromEntries(await request.formData()) as unknown as CardRequest;
 
         if(!data.cardId || typeof(data.cardId) !== 'string') {
-            return fail(400);
+            return fail(400, {success: false, message: 'tessera non valida'});
         }
 
         const user = await db.user.findUnique({
