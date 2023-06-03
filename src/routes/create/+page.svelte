@@ -42,7 +42,7 @@
                     <Span>ID carta</Span>
                     <div class="w-full flex flex-row gap-2">
                         <Input bind:value={cardID} disabled={cardDisabled} autocomplete="off" required type="text" name="cardId" placeholder="ID numerico" size="lg" class="focus:ring-0 focus:border-secondary-button"/>
-                        <Button on:click={() => cardDisabled = !cardDisabled} class="bg-primary-button hover:bg-primary-button hover:opacity-90 focus:!ring-0">Inserisci manualmente</Button>
+                        <Button on:click={() => cardDisabled = !cardDisabled} class="bg-primary-button hover:bg-primary-button hover:opacity-90 focus:!ring-0">{cardDisabled ? "Inserisci manualmente" : "Inserisci con il lettore"}</Button>
                     </div>
                 </Label>
                 <Label class="space-y-2">
