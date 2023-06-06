@@ -15,7 +15,7 @@
 
 {#if vertical}
 <li class={"flex flex-col gap-1 font-medium " + width} >
-    <span class="text-lg font-semibold">Transazione</span>
+    <span class="text-base font-bold">{fieldName}</span>
     {#if badge && fieldValue < 0}
         <Badge class="!bg-secondary-button !text-accent" large={true}>PAGAMENTO</Badge>
     {:else if badge && fieldValue > 0}
