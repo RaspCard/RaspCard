@@ -157,8 +157,8 @@
         <div class="text-center">
             <ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-primary"/>
             <h3 class="mb-5 text-lg font-normal text-primary">Sei sicuro di voler eliminare quest'utente?<br>L'utente verrà disattivato e sarà possibile riattivarlo in seguito.</h3>
-            <Button type="submit" class="mr-2 !text-primary bg-secondary-button hover:bg-secondary-button hover:opacity-90 active:ring-0">SI, sono sicuro</Button>
-            <Button on:click={() => deleteModal = false} class="bg-primary-button hover:bg-primary-button hover:opacity-90 active:ring-0">NO, torna indietro</Button>
+            <Button type="submit" class="mr-2 !text-primary bg-secondary-button hover:bg-secondary-button hover:opacity-90 focus:!ring-0 active:!ring-0">SI, sono sicuro</Button>
+            <Button on:click={() => deleteModal = false} class="bg-primary-button hover:bg-primary-button hover:opacity-90 focus:!ring-0 active:!ring-0">NO, torna indietro</Button>
         </div>
     </form>
 </Modal>
@@ -195,12 +195,11 @@
                 </div>
             </div>
             <Hr class="my-4" height="h-px" />
-            <Button type="submit" class="mr-2 bg-secondary-button !text-primary hover:bg-secondary-button hover:opacity-90 active:ring-0">SI, sono sicuro</Button>
-            <Button on:click={() => rollbackModal = false} class="bg-primary-button hover:bg-primary-button hover:opacity-90 active:ring-0">NO, torna indietro</Button>
+            <Button type="submit" class="mr-2 bg-secondary-button !text-primary hover:bg-secondary-button hover:opacity-90 focus:!ring-0 active:!ring-0">SI, sono sicuro</Button>
+            <Button on:click={() => rollbackModal = false} class="bg-primary-button hover:bg-primary-button hover:opacity-90 focus:!ring-0 active:!ring-0">NO, torna indietro</Button>
         </div>
     </form>
 </Modal>
-
 
 <!-- Transaction modal -->
 <Modal bind:open={transactionModal} class="w-full max-w-md" autoclose={false}>
@@ -208,7 +207,7 @@
         on:keypress={e => e.key == "Enter" ? e.preventDefault() : null}
         method="POST"
         action="?/balance"
-        class="flex flex-col space-y-6"
+        class="flex flex-col space-y-3"
         use:enhance={() => {
             return async ({ update, result, form }) => {
                 form.reset();
@@ -222,18 +221,35 @@
             }
         }}
     >
-        <Heading tag="h3" class="p-0">Nuova Transazione</Heading>
-        <Label class="space-y-2">
-            <span>Importo</span>
-            <Input min="0.01" step="0.01" type="number" name="amount" placeholder="0" required class="w-24 focus:border-secondary-button focus:ring-0"/>
-        </Label>
-        <Label class="space-y-2">
-            <span>Cashback</span>
-            <Input min="0" max="100" type="number" name="cashback" placeholder="0" class="w-24 focus:border-secondary-button focus:ring-0"/>
-        </Label>
-        <div class="flex flex-row gap-2">
-            <Button type="submit" name="operationType" value="-" class="w-full bg-primary-button hover:bg-primary-button hover:opacity-90 active:ring-0">- Sottrai</Button>
-            <Button type="submit" name="operationType" value="+" class="w-full !text-primary bg-secondary-button hover:bg-secondary-button hover:opacity-90 active:ring-0">+ Aggiungi</Button>
+        <div class="w-full">
+            <Heading tag="h3" class="p-0">Nuova Transazione</Heading>
+        </div>
+        <hr>
+        <div class="w-full flex flex-row justify-between">
+            <!-- The usage of component is a smart solution for a plugin system -->
+            <!-- <svelte:component this={}/> -->
+            <div class="flex flex-col space-y-3 min-w-[75%]">
+                <span>TYPOLOGY</span>
+                <Label class="space-y-2">
+                    <span>Importo</span>
+                    <Input min="0.01" step="0.01" type="number" name="amount" placeholder="0" required class="w-24 focus:border-secondary-button focus:ring-0"/>
+                </Label>
+                <Label class="space-y-2">
+                    <span>Cashback</span>
+                    <Input min="0" max="100" type="number" name="cashback" placeholder="0" class="w-24 focus:border-secondary-button focus:ring-0"/>
+                </Label>
+                <div class="flex flex-row gap-2">
+                    <Button type="submit" name="operationType" value="-" class="w-full bg-primary-button hover:bg-primary-button hover:opacity-90 focus:!ring-0 active:!ring-0">- Sottrai</Button>
+                    <Button type="submit" name="operationType" value="+" class="w-full !text-primary bg-secondary-button hover:bg-secondary-button hover:opacity-90 focus:!ring-0 active:!ring-0">+ Aggiungi</Button>
+                </div>
+            </div>
+            <!-- TODO update show for menu navigator -->
+            {#if true}
+            <div class="flex flex-col justify-between">
+                <Button on:click class="w-full bg-primary-button hover:bg-primary-button hover:opacity-90 focus:!ring-0 active:!ring-0"><Icons.ArrowSmallUp /></Button>
+                <Button on:click class="w-full bg-primary-button hover:bg-primary-button hover:opacity-90 focus:!ring-0 active:!ring-0"><Icons.ArrowSmallDown /></Button>
+            </div>
+            {/if}
         </div>
     </form>
 </Modal>
