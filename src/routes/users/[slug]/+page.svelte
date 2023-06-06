@@ -1,6 +1,7 @@
 <script lang="ts">
-    import { Button, Modal, Input, Label, Heading, Span, Hr, Badge } from 'flowbite-svelte';
+    import { Button, Modal, Input, Label, Heading, Span, Hr } from 'flowbite-svelte';
     import { Trash, ArrowPathRoundedSquare, CurrencyEuro, ExclamationTriangle, FingerPrint, Identification, Banknotes, ArrowPath } from 'svelte-heros-v2';
+    import * as Icons from 'svelte-heros-v2';
     import toast, { Toaster } from 'svelte-french-toast';
     import type { PageData } from './$types';
     import { enhance } from '$app/forms';
@@ -62,12 +63,12 @@
                 </svelte:fragment>
                 <Span class="font-medium text-lg !text-primary">{user.balance}€</Span>
                 {#if user.func !== null}
-                    <ul>
-                        {#each parseFuncData(user.func) as [key, value]}
-                            <Hr/>
-                            <ListItem fieldName={key} fieldValue={value}/>
-                        {/each}
-                    </ul>
+                <ul>
+                    {#each parseFuncData(user.func) as [key, value]}
+                    <Hr/>
+                    <ListItem fieldName={key} fieldValue={value}/>
+                    {/each}
+                </ul>
                 {/if}
             </BaseCard>
         </div>
@@ -77,24 +78,24 @@
                     <ArrowPath class="w-6 h-6 text-primary"/>
                 </svelte:fragment>
                 {#if user.rollback.length !== 0}
-                    <div class="flex flex-col gap-3">
-                        {#each user.rollback as transaction, i}
-                            <ul class="flex flex-col lg:flex-row gap-6 text-primary">
-                                <ListItem vertical={width >= 1024 ? true : false} badge fieldName={"Transazione"} fieldValue={transaction.transaction} currency={"€"} width="w-28" />
-                                <ListItem vertical fieldName={"Data Transazione"} fieldValue={`${transaction.createdAt.toLocaleDateString()} ${transaction.createdAt.toLocaleTimeString()}`} />
-                                {#if transaction.func !== null}
-                                    {#each parseFuncData(transaction.func) as [key, value]}
-                                        <ListItem vertical fieldName={key} fieldValue={value}/>
-                                    {/each}
-                                {/if}
-                            </ul>
-                            {#if i !== user.rollback.length - 1}
-                                <Hr />
-                            {/if}
-                        {/each}
-                    </div>
+                <div class="flex flex-col gap-3">
+                    {#each user.rollback as transaction, i}
+                    <ul class="flex flex-col lg:flex-row gap-6 text-primary">
+                        <ListItem vertical={width >= 1024 ? true : false} badge fieldName={"Transazione"} fieldValue={transaction.transaction} currency={"€"} width="w-28" />
+                        <ListItem vertical fieldName={"Data Transazione"} fieldValue={`${transaction.createdAt.toLocaleDateString()} ${transaction.createdAt.toLocaleTimeString()}`} />
+                        {#if transaction.func !== null}
+                            {#each parseFuncData(transaction.func) as [key, value]}
+                            <ListItem vertical fieldName={key} fieldValue={value}/>
+                            {/each}
+                        {/if}
+                    </ul>
+                    {#if i !== user.rollback.length - 1}
+                    <Hr />
+                    {/if}
+                    {/each}
+                </div>
                 {:else}
-                    <Heading tag="h6" color="text-gray-500">Nessuna transazione disponibile</Heading>
+                <Heading tag="h6" color="text-gray-500">Nessuna transazione disponibile</Heading>
                 {/if}
             </BaseCard>
         </div>
