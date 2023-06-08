@@ -7,6 +7,8 @@
     import { enhance } from '$app/forms';
     import BaseCard from '$lib/components/BaseCard.svelte';
     import ListItem from '$lib/components/ListItem.svelte';
+    import * as plugin from "$lib/plugins/plugin";
+	import { onMount } from 'svelte';
 
     export let data: PageData;
     $: ({ user } = data );
@@ -21,6 +23,10 @@
         const json = JSON.parse(func);
         return Object.entries(json);
     }
+
+    onMount(() => {
+        plugin.getPlugin("testing");
+    });
 </script>
 
 <svelte:window bind:innerWidth={width}/>
@@ -227,8 +233,9 @@
         <hr>
         <div class="w-full flex flex-row justify-between">
             <!-- The usage of component is a smart solution for a plugin system -->
-            <!-- <svelte:component this={}/> -->
             <div class="flex flex-col space-y-3 min-w-[75%]">
+                <!-- <svelte:component this={mod.getTransactionModule()}/> -->
+
                 <span>TYPOLOGY</span>
                 <Label class="space-y-2">
                     <span>Importo</span>
