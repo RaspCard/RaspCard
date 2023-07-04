@@ -1,6 +1,7 @@
 <script lang="ts">
-    import { Hr, Heading, Card } from 'flowbite-svelte';
+    import { Heading, Card } from 'flowbite-svelte';
     import { goto } from '$app/navigation';
+    import type { PageData } from './$types';
     import Scanner from "$lib/components/Scanner.svelte";
     import Chart from "$lib/components/Chart.svelte";
 
@@ -55,7 +56,7 @@
                                 <td class="w-5/12">{transaction.user.cardId}</td>
                                 <td class="w-2/12">{transaction.transaction}</td>
                             </tr>
-                            <Hr />
+                            <hr class="h-px my-2"/>
                             {/each}
                         </tbody>
                     </table>

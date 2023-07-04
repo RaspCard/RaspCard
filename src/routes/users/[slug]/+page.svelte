@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Button, Modal, Input, Label, Heading, Span, Hr } from 'flowbite-svelte';
+    import { Button, Modal, Input, Label, Heading, Span } from 'flowbite-svelte';
     import { Trash, ArrowPathRoundedSquare, CurrencyEuro, ExclamationTriangle, FingerPrint, Identification, Banknotes, ArrowPath } from 'svelte-heros-v2';
     import * as Icons from 'svelte-heros-v2';
     import toast, { Toaster } from 'svelte-french-toast';
@@ -57,9 +57,9 @@
                 </svelte:fragment>
                 <ul class="flex flex-col gap-2">
                     <ListItem fieldName={"Nome"} fieldValue={user.name}/>
-                    <Hr/>
+                    <hr class="h-px my-1" />
                     <ListItem fieldName={"Cognome"} fieldValue={user.surname}/>
-                    <Hr/>
+                    <hr class="h-px my-1" />
                     <ListItem fieldName={"Numero di Telefono"} fieldValue={user.phoneNumber}/>
                 </ul>
             </BaseCard>
@@ -71,7 +71,7 @@
                 {#if user.func !== null}
                 <ul>
                     {#each parseFuncData(user.func) as [key, value]}
-                    <Hr/>
+                    <hr class="h-px my-1"/>
                     <ListItem fieldName={key} fieldValue={value}/>
                     {/each}
                 </ul>
@@ -96,7 +96,7 @@
                         {/if}
                     </ul>
                     {#if i !== user.rollback.length - 1}
-                    <Hr />
+                    <hr class="h-px my-1"/>
                     {/if}
                     {/each}
                 </div>
@@ -191,7 +191,7 @@
         <div class="text-center">
             <ExclamationTriangle class="mx-auto mb-4 w-14 h-14 text-primary"/>
             <Heading tag="h5" class="font-normal text-primary">Sei sicuro di voler annullare la precedente transazione?</Heading>
-            <Hr class="my-4" height="h-px" />
+            <hr class="h-px my-4" />
             <div class="flex flex-col gap-2">
                 <Span class="font-semibold text-primary">Ciò comporta le seguenti modifiche:</Span>
                 <div class="max-h-[10rem] overflow-scroll scrollbar-none text-start">
@@ -200,7 +200,7 @@
                     </ul>
                 </div>
             </div>
-            <Hr class="my-4" height="h-px" />
+            <hr class="h-px my-4" />
             <Button type="submit" class="mr-2 bg-secondary-button !text-primary hover:bg-secondary-button hover:opacity-90 focus:!ring-0 active:!ring-0">SI, sono sicuro</Button>
             <Button on:click={() => rollbackModal = false} class="bg-primary-button hover:bg-primary-button hover:opacity-90 focus:!ring-0 active:!ring-0">NO, torna indietro</Button>
         </div>
@@ -230,7 +230,7 @@
         <div class="w-full">
             <Heading tag="h3" class="p-0">Nuova Transazione</Heading>
         </div>
-        <hr>
+        <hr />
         <div class="w-full flex flex-row justify-between">
             <!-- The usage of component is a smart solution for a plugin system -->
             <div class="flex flex-col space-y-3 min-w-[75%]">
