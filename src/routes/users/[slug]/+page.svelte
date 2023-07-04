@@ -1,14 +1,19 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
+    import type { PageData } from './$types';
+    import { enhance } from '$app/forms';
+    
     import { Button, Modal, Input, Label, Heading, Span } from 'flowbite-svelte';
     import { Trash, ArrowPathRoundedSquare, CurrencyEuro, ExclamationTriangle, FingerPrint, Identification, Banknotes, ArrowPath } from 'svelte-heros-v2';
     import * as Icons from 'svelte-heros-v2';
     import toast, { Toaster } from 'svelte-french-toast';
-    import type { PageData } from './$types';
-    import { enhance } from '$app/forms';
+
+    import { getPlugin } from "$lib/plugins/loader";
+    import type { Plugin } from "$lib/plugins/types";
+    import Default from "$lib/plugins/components/Default.svelte";
+
     import BaseCard from '$lib/components/BaseCard.svelte';
     import ListItem from '$lib/components/ListItem.svelte';
-    import * as plugin from "$lib/plugins/plugin";
-	import { onMount } from 'svelte';
 
     export let data: PageData;
     $: ({ user } = data );
@@ -17,15 +22,20 @@
     let transactionModal: boolean = false;
     let rollbackModal: boolean = false;
     let editModal: boolean = false;
+    
     let width: number = 0;
+
+    let mod: Plugin;
+    let component = Default;
 
     function parseFuncData(func: string) {
         const json = JSON.parse(func);
         return Object.entries(json);
     }
 
-    onMount(() => {
-        plugin.getPlugin("testing");
+    onMount(async () => {
+        mod = await getPlugin(data.currentAdmin.establishmentName);
+        component = mod.populateForm();
     });
 </script>
 
@@ -234,21 +244,7 @@
         <div class="w-full flex flex-row justify-between">
             <!-- The usage of component is a smart solution for a plugin system -->
             <div class="flex flex-col space-y-3 min-w-[75%]">
-                <!-- <svelte:component this={mod.getTransactionModule()}/> -->
-
-                <span>TYPOLOGY</span>
-                <Label class="space-y-2">
-                    <span>Importo</span>
-                    <Input min="0.01" step="0.01" type="number" name="amount" placeholder="0" required class="w-24 focus:border-secondary-button focus:ring-0"/>
-                </Label>
-                <Label class="space-y-2">
-                    <span>Cashback</span>
-                    <Input min="0" max="100" type="number" name="cashback" placeholder="0" class="w-24 focus:border-secondary-button focus:ring-0"/>
-                </Label>
-                <div class="flex flex-row gap-2">
-                    <Button type="submit" name="operationType" value="-" class="w-full bg-primary-button hover:bg-primary-button hover:opacity-90 focus:!ring-0 active:!ring-0">- Sottrai</Button>
-                    <Button type="submit" name="operationType" value="+" class="w-full !text-primary bg-secondary-button hover:bg-secondary-button hover:opacity-90 focus:!ring-0 active:!ring-0">+ Aggiungi</Button>
-                </div>
+                <svelte:component this={component} />
             </div>
             <!-- TODO update show for menu navigator -->
             {#if true}
