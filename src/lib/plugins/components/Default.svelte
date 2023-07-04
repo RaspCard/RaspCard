@@ -2,6 +2,7 @@
     import { Label, Input, Button } from "flowbite-svelte";
 </script>
 
+<span>Operazioni Saldo</span>
 <Label class="space-y-2">
     <span>Importo</span>
     <Input min="0.01" step="0.01" type="number" name="amount" placeholder="0" required class="w-24 focus:border-secondary-button focus:ring-0"/>
