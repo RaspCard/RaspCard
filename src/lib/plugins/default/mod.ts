@@ -1,5 +1,5 @@
-import Default from "./Default.svelte";
+import Default from "../components/Default.svelte";
 
-export function getTransactionModule() {
+export function populateForm() {
     return Default;
 }
