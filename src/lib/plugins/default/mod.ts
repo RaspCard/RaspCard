@@ -1,5 +1,3 @@
-import Default from "../components/Default.svelte";
-
-export function populateForm() {
-    return Default;
+export function getNavigator() {
+    return new Navigator();
 }
