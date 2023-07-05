@@ -9,9 +9,9 @@
     import toast, { Toaster } from 'svelte-french-toast';
 
     import { getPlugin } from "$lib/plugins/loader";
-    import type { Plugin } from "$lib/plugins/types";
+    import type { plugin, navigator } from "$lib/plugins/types";
+    
     import Default from "$lib/plugins/components/Default.svelte";
-
     import BaseCard from '$lib/components/BaseCard.svelte';
     import ListItem from '$lib/components/ListItem.svelte';
 
@@ -25,7 +25,8 @@
     
     let width: number = 0;
 
-    let mod: Plugin;
+    let mod: plugin;
+    let formNavigator: navigator;
     let component = Default;
 
     function parseFuncData(func: string) {
@@ -33,9 +34,17 @@
         return Object.entries(json);
     }
 
+    function previous() {
+        component = formNavigator.getPrevious();
+    }
+
+    function next() {
+        component = formNavigator.getNext();
+    }
+
     onMount(async () => {
         mod = await getPlugin(data.currentAdmin.establishmentName);
-        component = mod.populateForm();
+        formNavigator = mod.getNavigator();
     });
 </script>
 
@@ -247,10 +256,10 @@
                 <svelte:component this={component} />
             </div>
             <!-- TODO update show for menu navigator -->
-            {#if true}
+            {#if formNavigator.forms.length > 1}
             <div class="flex flex-col justify-between">
-                <Button on:click class="w-full bg-primary-button hover:bg-primary-button hover:opacity-90 focus:!ring-0 active:!ring-0"><Icons.ArrowSmallUp /></Button>
-                <Button on:click class="w-full bg-primary-button hover:bg-primary-button hover:opacity-90 focus:!ring-0 active:!ring-0"><Icons.ArrowSmallDown /></Button>
+                <Button on:click={previous} class="w-full bg-primary-button hover:bg-primary-button hover:opacity-90 focus:!ring-0 active:!ring-0"><Icons.ArrowSmallUp /></Button>
+                <Button on:click={next} class="w-full bg-primary-button hover:bg-primary-button hover:opacity-90 focus:!ring-0 active:!ring-0"><Icons.ArrowSmallDown /></Button>
             </div>
             {/if}
         </div>
