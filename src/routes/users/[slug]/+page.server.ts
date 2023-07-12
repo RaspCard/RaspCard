@@ -1,7 +1,10 @@
-import { redirect, error, fail } from '@sveltejs/kit';
-import type { PageServerLoad, Actions } from './$types';
+import { redirect, error, fail, ActionFailure } from '@sveltejs/kit';
 import { db } from '$lib/server/database';
-import type { BalanceRequest, EditRequest } from '$lib/utils/types';
+import { getPlugin, getUpdater } from '$lib/plugins/loader';
+import { UpdaterFailure } from '$lib/plugins/kit';
+import type { PageServerLoad, Actions } from './$types';
+import type { EditRequest } from '$lib/utils/types';
+import type { User } from '$lib/plugins/types';
 
 export const load: PageServerLoad = async({ locals, params }) => {
     if(!locals.currentAdmin) {
@@ -59,34 +62,60 @@ export const actions: Actions = {
         return {success: true, message: "Dati aggiornati con successo"}; 
     },
 
-    async balance({locals, params, request}) {
+    async transaction({locals, params, request}) {
         if(!locals.currentAdmin) {
             return fail(401);
         }
 
-        const data = Object.fromEntries(await request.formData()) as unknown as BalanceRequest;
-        const amount = parseFloat(data.amount || '');
-        const cashback = parseInt(data?.cashback || '0');
-        const operationType = data.operationType === '+' ? 1 : -1;
+        const mod = await getPlugin(locals.currentAdmin.establishmentName);
 
-        if(isNaN(amount) || cashback < 0 || cashback > 100) {
-            return fail(400, {success: false, message: 'Saldo invalido'});
+        const rawData = await request.formData();
+        if (!rawData.has('plugin')) {
+            return fail(400, {success: false, message: 'Errore nel caricamento del plugin'});
+        }
+        const plugin = rawData.get('plugin')?.toString();
+        if (!plugin) {
+            return fail(400, {success: false, message: 'Errore nel caricamento del plugin'});
         }
 
-        const user = await db.user.findUnique({
+        let regex = /Proxy<(\w+)>/;
+        let m = plugin.match(regex);
+        if (m === null) {
+            return fail(400, {success: false, message: 'Errore nel caricamento del plugin'});
+        }
+        const pluginType = m[1].toLowerCase();
+        rawData.delete('plugin');
+
+        let user = await db.user.findUnique({
             where: {
                 cardId_establishmentId: {
                     cardId: params.slug,
                     establishmentId: locals.currentAdmin.establishmentId
                 }
             }
-        });
+        }) as User;
 
         if(!user) {
             return fail(404, {success: false, message: 'Utente non trovato'});
         }
+        
+        let updatedUser: User | UpdaterFailure;
 
-        const calculedValue = operationType === 1 ? amount + (amount/100 * cashback) : amount * operationType;
+        let updater = await getUpdater(pluginType, mod);
+
+        if (updater instanceof UpdaterFailure) {
+            return fail(500, {success: updater.success, message: updater.message});
+        }
+
+        updatedUser = await updater(user, rawData);
+
+        if (updatedUser instanceof UpdaterFailure) {
+            return fail(400, {success: updatedUser.success, message: updatedUser.message});
+        }
+
+        if (!updatedUser) {
+            return fail(400, {success: false, message: 'Qualcosa è andato storto nella richiesta'});
+        }
 
         try {
             await db.user.update({
@@ -98,11 +127,14 @@ export const actions: Actions = {
                 },
                 data: {
                     balance: {
-                        increment: calculedValue
+                        set: updatedUser.balance
+                    },
+                    func: {
+                        set: updatedUser.func
                     },
                     rollback: {
                         create: {
-                            transaction: calculedValue,
+                            transaction: (updatedUser.balance - user.balance),
                             func: user.func
                         }
                     }
@@ -112,7 +144,7 @@ export const actions: Actions = {
             return fail(400, {success: false, message: 'Qualcosa è andato storto nella richiesta'});
         }
 
-        return {success: true, message: `Saldo aggiornato con successo: ${data.operationType}${amount}€`};
+        return {success: true, message: `Utente aggiornato con successo`};
     },
 
     async rollback({locals, params}) {
