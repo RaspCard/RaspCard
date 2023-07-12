@@ -1,6 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
-import type { Actions, PageServerLoad } from './$types';
 import { db } from '$lib/server/database';
+import { getPlugin } from '$lib/plugins/loader';
+import type { Actions, PageServerLoad } from './$types';
 import type { CardRequest } from '$lib/utils/types';
 
 
@@ -10,15 +11,14 @@ export const load: PageServerLoad = async({ locals }) => {
     }
 }
 
-
 export const actions: Actions = {
     async default({request, locals}) {
         if(!locals.currentAdmin) {
             return fail(401);
         }
+        const mod = await getPlugin(locals.currentAdmin.establishmentName);
 
         const data = Object.fromEntries(await request.formData()) as unknown as CardRequest;
-
         if(!data.cardId || typeof(data.cardId) !== 'string') {
             return fail(400, {success: false, message: 'tessera non valida'});
         }
@@ -55,7 +55,8 @@ export const actions: Actions = {
                 name: data.name || null,
                 surname: data.surname || null,
                 phoneNumber: data.phoneNumber || null,
-                establishmentId: locals.currentAdmin.establishmentId
+                establishmentId: locals.currentAdmin.establishmentId,
+                func: mod.createPluginStorage()
             }
         });
 
