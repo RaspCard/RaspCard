@@ -1,4 +1,4 @@
-export interface BalanceRequest {
+export interface DefaultRequest {
     amount: string;
     cashback?: string;
     operationType: '+' | '-';
