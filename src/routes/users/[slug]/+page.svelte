@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
+    import { onMount, type ComponentType } from 'svelte';
     import type { PageData } from './$types';
     import { enhance } from '$app/forms';
     
@@ -8,10 +8,10 @@
     import * as Icons from 'svelte-heros-v2';
     import toast, { Toaster } from 'svelte-french-toast';
 
-    import { getPlugin } from "$lib/plugins/loader";
-    import type { plugin, navigator } from "$lib/plugins/types";
+	import { getPlugin } from '$lib/plugins/loader';
+    import type { Plugin } from "$lib/plugins/types";
+    import type { Navigator } from "$lib/plugins/kit";
     
-    import Default from "$lib/plugins/components/Default.svelte";
     import BaseCard from '$lib/components/BaseCard.svelte';
     import ListItem from '$lib/components/ListItem.svelte';
 
@@ -25,9 +25,9 @@
     
     let width: number = 0;
 
-    let mod: plugin;
-    let formNavigator: navigator;
-    let component = Default;
+    let mod: Plugin;
+    let formNavigator: Navigator;
+    let component: ComponentType | undefined = undefined;
 
     function parseFuncData(func: string) {
         const json = JSON.parse(func);
@@ -45,6 +45,7 @@
     onMount(async () => {
         mod = await getPlugin(data.currentAdmin.establishmentName);
         formNavigator = mod.getNavigator();
+        component = formNavigator.getCurrent();
     });
 </script>
 
@@ -55,7 +56,10 @@
     <div class="absolute w-full lg:static">
         <div class="p-3 w-full flex justify-end flex-col-reverse h-52 lg:h-20 lg:flex-row gap-4">
             <Button on:click={() => deleteModal = true} class="w-ful h-full lg:w-56 bg-secondary-button !text-primary hover:bg-secondary-button hover:opacity-90 active:ring-0"><Trash/>Elimina Utente</Button>
-            <Button on:click={() => rollbackModal = true} disabled={user.rollback.length !== 0 ? false : true} class="w-full h-full lg:w-56 bg-primary-button hover:bg-primary-button enabled:hover:opacity-90 active:ring-0"><ArrowPathRoundedSquare/>Annulla L'ultima Transazione</Button>
+            <Button on:click={() => rollbackModal = true} disabled={user.rollback.length !== 0 ? false : true} class="w-full h-full lg:w-56 bg-primary-button hover:bg-primary-button enabled:hover:opacity-90 active:ring-0">
+                <ArrowPathRoundedSquare />
+                Annulla L'ultima Transazione
+            </Button>
             <Button on:click={() => transactionModal = true} class="w-full h-full lg:w-56 bg-primary-button hover:bg-primary-button hover:opacity-90 active:ring-0"><CurrencyEuro/>Nuova Transazione</Button>    
         </div>
     </div>
@@ -231,7 +235,7 @@
     <form
         on:keypress={e => e.key == "Enter" ? e.preventDefault() : null}
         method="POST"
-        action="?/balance"
+        action="?/transaction"
         class="flex flex-col space-y-3"
         use:enhance={() => {
             return async ({ update, result, form }) => {
@@ -246,6 +250,7 @@
             }
         }}
     >
+        <input type="hidden" name="plugin" bind:value={component.name} />
         <div class="w-full">
             <Heading tag="h3" class="p-0">Nuova Transazione</Heading>
         </div>
@@ -255,8 +260,7 @@
             <div class="flex flex-col space-y-3 min-w-[75%]">
                 <svelte:component this={component} />
             </div>
-            <!-- TODO update show for menu navigator -->
-            {#if formNavigator.forms.length > 1}
+            {#if formNavigator.components.length > 1}
             <div class="flex flex-col justify-between">
                 <Button on:click={previous} class="w-full bg-primary-button hover:bg-primary-button hover:opacity-90 focus:!ring-0 active:!ring-0"><Icons.ArrowSmallUp /></Button>
                 <Button on:click={next} class="w-full bg-primary-button hover:bg-primary-button hover:opacity-90 focus:!ring-0 active:!ring-0"><Icons.ArrowSmallDown /></Button>
