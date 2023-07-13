@@ -6,6 +6,10 @@ export function getNavigator() {
     return new Navigator();
 }
 
+export function createPluginStorage(): string | null {
+    return null;
+}
+
 export const updaters: Updaters = {
     async defaultUpdater(user: User, request: FormData): Promise<User | UpdaterFailure> {
         user = {...user};
